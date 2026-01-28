@@ -1,0 +1,3 @@
+# Stability Policy Package
+
+Enforces component lifecycle rules for OpenTelemetry Projects.
