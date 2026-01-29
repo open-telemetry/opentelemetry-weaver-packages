@@ -1,7 +1,13 @@
 #!/bin/bash
 
-# TODO - Figure out where to get weaver from
-WEAVER=~/projects/open-telemetry/weaver/target/debug/weaver
+if [[ -z "$WEAVER" ]]; then
+  WEAVER=weaver
+fi
+
+if ! command -v "${WEAVER}" >/dev/null 2>&1; then
+  echo WEAVER env variable not set or weaver not available on path
+  exit 1
+fi
 
 # Logs an error and exits
 log_err() {
