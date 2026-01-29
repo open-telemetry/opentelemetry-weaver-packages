@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Debugging
+set -x
 
 # Find weaver installation or warn it needs to exist.
 if [[ -z "$WEAVER" ]]; then
