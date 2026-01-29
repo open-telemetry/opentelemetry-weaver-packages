@@ -1,11 +1,14 @@
 #!/bin/bash
 
+
+# Find weaver installation or warn it needs to exist.
 if [[ -z "$WEAVER" ]]; then
   WEAVER=weaver
 fi
 
 if ! command -v "${WEAVER}" >/dev/null 2>&1; then
-  echo WEAVER env variable not set or weaver not available on path
+  echo weaver not found.
+  echo Please set WEAVER environment variable or add it to your path.
   exit 1
 fi
 
@@ -57,7 +60,6 @@ run_policy_test() {
   mkdir -p "${OBSERVED_DIR}"
   # Note: We force ourselves into test dir, so provenance of files is always consistently relative.
   pushd "${TEST_DIR}"
-  echo "  -- stderr -- "
   ${WEAVER} registry check \
     -r current \
     --baseline-registry base \
@@ -66,8 +68,11 @@ run_policy_test() {
     --diagnostic-format json \
     --diagnostic-stdout \
     > "${OBSERVED_DIR}/diagnostic-output.json"
-  echo "  -- /stderr -- "
+    2> "${OBSERVED_DIR}/stderr"
   popd
+  if [ $? -ne 0 ]; then
+    cat "${OBSERVED_DIR}/stderr"
+  fi
   check_output "${OBSERVED_DIR}/diagnostic-output.json" "${TEST_DIR}/expected-diagnostic-output.json" "${TEST_NAME} - Diagnostic Output"
 }
 
