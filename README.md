@@ -39,18 +39,20 @@ To run the tests for a given policy package, you can run the `buildscripts/test_
 TODO - figure this out
 
 
-## Contributing
+## Approvers and Maintainers
 
-TODO - write this.
+For github groups see the [codeowners](CODEOWNERS) file.
 
-## Maintainers
+### Maintainers
 
-- TODO
+- [Jeremy Blythe](https://github.com/jerbly) Evertz
+- [Josh Suereth](https://github.com/jsuereth) Google LLC
+- [Laurent Quérel](https://github.com/lquerel) F5 Networks
 
 For more information about the maintainer role, see the [community repository](https://github.com/open-telemetry/community/blob/main/guides/contributor/membership.md#maintainer).
 
-## Approvers
+### Approvers
 
-- TODO
+- [Liudmila Molkova](https://github.com/lmolkova), Grafana Labs
 
 For more information about the approver role, see the [community repository](https://github.com/open-telemetry/community/blob/main/guides/contributor/membership.md#approver).
