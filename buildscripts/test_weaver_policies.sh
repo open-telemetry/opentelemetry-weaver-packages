@@ -51,6 +51,7 @@ run_policy_test() {
   mkdir -p "${OBSERVED_DIR}"
   # Note: We force ourselves into test dir, so provenance of files is always consistently relative.
   pushd "${TEST_DIR}"
+  echo "  -- stderr -- "
   ${WEAVER} registry check \
     -r current \
     --baseline-registry base \
@@ -58,8 +59,8 @@ run_policy_test() {
     --v2 \
     --diagnostic-format json \
     --diagnostic-stdout \
-    > "${OBSERVED_DIR}/diagnostic-output.json" \
-    2> "${OBSERVED_DIR}/stderr"
+    > "${OBSERVED_DIR}/diagnostic-output.json"
+  echo "  -- /stderr -- "
   popd
   check_output "${OBSERVED_DIR}/diagnostic-output.json" "${TEST_DIR}/expected-diagnostic-output.json" "${TEST_NAME} - Diagnostic Output"
 }
