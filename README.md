@@ -17,7 +17,7 @@ Weaver policy packages consist of a set of rego policy files, a `README.md` and 
 
 Policies are divided into two categories:
 
-- `polices/check`: This directory contains policy packages designed to be used with `weaver registry check`.
+- `policies/check`: This directory contains policy packages designed to be used with `weaver registry check`.
 - `policies/live-check`: This directory contains policy packages designed to be used with `weaver registry live-check`.
 
 ### Testing Policy Packages
