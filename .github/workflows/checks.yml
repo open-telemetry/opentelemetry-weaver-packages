@@ -17,6 +17,6 @@ jobs:
     - name: check out code
       uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
     - name: set up weaver
-      uses: open-telemetry/weaver/.github/actions/setup-weaver@v0.20.0
+      uses: open-telemetry/weaver/.github/actions/setup-weaver@v0.21.2
     - name: verify policy packages
       run: ./buildscripts/test_weaver_policies.sh
