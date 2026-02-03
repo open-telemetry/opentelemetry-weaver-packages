@@ -1,0 +1,9 @@
+whitespace_control:
+  trim_blocks: true
+  lstrip_blocks: true
+
+templates:
+  - template: attributes_readme.md.j2
+    filter: .registry
+    application_mode: single
+    file_name: "attributes/README.md"

@@ -9,7 +9,27 @@ Weaver packages come in two primary forms:
 
 ## Templates
 
-TODO - implement these.
+Weaver template packages consist of a `weaver.yaml`, a set of jinja templates, a `README.md` and `tests` directory filled with tests for the templates.
+
+Templates are divided into two categories:
+
+- `templates/docs`: This directory contains packages which generate documentation from semantic convention registries.
+- `templates/codegen`: This directory contains packages which generate code (e.g. Java, Go, TypeScript) from semantic convention registries.
+
+### Testing Policy Packages
+
+To run the tests for a given template package, you can run the `buildscripts/test_weaver_templates.sh` file either within the template package directory, or at the root of this repository.
+
+### Anatomy of a template package
+
+- `weaver.yaml`: Configuration for how to interact with template schema and which files to generate.
+- `*.j2`: Jinja templates or macro files which generate files.
+- `README.md`: A file describing the package.
+- `tests` directory contains any number of test directories.
+  - "name" directory - The name of the directory is the name of the test.
+    - `registry` - This is the directory where you put a weaver registry.  This will be used with the `--registry` flag in `weaver registry generate`.
+    - `expected` - This directory contains the expected files you want to be generated for this test.
+
 
 ## Policies
 

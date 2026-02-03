@@ -1,0 +1,6 @@
+version: '2'
+attributes:
+- key: my.key
+  type: string
+  brief: A key in my registry
+  stability: stable
