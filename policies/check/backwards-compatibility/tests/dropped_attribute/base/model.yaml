@@ -1,0 +1,13 @@
+version: '2'
+attributes:
+  - key: was.stable
+    type: string
+    brief: this was stable
+    stability: stable
+events:
+  - name: some.event
+    brief: an event
+    stability: stable
+    attributes:
+    - ref: was.stable
+      requirement_level: required

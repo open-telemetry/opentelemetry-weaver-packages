@@ -1,0 +1,7 @@
+templates:
+  # TODO - errors.json.j2 should pretty print, when we figure out how to divorce line-length
+  # from environment.  Today it causes inconsistent build failures.
+  - template: errors.json.j2
+    # We remove ansi_message as it causes formatting / repeatability issues.
+    filter: map(del(.diagnostic.ansi_message))
+    application_mode: single
