@@ -56,6 +56,7 @@ run_policy_test() {
   TEST_DIR="$1"
   POLICY_PACKAGE_DIR="$2"
   TEST_NAME=$(realpath --relative-to="$POLICY_PACKAGE_DIR" "$TEST_DIR")
+  DIAGNOSTIC_WORKAROUND=$(realpath "${POLICY_PACKAGE_DIR}/../../../diagnostic_templates")
   echo "-> Running test [${TEST_NAME}] ..."
   OBSERVED_DIR="${POLICY_PACKAGE_DIR}/observed-output/${TEST_NAME}"
   rm -rf "${OBSERVED_DIR}"
@@ -67,6 +68,8 @@ run_policy_test() {
     --baseline-registry base \
     -p "${POLICY_PACKAGE_DIR}" \
     --v2 \
+    --quiet \
+    --diagnostic-template="${DIAGNOSTIC_WORKAROUND}" \
     --diagnostic-format json \
     --diagnostic-stdout \
     > "${OBSERVED_DIR}/diagnostic-output.json"
