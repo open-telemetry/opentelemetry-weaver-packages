@@ -110,8 +110,7 @@ run_tests() {
 run_all_policy_template_tests() {
   CUR="${1}"
   if [ -d "templates" ]; then
-    # TODO - iterate over `templates/*/*`
-    for package in ${CUR}/templates/docs/*; do
+    for package in ${CUR}/templates/*/*; do
       if [ -d "${package}" ]; then
         PACKAGE_NAME=$(realpath --relative-to="$package/../.." "$package")
         echo "---==== Template Package - ${PACKAGE_NAME} ====---"
