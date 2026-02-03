@@ -1,7 +1,7 @@
 [
   {
     "diagnostic": {
-      "ansi_message": "  \u001b[33m⚠\u001b[0m Version `2` schema file format is not yet stable: current/model.yaml\n",
+      "ansi_message": "  ⚠ Version `2` schema file format is not yet stable: current/model.yaml\n",
       "message": "Version `2` schema file format is not yet stable: current/model.yaml",
       "severity": "Warning"
     },
@@ -14,7 +14,7 @@
   },
   {
     "diagnostic": {
-      "ansi_message": "  \u001b[31m×\u001b[0m Policy violation: id=compatibility_removed_attribute, context={\"attribute_key\":\"was.stable\"}, message=Attribute \u0027was.stable\u0027\n  \u001b[31m│\u001b[0m no longer exists in the attribute registry, level=Violation, signal_type=None, signal_name=None, provenance: current\n",
+      "ansi_message": "  × Policy violation: id=compatibility_removed_attribute, context={\"attribute_key\":\"was.stable\"}, message=Attribute \u0027was.stable\u0027\n  │ no longer exists in the attribute registry, level=Violation, signal_type=None, signal_name=None, provenance: current\n",
       "message": "Policy violation: id=compatibility_removed_attribute, context={\"attribute_key\":\"was.stable\"}, message=Attribute \u0027was.stable\u0027 no longer exists in the attribute registry, level=Violation, signal_type=None, signal_name=None, provenance: current"
     },
     "error": {

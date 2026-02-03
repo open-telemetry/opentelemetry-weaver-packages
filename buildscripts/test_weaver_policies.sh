@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Debugging
-set -x
+# set -x
 
 # Find weaver installation or warn it needs to exist.
 if [[ -z "$WEAVER" ]]; then
@@ -62,7 +62,7 @@ run_policy_test() {
   mkdir -p "${OBSERVED_DIR}"
   # Note: We force ourselves into test dir, so provenance of files is always consistently relative.
   pushd "${TEST_DIR}"
-  ${WEAVER} registry check \
+  NO_COLOR=1 ${WEAVER} registry check \
     -r current \
     --baseline-registry base \
     -p "${POLICY_PACKAGE_DIR}" \
