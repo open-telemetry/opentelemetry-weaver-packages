@@ -1,7 +1,32 @@
 #!/bin/bash
 
+# parse arguments.
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --debug)
+            DEBUG=true
+            shift
+            ;;
+        --coverage)
+            COVERAGE=true
+            shift
+            ;;
+        -h|--help)
+            echo "Usage: test_weaver_policies.sh [--debug] [--coverage]"
+            exit 0
+            ;;
+        *)
+            echo "Invalid option: $1" >&2
+            exit 1
+            ;;
+    esac
+done
+
 # Debugging
-# set -x
+if [[ "${DEBUG:false}" == "true" ]]; then
+  set -x
+fi
+
 
 # Find weaver installation or warn it needs to exist.
 if [[ -z "$WEAVER" ]]; then
@@ -57,6 +82,10 @@ run_policy_test() {
   POLICY_PACKAGE_DIR="$2"
   TEST_NAME=$(realpath --relative-to="$POLICY_PACKAGE_DIR" "$TEST_DIR")
   DIAGNOSTIC_WORKAROUND=$(realpath "${POLICY_PACKAGE_DIR}/../../../diagnostic_templates")
+  COVERAGE_FLAG=""
+  if [[ "${COVERAGE:false}" == "true" ]]; then
+    COVERAGE_FLAG="--display-policy-coverage"
+  fi
   echo "-> Running test [${TEST_NAME}] ..."
   OBSERVED_DIR="${POLICY_PACKAGE_DIR}/observed-output/${TEST_NAME}"
   rm -rf "${OBSERVED_DIR}"
@@ -69,6 +98,7 @@ run_policy_test() {
     -p "${POLICY_PACKAGE_DIR}" \
     --v2 \
     --quiet \
+    ${COVERAGE_FLAG} \
     --diagnostic-template="${DIAGNOSTIC_WORKAROUND}" \
     --diagnostic-format json \
     --diagnostic-stdout \
