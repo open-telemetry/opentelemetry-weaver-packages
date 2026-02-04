@@ -1,5 +1,25 @@
 version: '2'
+attributes:
+  - key: is.change_stable
+    type: string
+    brief: this was stable
+    stability: alpha
+  - key: is.change_enum
+    type: string
+    brief: this was an enum
+    stability: stable
+  - key: is.enum_changes
+    type:
+      members:
+      - id: foo
+        value: bar
+        stability: beta
+    brief: an enum that stays
+    stability: stable
 events:
   - name: some.event
     brief: an event
-    stability: stable
+    stability: alpha
+    attributes:
+    - ref: is.change_stable
+      requirement_level: required
