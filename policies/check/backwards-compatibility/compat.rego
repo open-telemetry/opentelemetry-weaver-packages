@@ -11,9 +11,10 @@ import rego.v1
 registry_attribute_keys := {attr.key |
     some attr in input.registry.attributes
 }
-registry_metric_names := { g.metric_name | some g in input.registry.metrics }
-registry_resource_names := { g.name | some g in input.registry.entities }
-registry_event_names := { g.name | some g in input.registry.events }
+registry_metric_names := { metric.name | some metric in input.registry.metrics }
+registry_entity_types := { entity.type | some entity in input.registry.entities }
+registry_event_names := { event.name | some event in input.registry.events }
+registry_span_types := { span.type | some span in input.registry.spans }
 
 
 # Rules we enforce:
@@ -253,6 +254,173 @@ deny contains finding if {
     }
 }
 
+
+# Rule: Detect Removed Metrics
+#
+# This rule checks for stable metrics that existed in the baseline registry
+# but are no longer present in the current registry. Removing metrics
+# is considered a backward compatibility violation.
+#
+# In other words, we do not allow the removal of an metrics once added
+# to semantic conventions. They, however, may be deprecated.
+deny contains finding if {
+    # Find data we need to enforce
+    some metric in data.registry.metrics
+
+    # Enforce the policy
+    not registry_metric_names[metric.name]
+    # Generate human readable error.
+    finding := {
+        "id": "compatibility_metric_missing",
+        "context": {
+            "metric_name": metric.name,
+        },
+        "message": sprintf("Metric '%s' no longer exists in semantic conventions", [metric.name]),
+        "level": "violation",
+    }
+}
+
+# Rule: Stable metrics cannot become unstable
+#
+# This rule checks that stable metrics cannot have their stability level changed.
+deny contains finding if {
+    # Find data we need to enforce
+    some metric in data.registry.metrics
+    metric.stability == "stable"
+    some nmetric in input.registry.metrics
+    metric.name = nmetric.name
+    # Enforce the policy
+    nmetric.stability != "stable"
+
+    # Generate human readable error.
+    finding := {
+        "id": "compatibility_metric_missing",
+        "context": {
+            "metric_name": metric.name,
+        },
+        "message": sprintf("Metric '%s' cannot change from stable", [metric.name]),
+        "level": "violation",
+    }
+}
+
+
+# Rule: Stable metrics units cannot change
+#
+# This rule checks that stable metrics cannot change the unit type.
+deny contains finding if {
+    # Find data we need to enforce
+    some metric in data.registry.metrics
+    metric.stability == "stable"
+    some nmetric in input.registry.metrics
+    metric.name = nmetric.name
+    # Enforce the policy
+    nmetric.unit != metric.unit
+
+    # Generate human readable error.
+    finding := {
+        "id": "compatibility_metric_changed_unit",
+        "context": {
+            "metric_name": metric.name,
+            "previous_unit": metric.unit,
+            "current_unit": nmetric.unit,
+        },
+        "message": sprintf("Metric '%s' cannot change unit (was '%s', now: '%s')", [metric.name, metric.unit, nmetric.unit]),
+        "level": "violation",
+    }
+}
+
+# Rule: Stable metrics instrument cannot change
+#
+# This rule checks that stable metrics cannot change the instrument type.
+deny contains finding if {
+    # Find data we need to enforce
+    some metric in data.registry.metrics
+    metric.stability == "stable"
+    some nmetric in input.registry.metrics
+    metric.name = nmetric.name
+    # Enforce the policy
+    nmetric.instrument != metric.instrument
+
+    # Generate human readable error.
+    finding := {
+        "id": "compatibility_metric_changed_instrument",
+        "context": {
+            "metric_name": metric.name,
+            "previous_instrument": metric.instrument,
+            "current_instrument": nmetric.instrument,
+        },
+        "message": sprintf("Metric '%s' cannot change instrument (was '%s', now: '%s')", [metric.name, metric.instrument, nmetric.instrument]),
+        "level": "violation",
+    }
+}
+
+# Rule: Stable attributes on stable metric cannot be dropped.
+#
+# This rule checks that stable metrics have stable sets of attributes.
+deny contains finding if {
+   # Find data we need to enforce
+    some metric in data.registry.metrics
+    metric.stability == "stable"
+    some nmetric in input.registry.metrics
+    metric.name = nmetric.name
+
+    baseline_attributes := { attr.name |
+        some attr in metric.attributes
+        attr.stability == "stable"
+    }
+    new_attributes := { attr.name |
+        some attr in nmetric.attributes
+        attr.stability == "stable"
+    }
+    missing_attributes := baseline_attributes - new_attributes
+    # Enforce the policy
+    count(missing_attributes) > 0
+
+    # Generate human readable error.
+    finding := {
+        "id": "compatibility_metric_changed_attributes",
+        "context": {
+            "metric_name": metric.name,
+            "missing_attributes": missing_attributes,
+        },
+        "message": sprintf("Metric '%s' cannot change required/recommended attributes (missing '%s')", [metric.name, missing_attributes]),
+        "level": "violation",
+    }
+}
+
+# Rule: Stable Metric required/recommended attributes cannot be added
+#
+# This rule checks that stable metrics have stable sets of attributes.
+deny contains finding if {
+    # Find data we need to enforce
+    some metric in data.registry.metrics
+    metric.stability == "stable"
+    some nmetric in input.registry.metrics
+    metric.name = nmetric.name
+
+    baseline_attributes := { attr.key |
+        some attr in metric.attributes
+        not is_opt_in(attr)
+    }
+    new_attributes := { attr.key |
+        some attr in nmetric.attributes
+        not is_opt_in(attr)
+    }
+    added_attributes := new_attributes - baseline_attributes
+    # Enforce the policy
+    count(added_attributes) > 0
+
+    # Generate human readable error.
+    finding := {
+        "id": "compatibility_metric_added_attributes",
+        "context": {
+            "metric_name": metric.name,
+            "added_attributes": added_attributes,
+        },
+        "message": sprintf("Metric '%s' cannot change required/recommended attributes (added '%s')", [metric.name, added_attributes]),
+        "level": "violation",
+    }
+}
 
 # Helpers for enum values and type strings
 is_enum(attr) := true if count(attr.type.members) > 0
