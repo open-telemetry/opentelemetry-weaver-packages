@@ -42,10 +42,10 @@ registry_span_types := { span.type | some span in input.registry.spans }
 #   - [x] Stable events cannot become unstable
 #   - [x] Stable attributes cannot be dropped from stable event
 # - Spans - no enforcement yet since id format is not finalized
-#   - [ ] spans cannot be removed
-#   - [ ] Stable spans cannot become unstable
-#   - [ ] Stable attributes cannot be dropped from stable span
-#   - [ ] Span kind cannot change on stable spans.
+#   - [x] spans cannot be removed
+#   - [x] Stable spans cannot become unstable
+#   - [x] Stable attributes cannot be dropped from stable span
+#   - [x] Span kind cannot change on stable spans.
 
 # Rule: Detect Removed Attributes
 #
@@ -627,6 +627,116 @@ deny contains finding if {
     }
 }
 
+
+
+# Rule: Detect Removed Spans
+#
+# This rule checks for stable spans that existed in the baseline registry
+# but are no longer present in the current registry. Removing spans
+# is considered a backward compatibility violation.
+#
+# In other words, we do not allow the removal of a span once added
+# to semantic conventions. They, however, may be deprecated.
+deny contains finding if {
+    # Find data we need to enforce
+    some span in data.registry.spans
+
+    # Enforce the policy
+    not registry_span_types[span.type]
+
+    # Generate human readable error.
+    finding := {
+        "id": "compatibility_span_missing",
+        "context": {
+            "span_type": span.type,
+        },
+        "message": sprintf("Span '%s' no longer exists in semantic conventions", [span.type]),
+        "level": "violation",
+    }
+}
+
+
+# Rule: Stable spans cannot become unstable
+#
+# This rule checks that stable spans cannot have their stability level changed.
+deny contains finding if {
+    # Find data we need to enforce
+    some span in data.registry.spans
+    span.stability == "stable"
+    some nspan in input.registry.spans
+    span.type = nspan.type
+    # Enforce the policy
+    nspan.stability != "stable"
+
+    # Generate human readable error.
+    finding := {
+        "id": "compatibility_span_changed_stability",
+        "context": {
+            "span_type": span.type,
+        },
+        "message": sprintf("Span '%s' cannot change from stable", [span.type]),
+        "level": "violation",
+    }
+}
+
+
+# Rule: Stable spans cannot change kind
+#
+# This rule checks that stable spans cannot have their kind changed.
+deny contains finding if {
+    # Find data we need to enforce
+    some span in data.registry.spans
+    span.stability == "stable"
+    some nspan in input.registry.spans
+    span.type = nspan.type
+    # Enforce the policy
+    nspan.kind != span.kind
+
+    # Generate human readable error.
+    finding := {
+        "id": "compatibility_span_changed_kind",
+        "context": {
+            "span_type": span.type,
+            "previous": span.kind,
+            "current": nspan.kind,
+        },
+        "message": sprintf("Span '%s' cannot change kind (was '%s', now '%s').", [span.type, span.kind, nspan.kind]),
+        "level": "violation",
+    }
+}
+
+
+# Rule: Stable attributes on stable spans cannot be dropped.
+#
+# This rule checks that stable spans have stable sets of attributes.
+deny contains finding if {
+    # Find data we need to enforce
+    some span in data.registry.spans
+    span.stability == "stable"
+    some nspan in input.registry.spans
+    span.type == nspan.type
+
+    baseline_attributes := { attr.key |
+        some attr in span.attributes
+    }
+    new_attributes := { attr.key |
+        some attr in nspan.attributes
+    }
+    missing_attributes := baseline_attributes - new_attributes
+    # Enforce the policy
+    count(missing_attributes) > 0
+
+    # Generate human readable error.
+    finding := {
+        "id": "compatibility_span_dropped_attributes",
+        "context": {
+            "span_type": span.type,
+            "missing_attributes": missing_attributes,
+        },
+        "message": sprintf("Span '%s' cannot remove stable attributes (missing '%s')", [span.type, missing_attributes]),
+        "level": "violation",
+    }
+}
 
 # Helpers for enum values and type strings
 is_enum(attr) := true if count(attr.type.members) > 0
