@@ -45,6 +45,7 @@ registry_span_types := { span.type | some span in input.registry.spans }
 #   - [ ] spans cannot be removed
 #   - [ ] Stable spans cannot become unstable
 #   - [ ] Stable attributes cannot be dropped from stable span
+#   - [ ] Span kind cannot change on stable spans.
 
 # Rule: Detect Removed Attributes
 #
@@ -544,6 +545,88 @@ deny contains finding if {
         "level": "violation",
     }
 }
+
+
+# Rule: Detect Removed events
+#
+# This rule checks for stable events that existed in the baseline registry
+# but are no longer present in the current registry. Removing events
+# is considered a backward compatibility violation.
+#
+# In other words, we do not allow the removal of a events once added
+# to semantic conventions. They, however, may be deprecated.
+deny contains finding if {
+    # Find data we need to enforce
+    some event in data.registry.events
+    # Enforce the policy
+    not registry_event_names[event.name]
+
+    # Generate human readable error.
+    finding := {
+        "id": "compatibility_event_removed",
+        "context": {
+            "event_name": event.name,
+        },
+        "message": sprintf("Event '%s' no longer exists in semantic conventions", [event.name]),
+        "level": "violation",
+    }
+}
+
+# Rule: Stable events cannot become unstable
+#
+# This rule checks that stable events cannot have their stability level changed.
+deny contains finding if {
+    # Find data we need to enforce
+    some event in data.registry.events
+    event.stability == "stable"
+    some nevent in input.registry.events
+    event.name = nevent.name
+    # Enforce the policy
+    nevent.stability != "stable"
+
+    # Generate human readable error.
+    finding := {
+        "id": "compatibility_event_changed_stability",
+        "context": {
+            "event_name": event.name,
+        },
+        "message": sprintf("Event '%s' cannot change from stable", [event.name]),
+        "level": "violation",
+    }
+}
+
+# Rule: Stable attributes on stable event cannot be dropped.
+#
+# This rule checks that stable events have stable sets of attributes.
+deny contains finding if {
+    # Find data we need to enforce
+    some event in data.registry.events
+    event.stability == "stable"
+    some nevent in input.registry.events
+    event.name == nevent.name
+
+    baseline_attributes := { attr.key |
+        some attr in event.attributes
+    }
+    new_attributes := { attr.key |
+        some attr in nevent.attributes
+    }
+    missing_attributes := baseline_attributes - new_attributes
+    # Enforce the policy
+    count(missing_attributes) > 0
+
+    # Generate human readable error.
+    finding := {
+        "id": "compatibility_event_dropped_attributes",
+        "context": {
+            "event_name": event.name,
+            "missing_attributes": missing_attributes,
+        },
+        "message": sprintf("Event '%s' cannot remove stable attributes (missing '%s')", [event.name, missing_attributes]),
+        "level": "violation",
+    }
+}
+
 
 # Helpers for enum values and type strings
 is_enum(attr) := true if count(attr.type.members) > 0
