@@ -1,0 +1,25 @@
+version: '2'
+attributes:
+  - key: a
+    brief: a attribute
+    type: string
+    stability: stable
+  - key: b
+    brief: b attribute
+    type: string
+    stability: stable
+  - key: c
+    brief: c attribute
+    type: string
+    stability: stable
+events:
+  - name: some.event.change_stability
+    brief: this will change stability
+    stability: alpha
+    attributes:
+    - ref: a
+  - name: some.event.missing.attrs
+    brief: this will be missing an id attribute and desc attribute
+    stability: stable
+    attributes:
+    - ref: a

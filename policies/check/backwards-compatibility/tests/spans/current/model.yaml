@@ -1,0 +1,27 @@
+version: '2'
+attributes:
+  - key: a
+    brief: a attribute
+    type: string
+    stability: stable
+  - key: b
+    brief: b attribute
+    type: string
+    stability: stable
+  - key: c
+    brief: c attribute
+    type: string
+    stability: stable
+spans:
+  - type: changed.stable
+    name:
+      note: TBD
+    kind: client
+    stability: alpha
+    brief: a span that will have stable changes.
+  - type: changed.kind
+    name:
+      note: TBD
+    kind: internal
+    stability: stable
+    brief: a span that will have kind changed.

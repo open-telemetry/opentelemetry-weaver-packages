@@ -1,0 +1,39 @@
+version: '2'
+attributes:
+  - key: is.dropped
+    type: string
+    brief: this was present
+    stability: stable
+  - key: is.change_stable
+    type: string
+    brief: this was stable
+    stability: stable
+  - key: is.change_enum
+    type:
+      members:
+      - id: foo
+        value: FOO
+        stability: stable
+    brief: an enum
+    stability: stable
+  - key: is.enum_changes
+    type:
+      members:
+      - id: foo
+        value: FOO
+        stability: stable
+      - id: missing
+        value: missing
+        stability: stable
+        brief: This will be missing.
+    brief: an enum that stays
+    stability: stable
+events:
+  - name: some.event
+    brief: an event
+    stability: alpha
+    attributes:
+    - ref: is.dropped
+      requirement_level: opt_in
+    - ref: is.change_stable
+      requirement_level: required

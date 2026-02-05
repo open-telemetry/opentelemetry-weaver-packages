@@ -1,0 +1,30 @@
+version: '2'
+attributes:
+  - key: a
+    brief: a attribute
+    type: string
+    stability: stable
+metrics:
+  - name: some.missing.metric
+    brief: this will be missing
+    stability: stable
+    instrument: counter
+    unit: s
+  - name: some.stable.change.metric
+    brief: this will no longer be stable
+    stability: stable
+    instrument: counter
+    unit: s
+  - name: some.change.metric.items
+    brief: this will no longer have same unit or instrument
+    stability: stable
+    instrument: counter
+    unit: s
+    attributes:
+      - ref: a
+        requirement_level: required
+  - name: some.metric.added.attrs
+    brief: this will add non opt_in attributes
+    stability: stable
+    instrument: counter
+    unit: s
