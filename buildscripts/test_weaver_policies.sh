@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# We parse an array of tests to run.
+test_filter=()
+
 # parse arguments.
 while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -11,8 +14,17 @@ while [[ $# -gt 0 ]]; do
             COVERAGE=true
             shift
             ;;
+        --test)
+          if [[ -n "$2" && "$2" != --* ]]; then
+            test_filter+=("$2")
+            shift 2             
+          else
+            echo "Error: --test requires an argument."
+            exit 1
+          fi
+          ;;
         -h|--help)
-            echo "Usage: test_weaver_policies.sh [--debug] [--coverage]"
+            echo "Usage: test_weaver_policies.sh [--debug] [--coverage] [--test {name}]"
             exit 0
             ;;
         *)
@@ -38,6 +50,25 @@ if ! command -v "${WEAVER}" >/dev/null 2>&1; then
   echo Please set WEAVER environment variable or add it to your path.
   exit 1
 fi
+
+# test_filter
+matches_test_filter() {
+  local search_term="$1"
+  shift # Remove the search term from the argument list
+  
+  # Check if the remaining arguments (the array) are empty
+  if [[ ${#test_filter[@]} -eq 0 ]]; then
+    return 0
+  fi
+
+  # Otherwise, loop through to find a match
+  for e in "${test_filter[@]}"; do 
+    [[ "$e" == "$search_term" ]] && return 0
+  done
+
+  return 1
+}
+
 
 # Logs an error and exits
 log_err() {
@@ -81,6 +112,10 @@ run_policy_test() {
   TEST_DIR="$1"
   POLICY_PACKAGE_DIR="$2"
   TEST_NAME=$(realpath --relative-to="$POLICY_PACKAGE_DIR" "$TEST_DIR")
+  local short_test_name="${TEST_NAME#tests/}"
+  if ! matches_test_filter "$short_test_name"; then
+    return
+  fi
   DIAGNOSTIC_WORKAROUND=$(realpath "${POLICY_PACKAGE_DIR}/../../../diagnostic_templates")
   COVERAGE_FLAG=""
   if [[ "${COVERAGE:false}" == "true" ]]; then
@@ -91,7 +126,7 @@ run_policy_test() {
   rm -rf "${OBSERVED_DIR}"
   mkdir -p "${OBSERVED_DIR}"
   # Note: We force ourselves into test dir, so provenance of files is always consistently relative.
-  pushd "${TEST_DIR}"
+  pushd "${TEST_DIR}" > /dev/null 2>&1
   NO_COLOR=1 ${WEAVER} registry check \
     -r current \
     --baseline-registry base \
@@ -104,7 +139,7 @@ run_policy_test() {
     --diagnostic-stdout \
     > "${OBSERVED_DIR}/diagnostic-output.json"
     2> "${OBSERVED_DIR}/stderr"
-  popd
+  popd > /dev/null 2>&1
   if [ $? -ne 0 ]; then
     cat "${OBSERVED_DIR}/stderr"
   fi

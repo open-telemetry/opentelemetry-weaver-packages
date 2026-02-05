@@ -1,0 +1,33 @@
+version: '2'
+attributes:
+  - key: a
+    brief: a attribute
+    type: string
+    stability: stable
+  - key: b
+    brief: b attribute
+    type: string
+    stability: stable
+  - key: c
+    brief: c attribute
+    type: string
+    stability: stable
+entities:
+  - type: some.missing.entity
+    brief: this will be missing
+    stability: stable
+    identity:
+    - ref: a
+  - type: some.entity.missing.attrs
+    brief: this will be missing an id attribute and desc attribute
+    stability: stable
+    identity:
+    - ref: a
+    - ref: b
+    description:
+    - ref: c
+  - type: some.entity.changed.id
+    brief: this adds a new identity
+    stability: stable
+    identity:
+    - ref: a

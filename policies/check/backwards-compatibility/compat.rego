@@ -36,6 +36,7 @@ registry_span_types := { span.type | some span in input.registry.spans }
 #   - [x] Entities cannot be removed
 #   - [x] Stable Entities cannot become unstable
 #   - [x] Stable attributes cannot be dropped from stable entity
+#   - [x] Stable Entities cannot change identity
 # - Events
 #   - [x] events cannot be removed
 #   - [x] Stable events cannot become unstable
@@ -418,6 +419,128 @@ deny contains finding if {
             "added_attributes": added_attributes,
         },
         "message": sprintf("Metric '%s' cannot change required/recommended attributes (added '%s')", [metric.name, added_attributes]),
+        "level": "violation",
+    }
+}
+
+# Rule: Detect Removed Entities
+#
+# This rule checks for stable resources that existed in the baseline registry
+# but are no longer present in the current registry. Removing entities
+# is considered a backward compatibility violation.
+#
+# In other words, we do not allow the removal of an entity once added
+# to semantic conventions. They, however, may be deprecated.
+deny contains finding if {
+    # Find data we need to enforce
+    some entity in data.registry.entities
+
+    # Enforce the policy
+    not registry_entity_types[entity.type]
+
+    # Generate human readable error.
+    finding := {
+        "id": "compatibility_entity_missing",
+        "context": {
+            "entity_type": entity.type,
+        },
+        "message": sprintf("Entity '%s' no longer exists in semantic conventions", [entity.type]),
+        "level": "violation",
+    }
+}
+
+# Rule: Stable attributes in identity cannot be dropped from stable entity.
+#
+# This rule checks that stable entities have stable sets of attributes.
+deny contains finding if {
+    # Find data we need to enforce
+    some entity in data.registry.entities
+    entity.stability == "stable"
+    some nentity in input.registry.entities
+    entity.type == nentity.type
+
+    baseline_attributes := { attr.key |
+        some attr in entity.identity
+    }
+    new_attributes := { attr.key |
+        some attr in nentity.identity
+    }
+    missing_attributes := baseline_attributes - new_attributes
+    # Enforce the policy
+    count(missing_attributes) > 0
+
+     # Generate human readable error.
+    finding := {
+        "id": "compatibility_entity_missing_attribute",
+        "context": {
+            "entity_type": entity.type,
+            "identity_missing_attributes": missing_attributes
+        },
+        "message": sprintf("Entity '%s' cannot remove attributes from identity (missing '%s')", [entity.type, missing_attributes]),
+        "level": "violation",
+    }
+}
+
+# Rule: Stable attributes in description cannot be dropped from stable entity.
+#
+# This rule checks that stable entities have stable sets of attributes.
+deny contains finding if {
+    # Find data we need to enforce
+    some entity in data.registry.entities
+    entity.stability == "stable"
+    some nentity in input.registry.entities
+    entity.type == nentity.type
+
+    baseline_attributes := { attr.key |
+        some attr in entity.description
+    }
+    new_attributes := { attr.key |
+        some attr in nentity.description
+    }
+    missing_attributes := baseline_attributes - new_attributes
+    # Enforce the policy
+    count(missing_attributes) > 0
+
+     # Generate human readable error.
+    finding := {
+        "id": "compatibility_entity_missing_attribute",
+        "context": {
+            "entity_type": entity.type,
+            "description_missing_attributes": missing_attributes
+        },
+        "message": sprintf("Entity '%s' cannot remove attributes from description (missing '%s')", [entity.type, missing_attributes]),
+        "level": "violation",
+    }
+}
+
+# Rule: Stable enitites cannot change identity.
+#
+# This rule checks that entities have stable identity.
+deny contains finding if {
+    # Find data we need to enforce
+    some entity in data.registry.entities
+    entity.stability == "stable"
+    some nentity in input.registry.entities
+    entity.type == nentity.type
+
+    baseline_id := { attr.key |
+        some attr in entity.identity
+    }
+    new_id := { attr.key |
+        some attr in nentity.identity
+    }
+    added_attributes := new_id - baseline_id
+    # Enforce the policy
+    count(added_attributes) > 0
+
+     # Generate human readable error.
+    finding := {
+        "id": "compatibility_entity_changed_identity",
+        "context": {
+            "entity_type": entity.type,
+            "added_attributes": added_attributes
+        },
+        "message": sprintf("Entity '%s' cannot change identity. (Found new attributes '%s')", [entity.type, added_attributes]),
         "level": "violation",
     }
 }
