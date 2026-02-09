@@ -1,5 +1,0 @@
-version: '2'
-events:
-  - name: some.event
-    brief: an event
-    stability: stable
