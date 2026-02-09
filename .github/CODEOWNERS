@@ -4,4 +4,10 @@
 # Learn about CODEOWNERS file format:
 # https://help.github.com/en/articles/about-code-owners
 
+# Global owners, will be the owners for everything in the repo
+
 * @open-telemetry/weaver-approvers
+
+# Semantic conventions policies
+/policies/check/backwards-compatibility/ @open-telemetry/specs-semconv-approvers
+/policies/check/stability/ @open-telemetry/specs-semconv-approvers
