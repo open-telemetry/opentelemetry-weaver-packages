@@ -112,7 +112,6 @@ deny contains finding if {
      attr.key == nattr.key
 
      # Enforce the policy
-     # TODO - deal with enum type changes, probably in enum sections
      not is_enum(attr)
      attr.type != nattr.type
 
