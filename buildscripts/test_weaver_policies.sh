@@ -153,6 +153,13 @@ run_policy_test() {
   mkdir -p "${OBSERVED_DIR}"
   # Note: We force ourselves into test dir, so provenance of files is always consistently relative.
   pushd "${TEST_DIR}" > /dev/null 2>&1
+  # First make sure model files are correct
+  ${WEAVER} registry check -r current --baseline-registry base --quiet --v2
+  if [ $? -ne 0 ]; then
+    echo "Test model in "base" or "current" is incorrect.  Invalid test configuration."
+    exit 1
+  fi
+  #
   RAW_DIAGNOSTIC_OUTPUT="${OBSERVED_DIR}/diagnostic-output.raw.json"
   NO_COLOR=1 ${WEAVER} registry check \
     -r current \
