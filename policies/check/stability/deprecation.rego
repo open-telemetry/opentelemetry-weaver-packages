@@ -51,13 +51,6 @@ deny contains finding if {
     }
 }
 
-# Helper to get type string for primitives or "enum"
-get_type_string(attr) := "enum" if {
-    attr.type.members
-} else := type_str if {
-    type_str := attr.type
-}
-
 # Rule: attribute.deprecated.renamed_to attribute must be of the same type
 deny contains finding if {
     some attr in input.registry.attributes
@@ -285,6 +278,14 @@ deny contains finding if {
             "renamed_to": new_id
         }
     }
+}
+
+
+# Helper to get type string for primitives or "enum"
+get_type_string(attr) := "enum" if {
+    attr.type.members
+} else := type_str if {
+    type_str := attr.type
 }
 
 same_type(a, b) if {
