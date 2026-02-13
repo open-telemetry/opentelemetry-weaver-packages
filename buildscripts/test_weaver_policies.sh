@@ -96,7 +96,12 @@ check_output() {
       # Pretty print both for comparison
       TEMP_OBSERVED=$(mktemp)
       TEMP_EXPECTED=$(mktemp)
-      jq -S . "$OBSERVED_FILE" > "$TEMP_OBSERVED"
+      
+      # Filter out Weaver's unstable version warnings from observed file for comparison
+      # We expect the expected file to ALREADY be clean of these warnings.
+      JQ_FILTER='map(select(.diagnostic.message | contains("Version `2` schema file format is not yet stable") | not))'
+      
+      jq -S "${JQ_FILTER}" "$OBSERVED_FILE" > "$TEMP_OBSERVED"
       jq -S . "$EXPECTED_FILE" > "$TEMP_EXPECTED"
       diff "$TEMP_OBSERVED" "$TEMP_EXPECTED" > /dev/null
       DIFF_RESULT=$?
@@ -167,7 +172,9 @@ run_policy_test() {
   fi
   if [ -f "${RAW_DIAGNOSTIC_OUTPUT}" ]; then
     # Strip coverage report or any other non-JSON output before passing to jq
-    sed -n '/^\[/,$p' "${RAW_DIAGNOSTIC_OUTPUT}" | jq -S . > "${OBSERVED_DIR}/diagnostic-output.json"
+    # Also filter out Weaver's unstable version warnings
+    JQ_FILTER='map(select(.diagnostic.message | contains("Version `2` schema file format is not yet stable") | not))'
+    sed -n '/^\[/,$p' "${RAW_DIAGNOSTIC_OUTPUT}" | jq -S "${JQ_FILTER}" > "${OBSERVED_DIR}/diagnostic-output.json"
   fi
   check_output "${OBSERVED_DIR}/diagnostic-output.json" "${TEST_DIR}/expected-diagnostic-output.json" "${TEST_NAME} - Diagnostic Output"
 }

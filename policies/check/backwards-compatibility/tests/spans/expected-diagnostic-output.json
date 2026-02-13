@@ -1,20 +1,6 @@
 [
   {
     "diagnostic": {
-      "message": "Version `2` schema file format is not yet stable: current/model.yaml",
-      "severity": "Warning"
-    },
-    "error": {
-      "FailToResolveDefinition": {
-        "UnstableFileVersion": {
-          "provenance": "current/model.yaml",
-          "version": "2"
-        }
-      }
-    }
-  },
-  {
-    "diagnostic": {
       "message": "Policy violation: id=compatibility_span_changed_kind, context={\"current\":\"internal\",\"previous\":\"server\",\"span_type\":\"changed.kind\"}, message=Span 'changed.kind' cannot change kind (was 'server', now 'internal')., level=Violation, signal_type=None, signal_name=None, provenance: current"
     },
     "error": {

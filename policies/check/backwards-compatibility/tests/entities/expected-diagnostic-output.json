@@ -1,20 +1,6 @@
 [
   {
     "diagnostic": {
-      "message": "Version `2` schema file format is not yet stable: current/model.yaml",
-      "severity": "Warning"
-    },
-    "error": {
-      "FailToResolveDefinition": {
-        "UnstableFileVersion": {
-          "provenance": "current/model.yaml",
-          "version": "2"
-        }
-      }
-    }
-  },
-  {
-    "diagnostic": {
       "message": "Policy violation: id=compatibility_entity_changed_identity, context={\"added_attributes\":[\"b\"],\"entity_type\":\"some.entity.changed.id\"}, message=Entity 'some.entity.changed.id' cannot change identity. (Found new attributes '{\"b\"}'), level=Violation, signal_type=None, signal_name=None, provenance: current"
     },
     "error": {

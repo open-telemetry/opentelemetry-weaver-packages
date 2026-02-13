@@ -1,20 +1,6 @@
 [
   {
     "diagnostic": {
-      "message": "Version `2` schema file format is not yet stable: current/model.yaml",
-      "severity": "Warning"
-    },
-    "error": {
-      "FailToResolveDefinition": {
-        "UnstableFileVersion": {
-          "provenance": "current/model.yaml",
-          "version": "2"
-        }
-      }
-    }
-  },
-  {
-    "diagnostic": {
       "message": "Policy violation: id=compatibility_stable_attribute_changed_type, context={\"attribute_key\":\"is.change_enum\",\"attribute_type\":\"string\",\"previous_attribute_type\":\"enum\"}, message=Attribute 'is.change_enum' was enum, but has new type 'string', level=Violation, signal_type=None, signal_name=None, provenance: current"
     },
     "error": {

@@ -1,20 +1,6 @@
 [
   {
     "diagnostic": {
-      "message": "Version `2` schema file format is not yet stable: current/model.yaml",
-      "severity": "Warning"
-    },
-    "error": {
-      "FailToResolveDefinition": {
-        "UnstableFileVersion": {
-          "provenance": "current/model.yaml",
-          "version": "2"
-        }
-      }
-    }
-  },
-  {
-    "diagnostic": {
       "message": "Policy violation: id=compatibility_metric_added_attributes, context={\"added_attributes\":[\"a\"],\"metric_name\":\"some.metric.added.attrs\"}, message=Metric 'some.metric.added.attrs' cannot change required/recommended attributes (added '{\"a\"}'), level=Violation, signal_type=None, signal_name=None, provenance: current"
     },
     "error": {
