@@ -1,1 +1,101 @@
-[{"diagnostic":{"message":"Version `2` schema file format is not yet stable: current/model.yaml","severity":"Warning"},"error":{"UnstableFileVersion":{"provenance":"current/model.yaml","version":"2"}}},{"diagnostic":{"message":"Policy violation: id=compatibility_span_changed_kind, context={\"current\":\"internal\",\"previous\":\"server\",\"span_type\":\"changed.kind\"}, message=Span \u0027changed.kind\u0027 cannot change kind (was \u0027server\u0027, now \u0027internal\u0027)., level=Violation, signal_type=None, signal_name=None, provenance: current"},"error":{"provenance":"current","type":"policy_violation","violation":{"context":{"current":"internal","previous":"server","span_type":"changed.kind"},"id":"compatibility_span_changed_kind","level":"violation","message":"Span \u0027changed.kind\u0027 cannot change kind (was \u0027server\u0027, now \u0027internal\u0027).","signal_name":null,"signal_type":null,"type":"PolicyFinding"}}},{"diagnostic":{"message":"Policy violation: id=compatibility_span_dropped_attributes, context={\"missing_attributes\":[\"a\"],\"span_type\":\"changed.stable\"}, message=Span \u0027changed.stable\u0027 cannot remove stable attributes (missing \u0027{\"a\"}\u0027), level=Violation, signal_type=None, signal_name=None, provenance: current"},"error":{"provenance":"current","type":"policy_violation","violation":{"context":{"missing_attributes":["a"],"span_type":"changed.stable"},"id":"compatibility_span_dropped_attributes","level":"violation","message":"Span \u0027changed.stable\u0027 cannot remove stable attributes (missing \u0027{\"a\"}\u0027)","signal_name":null,"signal_type":null,"type":"PolicyFinding"}}},{"diagnostic":{"message":"Policy violation: id=compatibility_span_changed_stability, context={\"span_type\":\"changed.stable\"}, message=Span \u0027changed.stable\u0027 cannot change from stable, level=Violation, signal_type=None, signal_name=None, provenance: current"},"error":{"provenance":"current","type":"policy_violation","violation":{"context":{"span_type":"changed.stable"},"id":"compatibility_span_changed_stability","level":"violation","message":"Span \u0027changed.stable\u0027 cannot change from stable","signal_name":null,"signal_type":null,"type":"PolicyFinding"}}},{"diagnostic":{"message":"Policy violation: id=compatibility_span_missing, context={\"span_type\":\"missing\"}, message=Span \u0027missing\u0027 no longer exists in semantic conventions, level=Violation, signal_type=None, signal_name=None, provenance: current"},"error":{"provenance":"current","type":"policy_violation","violation":{"context":{"span_type":"missing"},"id":"compatibility_span_missing","level":"violation","message":"Span \u0027missing\u0027 no longer exists in semantic conventions","signal_name":null,"signal_type":null,"type":"PolicyFinding"}}}]
+[
+  {
+    "diagnostic": {
+      "message": "Version `2` schema file format is not yet stable: current/model.yaml",
+      "severity": "Warning"
+    },
+    "error": {
+      "FailToResolveDefinition": {
+        "UnstableFileVersion": {
+          "provenance": "current/model.yaml",
+          "version": "2"
+        }
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=compatibility_span_changed_kind, context={\"current\":\"internal\",\"previous\":\"server\",\"span_type\":\"changed.kind\"}, message=Span 'changed.kind' cannot change kind (was 'server', now 'internal')., level=Violation, signal_type=None, signal_name=None, provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "current": "internal",
+          "previous": "server",
+          "span_type": "changed.kind"
+        },
+        "id": "compatibility_span_changed_kind",
+        "level": "violation",
+        "message": "Span 'changed.kind' cannot change kind (was 'server', now 'internal').",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=compatibility_span_dropped_attributes, context={\"missing_attributes\":[\"a\"],\"span_type\":\"changed.stable\"}, message=Span 'changed.stable' cannot remove stable attributes (missing '{\"a\"}'), level=Violation, signal_type=None, signal_name=None, provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "missing_attributes": [
+            "a"
+          ],
+          "span_type": "changed.stable"
+        },
+        "id": "compatibility_span_dropped_attributes",
+        "level": "violation",
+        "message": "Span 'changed.stable' cannot remove stable attributes (missing '{\"a\"}')",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=compatibility_span_changed_stability, context={\"span_type\":\"changed.stable\"}, message=Span 'changed.stable' cannot change from stable, level=Violation, signal_type=None, signal_name=None, provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "span_type": "changed.stable"
+        },
+        "id": "compatibility_span_changed_stability",
+        "level": "violation",
+        "message": "Span 'changed.stable' cannot change from stable",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=compatibility_span_missing, context={\"span_type\":\"missing\"}, message=Span 'missing' no longer exists in semantic conventions, level=Violation, signal_type=None, signal_name=None, provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "span_type": "missing"
+        },
+        "id": "compatibility_span_missing",
+        "level": "violation",
+        "message": "Span 'missing' no longer exists in semantic conventions",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
+      }
+    }
+  }
+]
