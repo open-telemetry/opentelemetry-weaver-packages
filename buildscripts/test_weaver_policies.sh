@@ -154,9 +154,11 @@ run_policy_test() {
   # Note: We force ourselves into test dir, so provenance of files is always consistently relative.
   pushd "${TEST_DIR}" > /dev/null 2>&1
   # First make sure model files are correct
-  ${WEAVER} registry check -r current --baseline-registry base --quiet --v2
+  RAW_CHECK_MODEL_OUTPUT="${OBSERVED_DIR}/model-check.stdout"
+  ${WEAVER} registry check -r current --baseline-registry base --quiet --v2 > "${RAW_CHECK_MODEL_OUTPUT}" 2>&1
   if [ $? -ne 0 ]; then
     echo "Test model in "base" or "current" is incorrect.  Invalid test configuration."
+    cat "${RAW_CHECK_MODEL_OUTPUT}"
     exit 1
   fi
   #
