@@ -9,7 +9,7 @@ spans:
     brief: stable span brief
     kind: internal
     name: 
-      note: stable.span
+        note: stable.span
     stability: stable
     attributes:
       - ref: experimental.attr

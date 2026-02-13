@@ -1,17 +1,45 @@
 [
   {
     "diagnostic": {
-      "message": "Value {\"attributes\":[{\"brief\":\"old string attribute\",\"deprecated\":{\"Renamed\":{\"note\":\"renamed to int\",\"renamed_to\":\"new.int.attr\"}},\"key\":\"old.string.attr\",\"stability\":\"stable\",\"type\":\"string\"},{\"brief\":\"new int attribute\",\"key\":\"new.int.attr\",\"stability\":\"stable\",\"type\":\"int\"},{\"brief\":\"old int attribute\",\"deprecated\":{\"Renamed\":{\"note\":\"renamed to string enum\",\"renamed_to\":\"new.string.enum.attr\"}},\"key\":\"old.int.attr\",\"stability\":\"stable\",\"type\":\"int\"},{\"brief\":\"new string enum attribute\",\"key\":\"new.string.enum.attr\",\"stability\":\"stable\",\"type\":{\"members\":[{\"brief\":\"value one\",\"id\":\"val1\",\"value\":\"one\"}]}}],\"version\":\"2\"} does not match any schema in a 'oneOf' group; it must match exactly one.\n(Variant 1):\n- Value \"2\" does not match the required constant: \"1\".\n- Object contains unexpected properties: attributes. These properties are not defined in the schema.\n(Variant 2):\n- The following YAML snippet does not match any of the allowed schemas.\n  (Variant 1):\n  - Value {\"Renamed\":{\"note\":\"renamed to int\",\"renamed_to\":\"new.int.attr\"}} does not match any schema in a 'oneOf' group; it must match exactly one.\n    (Variant 1):\n    - Missing required property: \"reason\".\n    - Missing required property: \"renamed_to\".\n    - Missing required property: \"note\".\n    (Variant 2):\n    - Missing required property: \"reason\".\n    - Missing required property: \"note\".\n    (Variant 3):\n    - Missing required property: \"reason\".\n    - Missing required property: \"note\".\n    (Variant 4):\n    - Missing required property: \"reason\".\n    - Missing required property: \"note\".\n  (Variant 2):\n  - Value {\"Renamed\":{\"note\":\"renamed to int\",\"renamed_to\":\"new.int.attr\"}} is not of the required type: 'null'.\n- The following YAML snippet does not match any of the allowed schemas.\n  (Variant 1):\n  - Value {\"Renamed\":{\"note\":\"renamed to string enum\",\"renamed_to\":\"new.string.enum.attr\"}} does not match any schema in a 'oneOf' group; it must match exactly one.\n    (Variant 1):\n    - Missing required property: \"reason\".\n    - Missing required property: \"renamed_to\".\n    - Missing required property: \"note\".\n    (Variant 2):\n    - Missing required property: \"reason\".\n    - Missing required property: \"note\".\n    (Variant 3):\n    - Missing required property: \"reason\".\n    - Missing required property: \"note\".\n    (Variant 4):\n    - Missing required property: \"reason\".\n    - Missing required property: \"note\".\n  (Variant 2):\n  - Value {\"Renamed\":{\"note\":\"renamed to string enum\",\"renamed_to\":\"new.string.enum.attr\"}} is not of the required type: 'null'."
+      "message": "Policy violation: id=deprecation_attribute_renamed_to_type_mismatch, context={\"attribute_key\":\"old.int.attr\",\"renamed_to\":\"new.string.enum.attr\"}, message=Int attribute 'old.int.attr' was renamed to enum attribute 'new.string.enum.attr', but the new attribute member type is not a number, level=Violation, signal_type=None, signal_name=None, provenance: current"
     },
     "error": {
-      "Resolver": {
-        "FailToResolveDefinition": {
-          "InvalidSemConvSpec": {
-            "advice": "A versioned semantic convention file.",
-            "err_span": null,
-            "error": "Value {\"attributes\":[{\"brief\":\"old string attribute\",\"deprecated\":{\"Renamed\":{\"note\":\"renamed to int\",\"renamed_to\":\"new.int.attr\"}},\"key\":\"old.string.attr\",\"stability\":\"stable\",\"type\":\"string\"},{\"brief\":\"new int attribute\",\"key\":\"new.int.attr\",\"stability\":\"stable\",\"type\":\"int\"},{\"brief\":\"old int attribute\",\"deprecated\":{\"Renamed\":{\"note\":\"renamed to string enum\",\"renamed_to\":\"new.string.enum.attr\"}},\"key\":\"old.int.attr\",\"stability\":\"stable\",\"type\":\"int\"},{\"brief\":\"new string enum attribute\",\"key\":\"new.string.enum.attr\",\"stability\":\"stable\",\"type\":{\"members\":[{\"brief\":\"value one\",\"id\":\"val1\",\"value\":\"one\"}]}}],\"version\":\"2\"} does not match any schema in a 'oneOf' group; it must match exactly one.\n(Variant 1):\n- Value \"2\" does not match the required constant: \"1\".\n- Object contains unexpected properties: attributes. These properties are not defined in the schema.\n(Variant 2):\n- The following YAML snippet does not match any of the allowed schemas.\n  (Variant 1):\n  - Value {\"Renamed\":{\"note\":\"renamed to int\",\"renamed_to\":\"new.int.attr\"}} does not match any schema in a 'oneOf' group; it must match exactly one.\n    (Variant 1):\n    - Missing required property: \"reason\".\n    - Missing required property: \"renamed_to\".\n    - Missing required property: \"note\".\n    (Variant 2):\n    - Missing required property: \"reason\".\n    - Missing required property: \"note\".\n    (Variant 3):\n    - Missing required property: \"reason\".\n    - Missing required property: \"note\".\n    (Variant 4):\n    - Missing required property: \"reason\".\n    - Missing required property: \"note\".\n  (Variant 2):\n  - Value {\"Renamed\":{\"note\":\"renamed to int\",\"renamed_to\":\"new.int.attr\"}} is not of the required type: 'null'.\n- The following YAML snippet does not match any of the allowed schemas.\n  (Variant 1):\n  - Value {\"Renamed\":{\"note\":\"renamed to string enum\",\"renamed_to\":\"new.string.enum.attr\"}} does not match any schema in a 'oneOf' group; it must match exactly one.\n    (Variant 1):\n    - Missing required property: \"reason\".\n    - Missing required property: \"renamed_to\".\n    - Missing required property: \"note\".\n    (Variant 2):\n    - Missing required property: \"reason\".\n    - Missing required property: \"note\".\n    (Variant 3):\n    - Missing required property: \"reason\".\n    - Missing required property: \"note\".\n    (Variant 4):\n    - Missing required property: \"reason\".\n    - Missing required property: \"note\".\n  (Variant 2):\n  - Value {\"Renamed\":{\"note\":\"renamed to string enum\",\"renamed_to\":\"new.string.enum.attr\"}} is not of the required type: 'null'."
-          }
-        }
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_key": "old.int.attr",
+          "renamed_to": "new.string.enum.attr"
+        },
+        "id": "deprecation_attribute_renamed_to_type_mismatch",
+        "level": "violation",
+        "message": "Int attribute 'old.int.attr' was renamed to enum attribute 'new.string.enum.attr', but the new attribute member type is not a number",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=deprecation_attribute_renamed_to_type_mismatch, context={\"attribute_key\":\"old.string.attr\",\"new_type\":\"int\",\"old_type\":\"string\",\"renamed_to\":\"new.int.attr\"}, message=Attribute 'old.string.attr' was renamed to 'new.int.attr', but the new attribute type 'int' is not the same as the old attribute type 'string'., level=Violation, signal_type=None, signal_name=None, provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_key": "old.string.attr",
+          "new_type": "int",
+          "old_type": "string",
+          "renamed_to": "new.int.attr"
+        },
+        "id": "deprecation_attribute_renamed_to_type_mismatch",
+        "level": "violation",
+        "message": "Attribute 'old.string.attr' was renamed to 'new.int.attr', but the new attribute type 'int' is not the same as the old attribute type 'string'.",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
       }
     }
   }

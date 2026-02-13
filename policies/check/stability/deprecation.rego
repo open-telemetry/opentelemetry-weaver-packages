@@ -37,7 +37,8 @@ registry_attribute_map := {attr.key: attr |
 # Rule: Attribute renamed_to must be another existing, non-deprecated attribute
 deny contains finding if {
     some attr in input.registry.attributes
-    new_name := attr.deprecated.Renamed.renamed_to
+    attr.deprecated.reason == "renamed"
+    new_name := attr.deprecated.renamed_to
     not registry_attribute_keys[new_name]
 
     finding := {
@@ -51,10 +52,18 @@ deny contains finding if {
     }
 }
 
+# Helper to get type string for primitives or "enum"
+get_type_string(attr) := "enum" if {
+    attr.type.members
+} else := type_str if {
+    type_str := attr.type
+}
+
 # Rule: attribute.deprecated.renamed_to attribute must be of the same type
 deny contains finding if {
     some attr in input.registry.attributes
-    new_name := attr.deprecated.Renamed.renamed_to
+    attr.deprecated.reason == "renamed"
+    new_name := attr.deprecated.renamed_to
     new_attr := registry_attribute_map[new_name]
     
     # skip enums, checked separately
@@ -79,7 +88,8 @@ deny contains finding if {
 # Rule: attribute.deprecated.renamed_to: string to enum of strings is ok
 deny contains finding if {
     some attr in input.registry.attributes
-    new_name := attr.deprecated.Renamed.renamed_to
+    attr.deprecated.reason == "renamed"
+    new_name := attr.deprecated.renamed_to
     new_attr := registry_attribute_map[new_name]
 
     attr.type == "string"
@@ -100,7 +110,8 @@ deny contains finding if {
 # Rule: attribute.deprecated.renamed_to: int to enum of ints is ok
 deny contains finding if {
     some attr in input.registry.attributes
-    new_name := attr.deprecated.Renamed.renamed_to
+    attr.deprecated.reason == "renamed"
+    new_name := attr.deprecated.renamed_to
     new_attr := registry_attribute_map[new_name]
 
     attr.type == "int"
@@ -121,7 +132,8 @@ deny contains finding if {
 # Rule: enum attribute.deprecated.renamed_to: enum of the same value types is ok
 deny contains finding if {
     some attr in input.registry.attributes
-    new_name := attr.deprecated.Renamed.renamed_to
+    attr.deprecated.reason == "renamed"
+    new_name := attr.deprecated.renamed_to
     new_attr := registry_attribute_map[new_name]
     
     attr.type.members
@@ -143,7 +155,8 @@ deny contains finding if {
 # Rule: enum attribute.deprecated.renamed_to: enum of strings to string is ok
 deny contains finding if {
     some attr in input.registry.attributes
-    new_name := attr.deprecated.Renamed.renamed_to
+    attr.deprecated.reason == "renamed"
+    new_name := attr.deprecated.renamed_to
     new_attr := registry_attribute_map[new_name]
 
     attr.type.members
@@ -166,7 +179,8 @@ deny contains finding if {
 # Rule: enum attribute.deprecated.renamed_to: enum of ints to int is ok
 deny contains finding if {
     some attr in input.registry.attributes
-    new_name := attr.deprecated.Renamed.renamed_to
+    attr.deprecated.reason == "renamed"
+    new_name := attr.deprecated.renamed_to
     new_attr := registry_attribute_map[new_name]
 
     attr.type.members
@@ -189,7 +203,8 @@ deny contains finding if {
 # Rule: Metric renamed_to must be another existing, non-deprecated metric
 deny contains finding if {
     some metric in input.registry.metrics
-    new_name := metric.deprecated.Renamed.renamed_to
+    metric.deprecated.reason == "renamed"
+    new_name := metric.deprecated.renamed_to
     not registry_metric_names[new_name]
 
     finding := {
@@ -206,7 +221,8 @@ deny contains finding if {
 # Rule: Event renamed_to must be another existing, non-deprecated event
 deny contains finding if {
     some event in input.registry.events
-    new_name := event.deprecated.Renamed.renamed_to
+    event.deprecated.reason == "renamed"
+    new_name := event.deprecated.renamed_to
     not registry_event_names[new_name]
 
     finding := {
@@ -223,7 +239,8 @@ deny contains finding if {
 # Rule: Span renamed_to must be another existing, non-deprecated span
 deny contains finding if {
     some span in input.registry.spans
-    new_name := span.deprecated.Renamed.renamed_to
+    span.deprecated.reason == "renamed"
+    new_name := span.deprecated.renamed_to
     not registry_span_types[new_name]
 
     finding := {
@@ -240,7 +257,8 @@ deny contains finding if {
 # Rule: Entity renamed_to must be another existing, non-deprecated entity
 deny contains finding if {
     some entity in input.registry.entities
-    new_name := entity.deprecated.Renamed.renamed_to
+    entity.deprecated.reason == "renamed"
+    new_name := entity.deprecated.renamed_to
     not registry_entity_types[new_name]
 
     finding := {
@@ -258,7 +276,8 @@ deny contains finding if {
 deny contains finding if {
     some attr in input.registry.attributes
     some member in attr.type.members
-    new_id := member.deprecated.Renamed.renamed_to
+    member.deprecated.reason == "renamed"
+    new_id := member.deprecated.renamed_to
     
     # Find matches in the same enum
     matches := [m.id |
@@ -278,14 +297,6 @@ deny contains finding if {
             "renamed_to": new_id
         }
     }
-}
-
-
-# Helper to get type string for primitives or "enum"
-get_type_string(attr) := "enum" if {
-    attr.type.members
-} else := type_str if {
-    type_str := attr.type
 }
 
 same_type(a, b) if {

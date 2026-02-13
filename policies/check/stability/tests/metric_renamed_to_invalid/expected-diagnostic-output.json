@@ -1,17 +1,22 @@
 [
   {
     "diagnostic": {
-      "message": "Value {\"metrics\":[{\"brief\":\"old metric\",\"deprecated\":{\"Renamed\":{\"note\":\"renamed to non-existent\",\"renamed_to\":\"non.existent.metric\"}},\"instrument\":\"counter\",\"name\":\"old.metric\",\"stability\":\"stable\",\"unit\":\"1\"}],\"version\":\"2\"} does not match any schema in a 'oneOf' group; it must match exactly one.\n(Variant 1):\n- Value \"2\" does not match the required constant: \"1\".\n- Object contains unexpected properties: metrics. These properties are not defined in the schema.\n(Variant 2):\n- The following YAML snippet does not match any of the allowed schemas.\n  (Variant 1):\n  - Value {\"Renamed\":{\"note\":\"renamed to non-existent\",\"renamed_to\":\"non.existent.metric\"}} does not match any schema in a 'oneOf' group; it must match exactly one.\n    (Variant 1):\n    - Missing required property: \"reason\".\n    - Missing required property: \"renamed_to\".\n    - Missing required property: \"note\".\n    (Variant 2):\n    - Missing required property: \"reason\".\n    - Missing required property: \"note\".\n    (Variant 3):\n    - Missing required property: \"reason\".\n    - Missing required property: \"note\".\n    (Variant 4):\n    - Missing required property: \"reason\".\n    - Missing required property: \"note\".\n  (Variant 2):\n  - Value {\"Renamed\":{\"note\":\"renamed to non-existent\",\"renamed_to\":\"non.existent.metric\"}} is not of the required type: 'null'."
+      "message": "Policy violation: id=deprecation_metric_renamed_to_invalid, context={\"metric_name\":\"old.metric\",\"renamed_to\":\"non.existent.metric\"}, message=Metric 'old.metric' was renamed to 'non.existent.metric', but the new metric does not exist or is deprecated., level=Violation, signal_type=None, signal_name=None, provenance: current"
     },
     "error": {
-      "Resolver": {
-        "FailToResolveDefinition": {
-          "InvalidSemConvSpec": {
-            "advice": "A versioned semantic convention file.",
-            "err_span": null,
-            "error": "Value {\"metrics\":[{\"brief\":\"old metric\",\"deprecated\":{\"Renamed\":{\"note\":\"renamed to non-existent\",\"renamed_to\":\"non.existent.metric\"}},\"instrument\":\"counter\",\"name\":\"old.metric\",\"stability\":\"stable\",\"unit\":\"1\"}],\"version\":\"2\"} does not match any schema in a 'oneOf' group; it must match exactly one.\n(Variant 1):\n- Value \"2\" does not match the required constant: \"1\".\n- Object contains unexpected properties: metrics. These properties are not defined in the schema.\n(Variant 2):\n- The following YAML snippet does not match any of the allowed schemas.\n  (Variant 1):\n  - Value {\"Renamed\":{\"note\":\"renamed to non-existent\",\"renamed_to\":\"non.existent.metric\"}} does not match any schema in a 'oneOf' group; it must match exactly one.\n    (Variant 1):\n    - Missing required property: \"reason\".\n    - Missing required property: \"renamed_to\".\n    - Missing required property: \"note\".\n    (Variant 2):\n    - Missing required property: \"reason\".\n    - Missing required property: \"note\".\n    (Variant 3):\n    - Missing required property: \"reason\".\n    - Missing required property: \"note\".\n    (Variant 4):\n    - Missing required property: \"reason\".\n    - Missing required property: \"note\".\n  (Variant 2):\n  - Value {\"Renamed\":{\"note\":\"renamed to non-existent\",\"renamed_to\":\"non.existent.metric\"}} is not of the required type: 'null'."
-          }
-        }
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "metric_name": "old.metric",
+          "renamed_to": "non.existent.metric"
+        },
+        "id": "deprecation_metric_renamed_to_invalid",
+        "level": "violation",
+        "message": "Metric 'old.metric' was renamed to 'non.existent.metric', but the new metric does not exist or is deprecated.",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
       }
     }
   }

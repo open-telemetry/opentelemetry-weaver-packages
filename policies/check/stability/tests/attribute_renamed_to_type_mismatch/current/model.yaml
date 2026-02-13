@@ -5,9 +5,9 @@ attributes:
     type: string
     stability: stable
     deprecated:
-      Renamed:
-        renamed_to: new.int.attr
-        note: renamed to int
+      reason: renamed
+      renamed_to: new.int.attr
+      note: renamed to int
   - key: new.int.attr
     brief: new int attribute
     type: int
@@ -17,9 +17,9 @@ attributes:
     type: int
     stability: stable
     deprecated:
-      Renamed:
-        renamed_to: new.string.enum.attr
-        note: renamed to string enum
+      reason: renamed
+      renamed_to: new.string.enum.attr
+      note: renamed to string enum
   - key: new.string.enum.attr
     brief: new string enum attribute
     type:

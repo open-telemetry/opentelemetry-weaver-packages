@@ -5,9 +5,9 @@ attributes:
     type: string
     stability: stable
     deprecated:
-      Renamed:
-        renamed_to: new.attr
-        note: renamed to valid new attr
+      reason: renamed
+      renamed_to: new.attr
+      note: renamed to valid new attr
   - key: new.attr
     brief: new attribute
     type: string
@@ -17,9 +17,9 @@ attributes:
     type: string
     stability: stable
     deprecated:
-      Renamed:
-        renamed_to: new.string.enum.attr
-        note: renamed to string enum
+      reason: renamed
+      renamed_to: new.string.enum.attr
+      note: renamed to string enum
   - key: new.string.enum.attr
     brief: new string enum attribute
     type:

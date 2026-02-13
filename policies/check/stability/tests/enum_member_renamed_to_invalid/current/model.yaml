@@ -8,9 +8,9 @@ attributes:
           value: "old"
           brief: old value
           deprecated:
-            Renamed:
-              renamed_to: non_existent_val
-              note: renamed to non-existent
+            reason: renamed
+            renamed_to: non_existent_val
+            note: renamed to non-existent
         - id: new_val
           value: "new"
           brief: new value

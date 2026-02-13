@@ -14,8 +14,6 @@ is_opt_in(level) if {
 deny contains finding if {
     some entity in input.registry.entities
     entity.stability == "stable"
-    
-    # identity is omitted if empty due to skip_serializing_if
     not entity.identity
     
     finding := {

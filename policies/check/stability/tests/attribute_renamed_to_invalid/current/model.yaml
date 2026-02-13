@@ -5,6 +5,6 @@ attributes:
     type: string
     stability: stable
     deprecated:
-      Renamed:
-        renamed_to: non.existent.attr
-        note: renamed to non-existent
+      reason: renamed
+      renamed_to: non.existent.attr
+      note: renamed to non-existent

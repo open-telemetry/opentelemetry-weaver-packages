@@ -6,6 +6,6 @@ metrics:
     instrument: counter
     unit: "1"
     deprecated:
-      Renamed:
-        renamed_to: non.existent.metric
-        note: renamed to non-existent
+      reason: renamed
+      renamed_to: non.existent.metric
+      note: renamed to non-existent
