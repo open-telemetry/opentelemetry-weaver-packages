@@ -153,11 +153,18 @@ run_policy_test() {
   mkdir -p "${OBSERVED_DIR}"
   # Note: We force ourselves into test dir, so provenance of files is always consistently relative.
   pushd "${TEST_DIR}" > /dev/null 2>&1
+  
+  # Conditionally set baseline flag if 'base' directory exists
+  BASELINE_FLAG=""
+  if [ -d "base" ]; then
+    BASELINE_FLAG="--baseline-registry base"
+  fi
+
   # First make sure model files are correct
   RAW_CHECK_MODEL_OUTPUT="${OBSERVED_DIR}/model-check.stdout"
-  ${WEAVER} registry check -r current --baseline-registry base --quiet --v2 > "${RAW_CHECK_MODEL_OUTPUT}" 2>&1
+  ${WEAVER} registry check -r current ${BASELINE_FLAG} --quiet --v2 > "${RAW_CHECK_MODEL_OUTPUT}" 2>&1
   if [ $? -ne 0 ]; then
-    echo "Test model in "base" or "current" is incorrect.  Invalid test configuration."
+    echo "Test model in \"base\" or \"current\" is incorrect.  Invalid test configuration."
     cat "${RAW_CHECK_MODEL_OUTPUT}"
     exit 1
   fi
@@ -165,7 +172,7 @@ run_policy_test() {
   RAW_DIAGNOSTIC_OUTPUT="${OBSERVED_DIR}/diagnostic-output.raw.json"
   NO_COLOR=1 ${WEAVER} registry check \
     -r current \
-    --baseline-registry base \
+    ${BASELINE_FLAG} \
     -p "${POLICY_PACKAGE_DIR}" \
     --v2 \
     --quiet \
