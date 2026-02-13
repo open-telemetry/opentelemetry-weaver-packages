@@ -1,0 +1,46 @@
+[
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=deprecation_attribute_renamed_to_type_mismatch, context={\"attribute_key\":\"old.int.attr\",\"renamed_to\":\"new.string.enum.attr\"}, message=Int attribute 'old.int.attr' was renamed to enum attribute 'new.string.enum.attr', but the new attribute member type is not a number, level=Violation, signal_type=None, signal_name=None, provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_key": "old.int.attr",
+          "renamed_to": "new.string.enum.attr"
+        },
+        "id": "deprecation_attribute_renamed_to_type_mismatch",
+        "level": "violation",
+        "message": "Int attribute 'old.int.attr' was renamed to enum attribute 'new.string.enum.attr', but the new attribute member type is not a number",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=deprecation_attribute_renamed_to_type_mismatch, context={\"attribute_key\":\"old.string.attr\",\"new_type\":\"int\",\"old_type\":\"string\",\"renamed_to\":\"new.int.attr\"}, message=Attribute 'old.string.attr' was renamed to 'new.int.attr', but the new attribute type 'int' is not the same as the old attribute type 'string'., level=Violation, signal_type=None, signal_name=None, provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_key": "old.string.attr",
+          "new_type": "int",
+          "old_type": "string",
+          "renamed_to": "new.int.attr"
+        },
+        "id": "deprecation_attribute_renamed_to_type_mismatch",
+        "level": "violation",
+        "message": "Attribute 'old.string.attr' was renamed to 'new.int.attr', but the new attribute type 'int' is not the same as the old attribute type 'string'.",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
+      }
+    }
+  }
+]

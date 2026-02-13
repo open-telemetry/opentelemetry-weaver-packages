@@ -1,0 +1,19 @@
+version: '2'
+attributes:
+  - key: experimental.attr
+    brief: experimental attribute
+    type: string
+    stability: development
+  - key: stable.attr
+    brief: stable attribute
+    type: string
+    stability: stable
+entities:
+  - type: stable.entity
+    brief: stable entity brief
+    stability: stable
+    identity:
+      - ref: stable.attr
+    description:
+      - ref: experimental.attr
+        requirement_level: required

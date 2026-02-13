@@ -1,0 +1,10 @@
+version: '2'
+attributes:
+  - key: old.attr
+    brief: old attribute
+    type: string
+    stability: stable
+    deprecated:
+      reason: renamed
+      renamed_to: non.existent.attr
+      note: renamed to non-existent

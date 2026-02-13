@@ -1,0 +1,11 @@
+version: '2'
+attributes:
+  - key: test.attr
+    brief: A test attribute
+    type: string
+    stability: stable
+entities:
+  - type: test.entity
+    brief: A test entity with no identity
+    stability: stable
+    identity: []

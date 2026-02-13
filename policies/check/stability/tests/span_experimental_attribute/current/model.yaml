@@ -1,0 +1,16 @@
+version: '2'
+attributes:
+  - key: experimental.attr
+    brief: experimental attribute
+    type: string
+    stability: development
+spans:
+  - type: stable.span
+    brief: stable span brief
+    kind: internal
+    name: 
+        note: stable.span
+    stability: stable
+    attributes:
+      - ref: experimental.attr
+        requirement_level: recommended

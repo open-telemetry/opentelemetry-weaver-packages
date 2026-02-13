@@ -1,0 +1,17 @@
+version: '2'
+attributes:
+  - key: test.enum
+    brief: test enum
+    type:
+      members:
+        - id: old_val
+          value: "old"
+          brief: old value
+          deprecated:
+            reason: renamed
+            renamed_to: non_existent_val
+            note: renamed to non-existent
+        - id: new_val
+          value: "new"
+          brief: new value
+    stability: stable
