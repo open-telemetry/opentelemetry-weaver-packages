@@ -1,0 +1,30 @@
+version: '2'
+attributes:
+  - key: old.string.attr
+    brief: old string attribute
+    type: string
+    stability: stable
+    deprecated:
+      Renamed:
+        renamed_to: new.int.attr
+        note: renamed to int
+  - key: new.int.attr
+    brief: new int attribute
+    type: int
+    stability: stable
+  - key: old.int.attr
+    brief: old int attribute
+    type: int
+    stability: stable
+    deprecated:
+      Renamed:
+        renamed_to: new.string.enum.attr
+        note: renamed to string enum
+  - key: new.string.enum.attr
+    brief: new string enum attribute
+    type:
+      members:
+        - id: val1
+          value: "one"
+          brief: value one
+    stability: stable

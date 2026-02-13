@@ -1,0 +1,18 @@
+[
+  {
+    "diagnostic": {
+      "message": "Value {\"metrics\":[{\"brief\":\"old metric\",\"deprecated\":{\"Renamed\":{\"note\":\"renamed to non-existent\",\"renamed_to\":\"non.existent.metric\"}},\"instrument\":\"counter\",\"name\":\"old.metric\",\"stability\":\"stable\",\"unit\":\"1\"}],\"version\":\"2\"} does not match any schema in a 'oneOf' group; it must match exactly one.\n(Variant 1):\n- Value \"2\" does not match the required constant: \"1\".\n- Object contains unexpected properties: metrics. These properties are not defined in the schema.\n(Variant 2):\n- The following YAML snippet does not match any of the allowed schemas.\n  (Variant 1):\n  - Value {\"Renamed\":{\"note\":\"renamed to non-existent\",\"renamed_to\":\"non.existent.metric\"}} does not match any schema in a 'oneOf' group; it must match exactly one.\n    (Variant 1):\n    - Missing required property: \"reason\".\n    - Missing required property: \"renamed_to\".\n    - Missing required property: \"note\".\n    (Variant 2):\n    - Missing required property: \"reason\".\n    - Missing required property: \"note\".\n    (Variant 3):\n    - Missing required property: \"reason\".\n    - Missing required property: \"note\".\n    (Variant 4):\n    - Missing required property: \"reason\".\n    - Missing required property: \"note\".\n  (Variant 2):\n  - Value {\"Renamed\":{\"note\":\"renamed to non-existent\",\"renamed_to\":\"non.existent.metric\"}} is not of the required type: 'null'."
+    },
+    "error": {
+      "Resolver": {
+        "FailToResolveDefinition": {
+          "InvalidSemConvSpec": {
+            "advice": "A versioned semantic convention file.",
+            "err_span": null,
+            "error": "Value {\"metrics\":[{\"brief\":\"old metric\",\"deprecated\":{\"Renamed\":{\"note\":\"renamed to non-existent\",\"renamed_to\":\"non.existent.metric\"}},\"instrument\":\"counter\",\"name\":\"old.metric\",\"stability\":\"stable\",\"unit\":\"1\"}],\"version\":\"2\"} does not match any schema in a 'oneOf' group; it must match exactly one.\n(Variant 1):\n- Value \"2\" does not match the required constant: \"1\".\n- Object contains unexpected properties: metrics. These properties are not defined in the schema.\n(Variant 2):\n- The following YAML snippet does not match any of the allowed schemas.\n  (Variant 1):\n  - Value {\"Renamed\":{\"note\":\"renamed to non-existent\",\"renamed_to\":\"non.existent.metric\"}} does not match any schema in a 'oneOf' group; it must match exactly one.\n    (Variant 1):\n    - Missing required property: \"reason\".\n    - Missing required property: \"renamed_to\".\n    - Missing required property: \"note\".\n    (Variant 2):\n    - Missing required property: \"reason\".\n    - Missing required property: \"note\".\n    (Variant 3):\n    - Missing required property: \"reason\".\n    - Missing required property: \"note\".\n    (Variant 4):\n    - Missing required property: \"reason\".\n    - Missing required property: \"note\".\n  (Variant 2):\n  - Value {\"Renamed\":{\"note\":\"renamed to non-existent\",\"renamed_to\":\"non.existent.metric\"}} is not of the required type: 'null'."
+          }
+        }
+      }
+    }
+  }
+]

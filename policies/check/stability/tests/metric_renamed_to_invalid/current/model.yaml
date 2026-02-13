@@ -1,0 +1,11 @@
+version: '2'
+metrics:
+  - name: old.metric
+    brief: old metric
+    stability: stable
+    instrument: counter
+    unit: "1"
+    deprecated:
+      Renamed:
+        renamed_to: non.existent.metric
+        note: renamed to non-existent

@@ -1,0 +1,38 @@
+[
+  {
+    "diagnostic": {
+      "message": "Version `2` schema file format is not yet stable: current/model.yaml",
+      "severity": "Warning"
+    },
+    "error": {
+      "FailToResolveDefinition": {
+        "UnstableFileVersion": {
+          "provenance": "current/model.yaml",
+          "version": "2"
+        }
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=stability_entity_experimental_attribute, context={\"attribute_key\":\"experimental.attr\",\"entity_type\":\"stable.entity\",\"requirement_level\":\"required\"}, message=Stable entity 'stable.entity' references experimental attribute 'experimental.attr' in descriptionwith requirement level 'required', only 'opt_in' level is allowed, level=Violation, signal_type=None, signal_name=None, provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_key": "experimental.attr",
+          "entity_type": "stable.entity",
+          "requirement_level": "required"
+        },
+        "id": "stability_entity_experimental_attribute",
+        "level": "violation",
+        "message": "Stable entity 'stable.entity' references experimental attribute 'experimental.attr' in descriptionwith requirement level 'required', only 'opt_in' level is allowed",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
+      }
+    }
+  }
+]

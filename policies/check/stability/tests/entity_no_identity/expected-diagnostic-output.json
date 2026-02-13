@@ -1,0 +1,36 @@
+[
+  {
+    "diagnostic": {
+      "message": "Version `2` schema file format is not yet stable: current/model.yaml",
+      "severity": "Warning"
+    },
+    "error": {
+      "FailToResolveDefinition": {
+        "UnstableFileVersion": {
+          "provenance": "current/model.yaml",
+          "version": "2"
+        }
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=stability_entity_no_identity, context={\"entity_type\":\"test.entity\"}, message=Stable entity 'test.entity' has no identifying attributes, level=Violation, signal_type=None, signal_name=None, provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "entity_type": "test.entity"
+        },
+        "id": "stability_entity_no_identity",
+        "level": "violation",
+        "message": "Stable entity 'test.entity' has no identifying attributes",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
+      }
+    }
+  }
+]
