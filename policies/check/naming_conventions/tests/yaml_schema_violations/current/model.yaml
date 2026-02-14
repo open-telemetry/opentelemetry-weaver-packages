@@ -1,0 +1,41 @@
+version: '2'
+attributes:
+  - key: Invalid_Attr
+    type: string
+    brief: Invalid name format
+    stability: stable
+  - key: nonamespace
+    type: string
+    brief: Missing namespace
+    stability: stable
+  - key: test.enum
+    type: 
+      members:
+        - id: Invalid_Member
+          value: 1
+    brief: Enum with invalid member id
+    stability: stable
+  - key: event.name
+    type: string
+    brief: Forbidden attribute.
+    stability: stable
+
+metrics:
+  - name: Invalid.Metric_
+    brief: Invalid metric name.
+    stability: stable
+    instrument: counter
+    unit: '1'
+
+events:
+  - name: event.name
+    brief: Event with invalid name and forbidden attribute reference.
+    stability: stable
+    attributes:
+      - ref: event.name
+
+entities:
+  - type: Invalid.Entity.
+    brief: Invalid entity type.
+    stability: stable
+    identity: []

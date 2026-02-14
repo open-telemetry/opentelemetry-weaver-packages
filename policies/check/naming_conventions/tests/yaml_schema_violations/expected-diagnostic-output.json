@@ -1,0 +1,143 @@
+[
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=naming_convention_attribute_name_format, context={\"attribute_key\":\"Invalid_Attr\"}, message=Attribute name 'Invalid_Attr' is invalid. Attribute name must consist of lowercase alphanumeric characters separated by '_' and '.', level=Violation, signal_type=None, signal_name=None, provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_key": "Invalid_Attr"
+        },
+        "id": "naming_convention_attribute_name_format",
+        "level": "violation",
+        "message": "Attribute name 'Invalid_Attr' is invalid. Attribute name must consist of lowercase alphanumeric characters separated by '_' and '.'",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=naming_convention_attribute_name_namespace, context={\"attribute_key\":\"Invalid_Attr\"}, message=Attribute name 'Invalid_Attr' should have a namespace. Attribute name must consist of lowercase alphanumeric characters separated by '_' and '.', level=Violation, signal_type=None, signal_name=None, provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_key": "Invalid_Attr"
+        },
+        "id": "naming_convention_attribute_name_namespace",
+        "level": "violation",
+        "message": "Attribute name 'Invalid_Attr' should have a namespace. Attribute name must consist of lowercase alphanumeric characters separated by '_' and '.'",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=naming_convention_attribute_name_namespace, context={\"attribute_key\":\"nonamespace\"}, message=Attribute name 'nonamespace' should have a namespace. Attribute name must consist of lowercase alphanumeric characters separated by '_' and '.', level=Violation, signal_type=None, signal_name=None, provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_key": "nonamespace"
+        },
+        "id": "naming_convention_attribute_name_namespace",
+        "level": "violation",
+        "message": "Attribute name 'nonamespace' should have a namespace. Attribute name must consist of lowercase alphanumeric characters separated by '_' and '.'",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=naming_convention_enum_member_id_format, context={\"attribute_key\":\"test.enum\",\"member_id\":\"Invalid_Member\"}, message=Member id 'Invalid_Member' on attribute 'test.enum' is invalid. Member id must consist of lowercase alphanumeric characters separated by '_' and '.', level=Violation, signal_type=None, signal_name=None, provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_key": "test.enum",
+          "member_id": "Invalid_Member"
+        },
+        "id": "naming_convention_enum_member_id_format",
+        "level": "violation",
+        "message": "Member id 'Invalid_Member' on attribute 'test.enum' is invalid. Member id must consist of lowercase alphanumeric characters separated by '_' and '.'",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=naming_convention_entity_type_format, context={\"entity_type\":\"Invalid.Entity.\"}, message=Entity type 'Invalid.Entity.' is invalid. Entity type must consist of lowercase alphanumeric characters separated by '_' and '.', level=Violation, signal_type=Some(\"entity\"), signal_name=Some(\"Invalid.Entity.\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "entity_type": "Invalid.Entity."
+        },
+        "id": "naming_convention_entity_type_format",
+        "level": "violation",
+        "message": "Entity type 'Invalid.Entity.' is invalid. Entity type must consist of lowercase alphanumeric characters separated by '_' and '.'",
+        "signal_name": "Invalid.Entity.",
+        "signal_type": "entity",
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=naming_convention_event_name_attribute_forbidden, context={\"event_name\":\"event.name\"}, message=Attribute 'event.name' is referenced on event 'event.name'. Event name must be provided in the 'name' property of the event., level=Violation, signal_type=Some(\"event\"), signal_name=Some(\"event.name\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "event_name": "event.name"
+        },
+        "id": "naming_convention_event_name_attribute_forbidden",
+        "level": "violation",
+        "message": "Attribute 'event.name' is referenced on event 'event.name'. Event name must be provided in the 'name' property of the event.",
+        "signal_name": "event.name",
+        "signal_type": "event",
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=naming_convention_metric_name_format, context={\"metric_name\":\"Invalid.Metric_\"}, message=Metric name 'Invalid.Metric_' is invalid. Metric name must consist of lowercase alphanumeric characters separated by '_' and '.', level=Violation, signal_type=Some(\"metric\"), signal_name=Some(\"Invalid.Metric_\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "metric_name": "Invalid.Metric_"
+        },
+        "id": "naming_convention_metric_name_format",
+        "level": "violation",
+        "message": "Metric name 'Invalid.Metric_' is invalid. Metric name must consist of lowercase alphanumeric characters separated by '_' and '.'",
+        "signal_name": "Invalid.Metric_",
+        "signal_type": "metric",
+        "type": "PolicyFinding"
+      }
+    }
+  }
+]
