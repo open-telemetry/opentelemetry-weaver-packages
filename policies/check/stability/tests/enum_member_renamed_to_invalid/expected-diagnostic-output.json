@@ -1,0 +1,24 @@
+[
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=deprecation_enum_member_renamed_to_invalid, context={\"attribute_key\":\"test.enum\",\"member_id\":\"old_val\",\"renamed_to\":\"non_existent_val\"}, message=Member 'old_val' of the attribute 'test.enum' was renamed to 'non_existent_val', but the new member does not exist or is deprecated., level=Violation, signal_type=None, signal_name=None, provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_key": "test.enum",
+          "member_id": "old_val",
+          "renamed_to": "non_existent_val"
+        },
+        "id": "deprecation_enum_member_renamed_to_invalid",
+        "level": "violation",
+        "message": "Member 'old_val' of the attribute 'test.enum' was renamed to 'non_existent_val', but the new member does not exist or is deprecated.",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
+      }
+    }
+  }
+]

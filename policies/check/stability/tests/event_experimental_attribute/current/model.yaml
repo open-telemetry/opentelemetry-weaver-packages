@@ -1,0 +1,13 @@
+version: '2'
+attributes:
+  - key: experimental.attr
+    brief: experimental attribute
+    type: string
+    stability: development
+events:
+  - name: stable.event
+    brief: stable event brief
+    stability: stable
+    attributes:
+      - ref: experimental.attr
+        requirement_level: required

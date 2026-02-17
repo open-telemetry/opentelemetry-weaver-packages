@@ -1,0 +1,22 @@
+[
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=deprecation_metric_renamed_to_invalid, context={\"renamed_to\":\"non.existent.metric\"}, message=Metric 'old.metric' was renamed to 'non.existent.metric', but the new metric does not exist or is deprecated., level=Violation, signal_type=Some(\"metric\"), signal_name=Some(\"old.metric\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "renamed_to": "non.existent.metric"
+        },
+        "id": "deprecation_metric_renamed_to_invalid",
+        "level": "violation",
+        "message": "Metric 'old.metric' was renamed to 'non.existent.metric', but the new metric does not exist or is deprecated.",
+        "signal_name": "old.metric",
+        "signal_type": "metric",
+        "type": "PolicyFinding"
+      }
+    }
+  }
+]

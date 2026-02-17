@@ -1,1 +1,66 @@
-[{"diagnostic":{"message":"Version `2` schema file format is not yet stable: current/model.yaml","severity":"Warning"},"error":{"UnstableFileVersion":{"provenance":"current/model.yaml","version":"2"}}},{"diagnostic":{"message":"Policy violation: id=compatibility_event_changed_stability, context={\"event_name\":\"some.event.change_stability\"}, message=Event \u0027some.event.change_stability\u0027 cannot change from stable, level=Violation, signal_type=None, signal_name=None, provenance: current"},"error":{"provenance":"current","type":"policy_violation","violation":{"context":{"event_name":"some.event.change_stability"},"id":"compatibility_event_changed_stability","level":"violation","message":"Event \u0027some.event.change_stability\u0027 cannot change from stable","signal_name":null,"signal_type":null,"type":"PolicyFinding"}}},{"diagnostic":{"message":"Policy violation: id=compatibility_event_dropped_attributes, context={\"event_name\":\"some.event.missing.attrs\",\"missing_attributes\":[\"b\",\"c\"]}, message=Event \u0027some.event.missing.attrs\u0027 cannot remove stable attributes (missing \u0027{\"b\", \"c\"}\u0027), level=Violation, signal_type=None, signal_name=None, provenance: current"},"error":{"provenance":"current","type":"policy_violation","violation":{"context":{"event_name":"some.event.missing.attrs","missing_attributes":["b","c"]},"id":"compatibility_event_dropped_attributes","level":"violation","message":"Event \u0027some.event.missing.attrs\u0027 cannot remove stable attributes (missing \u0027{\"b\", \"c\"}\u0027)","signal_name":null,"signal_type":null,"type":"PolicyFinding"}}},{"diagnostic":{"message":"Policy violation: id=compatibility_event_removed, context={\"event_name\":\"some.missing.event\"}, message=Event \u0027some.missing.event\u0027 no longer exists in semantic conventions, level=Violation, signal_type=None, signal_name=None, provenance: current"},"error":{"provenance":"current","type":"policy_violation","violation":{"context":{"event_name":"some.missing.event"},"id":"compatibility_event_removed","level":"violation","message":"Event \u0027some.missing.event\u0027 no longer exists in semantic conventions","signal_name":null,"signal_type":null,"type":"PolicyFinding"}}}]
+[
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=compatibility_event_changed_stability, context={\"event_name\":\"some.event.change_stability\"}, message=Event 'some.event.change_stability' cannot change from stable, level=Violation, signal_type=None, signal_name=None, provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "event_name": "some.event.change_stability"
+        },
+        "id": "compatibility_event_changed_stability",
+        "level": "violation",
+        "message": "Event 'some.event.change_stability' cannot change from stable",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=compatibility_event_dropped_attributes, context={\"event_name\":\"some.event.missing.attrs\",\"missing_attributes\":[\"b\",\"c\"]}, message=Event 'some.event.missing.attrs' cannot remove stable attributes (missing '{\"b\", \"c\"}'), level=Violation, signal_type=None, signal_name=None, provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "event_name": "some.event.missing.attrs",
+          "missing_attributes": [
+            "b",
+            "c"
+          ]
+        },
+        "id": "compatibility_event_dropped_attributes",
+        "level": "violation",
+        "message": "Event 'some.event.missing.attrs' cannot remove stable attributes (missing '{\"b\", \"c\"}')",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=compatibility_event_removed, context={\"event_name\":\"some.missing.event\"}, message=Event 'some.missing.event' no longer exists in semantic conventions, level=Violation, signal_type=None, signal_name=None, provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "event_name": "some.missing.event"
+        },
+        "id": "compatibility_event_removed",
+        "level": "violation",
+        "message": "Event 'some.missing.event' no longer exists in semantic conventions",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
+      }
+    }
+  }
+]

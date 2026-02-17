@@ -1,0 +1,20 @@
+[
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=stability_entity_no_identity, context={}, message=Stable entity 'test.entity' has no identifying attributes, level=Violation, signal_type=Some(\"entity\"), signal_name=Some(\"test.entity\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {},
+        "id": "stability_entity_no_identity",
+        "level": "violation",
+        "message": "Stable entity 'test.entity' has no identifying attributes",
+        "signal_name": "test.entity",
+        "signal_type": "entity",
+        "type": "PolicyFinding"
+      }
+    }
+  }
+]

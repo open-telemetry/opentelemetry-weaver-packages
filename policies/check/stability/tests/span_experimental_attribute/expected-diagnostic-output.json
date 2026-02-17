@@ -1,0 +1,23 @@
+[
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=stability_span_experimental_attribute, context={\"attribute_key\":\"experimental.attr\",\"requirement_level\":\"recommended\"}, message=Stable span 'stable.span' references experimental attribute 'experimental.attr' with requirement level 'recommended', only 'opt_in' level is allowed, level=Violation, signal_type=Some(\"span\"), signal_name=Some(\"stable.span\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_key": "experimental.attr",
+          "requirement_level": "recommended"
+        },
+        "id": "stability_span_experimental_attribute",
+        "level": "violation",
+        "message": "Stable span 'stable.span' references experimental attribute 'experimental.attr' with requirement level 'recommended', only 'opt_in' level is allowed",
+        "signal_name": "stable.span",
+        "signal_type": "span",
+        "type": "PolicyFinding"
+      }
+    }
+  }
+]

@@ -92,15 +92,41 @@ check_output() {
   TEST_NAME="$3"
   # Skip checking if we don't have an expected file.
   if [[ -f "$EXPECTED_FILE" ]]; then
-    diff "$OBSERVED_FILE" "$EXPECTED_FILE" > /dev/null
-    if [ $? -eq 0 ]; then
-        echo "  ✅ PASS: $TEST_NAME matches expected output."
+    if [[ "$EXPECTED_FILE" == *.json ]]; then
+      # Pretty print both for comparison
+      TEMP_OBSERVED=$(mktemp)
+      TEMP_EXPECTED=$(mktemp)
+      
+      # Filter out Weaver's unstable version warnings from observed file for comparison
+      # We expect the expected file to ALREADY be clean of these warnings.
+      JQ_FILTER='map(select(.diagnostic.message | contains("Version `2` schema file format is not yet stable") | not))'
+      
+      jq -S "${JQ_FILTER}" "$OBSERVED_FILE" > "$TEMP_OBSERVED"
+      jq -S . "$EXPECTED_FILE" > "$TEMP_EXPECTED"
+      diff "$TEMP_OBSERVED" "$TEMP_EXPECTED" > /dev/null
+      DIFF_RESULT=$?
+      if [ $DIFF_RESULT -eq 0 ]; then
+          echo "  ✅ PASS: $TEST_NAME matches expected output."
+      else
+          echo "  ❌ FAIL: $TEST_NAME differences found!"
+          # Optional: Show the differences
+          diff -u "$TEMP_EXPECTED" "$TEMP_OBSERVED"
+          # TODO - We should try to accumulate errors and report status ONCE after all tests.
+          rm "$TEMP_OBSERVED" "$TEMP_EXPECTED"
+          exit 1
+      fi
+      rm "$TEMP_OBSERVED" "$TEMP_EXPECTED"
     else
-        echo "  ❌ FAIL: $TEST_NAME differences found!"
-        # Optional: Show the differences
-        diff -u "$EXPECTED_FILE" "$OBSERVED_FILE"
-        # TODO - We should try to accumulate errors and report status ONCE after all tests.
-        exit 1
+      diff "$OBSERVED_FILE" "$EXPECTED_FILE" > /dev/null
+      if [ $? -eq 0 ]; then
+          echo "  ✅ PASS: $TEST_NAME matches expected output."
+      else
+          echo "  ❌ FAIL: $TEST_NAME differences found!"
+          # Optional: Show the differences
+          diff -u "$EXPECTED_FILE" "$OBSERVED_FILE"
+          # TODO - We should try to accumulate errors and report status ONCE after all tests.
+          exit 1
+      fi
     fi
   else
     echo "  ⚠️  SKIPPED: Missing expected file: $EXPECTED_FILE"
@@ -127,9 +153,26 @@ run_policy_test() {
   mkdir -p "${OBSERVED_DIR}"
   # Note: We force ourselves into test dir, so provenance of files is always consistently relative.
   pushd "${TEST_DIR}" > /dev/null 2>&1
+  
+  # Conditionally set baseline flag if 'base' directory exists
+  BASELINE_FLAG=""
+  if [ -d "base" ]; then
+    BASELINE_FLAG="--baseline-registry base"
+  fi
+
+  # First make sure model files are correct
+  RAW_CHECK_MODEL_OUTPUT="${OBSERVED_DIR}/model-check.stdout"
+  ${WEAVER} registry check -r current ${BASELINE_FLAG} --quiet --v2 > "${RAW_CHECK_MODEL_OUTPUT}" 2>&1
+  if [ $? -ne 0 ]; then
+    echo "Test model in \"base\" or \"current\" is incorrect.  Invalid test configuration."
+    cat "${RAW_CHECK_MODEL_OUTPUT}"
+    exit 1
+  fi
+  #
+  RAW_DIAGNOSTIC_OUTPUT="${OBSERVED_DIR}/diagnostic-output.raw.json"
   NO_COLOR=1 ${WEAVER} registry check \
     -r current \
-    --baseline-registry base \
+    ${BASELINE_FLAG} \
     -p "${POLICY_PACKAGE_DIR}" \
     --v2 \
     --quiet \
@@ -137,11 +180,18 @@ run_policy_test() {
     --diagnostic-template="${DIAGNOSTIC_WORKAROUND}" \
     --diagnostic-format json \
     --diagnostic-stdout \
-    > "${OBSERVED_DIR}/diagnostic-output.json"
+    > "${RAW_DIAGNOSTIC_OUTPUT}" \
     2> "${OBSERVED_DIR}/stderr"
   popd > /dev/null 2>&1
   if [ $? -ne 0 ]; then
     cat "${OBSERVED_DIR}/stderr"
+  fi
+  if [ -f "${RAW_DIAGNOSTIC_OUTPUT}" ]; then
+    # Strip coverage report or any other non-JSON output before passing to jq
+    # Also filter out Weaver's unstable version warnings
+    # TODO - extract coverage report into separate file for display.
+    JQ_FILTER='map(select(.diagnostic.message | contains("Version `2` schema file format is not yet stable") | not))'
+    sed -n '/^\[/,$p' "${RAW_DIAGNOSTIC_OUTPUT}" | jq -S "${JQ_FILTER}" > "${OBSERVED_DIR}/diagnostic-output.json"
   fi
   check_output "${OBSERVED_DIR}/diagnostic-output.json" "${TEST_DIR}/expected-diagnostic-output.json" "${TEST_NAME} - Diagnostic Output"
 }

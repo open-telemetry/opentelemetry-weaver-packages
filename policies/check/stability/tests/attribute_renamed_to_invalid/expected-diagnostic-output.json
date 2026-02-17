@@ -1,0 +1,23 @@
+[
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=deprecation_attribute_renamed_to_invalid, context={\"attribute_key\":\"old.attr\",\"renamed_to\":\"non.existent.attr\"}, message=Attribute 'old.attr' was renamed to 'non.existent.attr', but the new attribute does not exist or is deprecated., level=Violation, signal_type=None, signal_name=None, provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_key": "old.attr",
+          "renamed_to": "non.existent.attr"
+        },
+        "id": "deprecation_attribute_renamed_to_invalid",
+        "level": "violation",
+        "message": "Attribute 'old.attr' was renamed to 'non.existent.attr', but the new attribute does not exist or is deprecated.",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
+      }
+    }
+  }
+]

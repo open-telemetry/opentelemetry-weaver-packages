@@ -1,0 +1,23 @@
+[
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=stability_entity_experimental_attribute, context={\"attribute_key\":\"experimental.attr\",\"requirement_level\":\"required\"}, message=Stable entity 'stable.entity' references experimental attribute 'experimental.attr' in descriptionwith requirement level 'required', only 'opt_in' level is allowed, level=Violation, signal_type=Some(\"entity\"), signal_name=Some(\"stable.entity\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_key": "experimental.attr",
+          "requirement_level": "required"
+        },
+        "id": "stability_entity_experimental_attribute",
+        "level": "violation",
+        "message": "Stable entity 'stable.entity' references experimental attribute 'experimental.attr' in descriptionwith requirement level 'required', only 'opt_in' level is allowed",
+        "signal_name": "stable.entity",
+        "signal_type": "entity",
+        "type": "PolicyFinding"
+      }
+    }
+  }
+]

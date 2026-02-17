@@ -1,1 +1,109 @@
-[{"diagnostic":{"message":"Version `2` schema file format is not yet stable: current/model.yaml","severity":"Warning"},"error":{"UnstableFileVersion":{"provenance":"current/model.yaml","version":"2"}}},{"diagnostic":{"message":"Policy violation: id=compatibility_metric_added_attributes, context={\"added_attributes\":[\"a\"],\"metric_name\":\"some.metric.added.attrs\"}, message=Metric \u0027some.metric.added.attrs\u0027 cannot change required/recommended attributes (added \u0027{\"a\"}\u0027), level=Violation, signal_type=None, signal_name=None, provenance: current"},"error":{"provenance":"current","type":"policy_violation","violation":{"context":{"added_attributes":["a"],"metric_name":"some.metric.added.attrs"},"id":"compatibility_metric_added_attributes","level":"violation","message":"Metric \u0027some.metric.added.attrs\u0027 cannot change required/recommended attributes (added \u0027{\"a\"}\u0027)","signal_name":null,"signal_type":null,"type":"PolicyFinding"}}},{"diagnostic":{"message":"Policy violation: id=compatibility_metric_changed_instrument, context={\"current_instrument\":\"gauge\",\"metric_name\":\"some.change.metric.items\",\"previous_instrument\":\"counter\"}, message=Metric \u0027some.change.metric.items\u0027 cannot change instrument (was \u0027counter\u0027, now: \u0027gauge\u0027), level=Violation, signal_type=None, signal_name=None, provenance: current"},"error":{"provenance":"current","type":"policy_violation","violation":{"context":{"current_instrument":"gauge","metric_name":"some.change.metric.items","previous_instrument":"counter"},"id":"compatibility_metric_changed_instrument","level":"violation","message":"Metric \u0027some.change.metric.items\u0027 cannot change instrument (was \u0027counter\u0027, now: \u0027gauge\u0027)","signal_name":null,"signal_type":null,"type":"PolicyFinding"}}},{"diagnostic":{"message":"Policy violation: id=compatibility_metric_changed_unit, context={\"current_unit\":\"ms\",\"metric_name\":\"some.change.metric.items\",\"previous_unit\":\"s\"}, message=Metric \u0027some.change.metric.items\u0027 cannot change unit (was \u0027s\u0027, now: \u0027ms\u0027), level=Violation, signal_type=None, signal_name=None, provenance: current"},"error":{"provenance":"current","type":"policy_violation","violation":{"context":{"current_unit":"ms","metric_name":"some.change.metric.items","previous_unit":"s"},"id":"compatibility_metric_changed_unit","level":"violation","message":"Metric \u0027some.change.metric.items\u0027 cannot change unit (was \u0027s\u0027, now: \u0027ms\u0027)","signal_name":null,"signal_type":null,"type":"PolicyFinding"}}},{"diagnostic":{"message":"Policy violation: id=compatibility_metric_missing, context={\"metric_name\":\"some.missing.metric\"}, message=Metric \u0027some.missing.metric\u0027 no longer exists in semantic conventions, level=Violation, signal_type=None, signal_name=None, provenance: current"},"error":{"provenance":"current","type":"policy_violation","violation":{"context":{"metric_name":"some.missing.metric"},"id":"compatibility_metric_missing","level":"violation","message":"Metric \u0027some.missing.metric\u0027 no longer exists in semantic conventions","signal_name":null,"signal_type":null,"type":"PolicyFinding"}}},{"diagnostic":{"message":"Policy violation: id=compatibility_metric_missing, context={\"metric_name\":\"some.stable.change.metric\"}, message=Metric \u0027some.stable.change.metric\u0027 cannot change from stable, level=Violation, signal_type=None, signal_name=None, provenance: current"},"error":{"provenance":"current","type":"policy_violation","violation":{"context":{"metric_name":"some.stable.change.metric"},"id":"compatibility_metric_missing","level":"violation","message":"Metric \u0027some.stable.change.metric\u0027 cannot change from stable","signal_name":null,"signal_type":null,"type":"PolicyFinding"}}}]
+[
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=compatibility_metric_added_attributes, context={\"added_attributes\":[\"a\"],\"metric_name\":\"some.metric.added.attrs\"}, message=Metric 'some.metric.added.attrs' cannot change required/recommended attributes (added '{\"a\"}'), level=Violation, signal_type=None, signal_name=None, provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "added_attributes": [
+            "a"
+          ],
+          "metric_name": "some.metric.added.attrs"
+        },
+        "id": "compatibility_metric_added_attributes",
+        "level": "violation",
+        "message": "Metric 'some.metric.added.attrs' cannot change required/recommended attributes (added '{\"a\"}')",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=compatibility_metric_changed_instrument, context={\"current_instrument\":\"gauge\",\"metric_name\":\"some.change.metric.items\",\"previous_instrument\":\"counter\"}, message=Metric 'some.change.metric.items' cannot change instrument (was 'counter', now: 'gauge'), level=Violation, signal_type=None, signal_name=None, provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "current_instrument": "gauge",
+          "metric_name": "some.change.metric.items",
+          "previous_instrument": "counter"
+        },
+        "id": "compatibility_metric_changed_instrument",
+        "level": "violation",
+        "message": "Metric 'some.change.metric.items' cannot change instrument (was 'counter', now: 'gauge')",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=compatibility_metric_changed_unit, context={\"current_unit\":\"ms\",\"metric_name\":\"some.change.metric.items\",\"previous_unit\":\"s\"}, message=Metric 'some.change.metric.items' cannot change unit (was 's', now: 'ms'), level=Violation, signal_type=None, signal_name=None, provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "current_unit": "ms",
+          "metric_name": "some.change.metric.items",
+          "previous_unit": "s"
+        },
+        "id": "compatibility_metric_changed_unit",
+        "level": "violation",
+        "message": "Metric 'some.change.metric.items' cannot change unit (was 's', now: 'ms')",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=compatibility_metric_missing, context={\"metric_name\":\"some.missing.metric\"}, message=Metric 'some.missing.metric' no longer exists in semantic conventions, level=Violation, signal_type=None, signal_name=None, provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "metric_name": "some.missing.metric"
+        },
+        "id": "compatibility_metric_missing",
+        "level": "violation",
+        "message": "Metric 'some.missing.metric' no longer exists in semantic conventions",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=compatibility_metric_missing, context={\"metric_name\":\"some.stable.change.metric\"}, message=Metric 'some.stable.change.metric' cannot change from stable, level=Violation, signal_type=None, signal_name=None, provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "metric_name": "some.stable.change.metric"
+        },
+        "id": "compatibility_metric_missing",
+        "level": "violation",
+        "message": "Metric 'some.stable.change.metric' cannot change from stable",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
+      }
+    }
+  }
+]
