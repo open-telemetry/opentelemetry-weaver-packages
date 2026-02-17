@@ -1,10 +1,10 @@
 version: '2'
 attributes:
-  - key: test.attribute
+  - key: namespace.test.attribute
     type: string
     brief: Test attribute
     stability: stable
-  - key: test_attribute
+  - key: namespace.test_attribute
     type: string
     brief: Colliding attribute
     stability: stable
@@ -14,5 +14,5 @@ attribute_groups:
     stability: stable
     visibility: public
     attributes:
-      - ref: test.attribute
-      - ref: test_attribute
+      - ref: namespace.test.attribute
+      - ref: namespace.test_attribute

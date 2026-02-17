@@ -1,20 +1,20 @@
 [
   {
     "diagnostic": {
-      "message": "Policy violation: id=naming_convention_attribute_constant_collision, context={\"attribute_key\":\"test.attribute\",\"colliding_attribute_key\":\"test_attribute\",\"constant_name\":\"test_attribute\"}, message=Attribute 'test.attribute' has the same constant name 'test_attribute' as 'test_attribute'., level=Violation, signal_type=None, signal_name=None, provenance: current"
+      "message": "Policy violation: id=naming_convention_attribute_constant_collision, context={\"attribute_key\":\"namespace.test.attribute\",\"colliding_attribute_key\":\"namespace.test_attribute\",\"constant_name\":\"namespace_test_attribute\"}, message=Attribute 'namespace.test.attribute' has the same constant name 'namespace_test_attribute' as 'namespace.test_attribute'., level=Violation, signal_type=None, signal_name=None, provenance: current"
     },
     "error": {
       "provenance": "current",
       "type": "policy_violation",
       "violation": {
         "context": {
-          "attribute_key": "test.attribute",
-          "colliding_attribute_key": "test_attribute",
-          "constant_name": "test_attribute"
+          "attribute_key": "namespace.test.attribute",
+          "colliding_attribute_key": "namespace.test_attribute",
+          "constant_name": "namespace_test_attribute"
         },
         "id": "naming_convention_attribute_constant_collision",
         "level": "violation",
-        "message": "Attribute 'test.attribute' has the same constant name 'test_attribute' as 'test_attribute'.",
+        "message": "Attribute 'namespace.test.attribute' has the same constant name 'namespace_test_attribute' as 'namespace.test_attribute'.",
         "signal_name": null,
         "signal_type": null,
         "type": "PolicyFinding"
@@ -23,20 +23,20 @@
   },
   {
     "diagnostic": {
-      "message": "Policy violation: id=naming_convention_attribute_constant_collision, context={\"attribute_key\":\"test_attribute\",\"colliding_attribute_key\":\"test.attribute\",\"constant_name\":\"test_attribute\"}, message=Attribute 'test_attribute' has the same constant name 'test_attribute' as 'test.attribute'., level=Violation, signal_type=None, signal_name=None, provenance: current"
+      "message": "Policy violation: id=naming_convention_attribute_constant_collision, context={\"attribute_key\":\"namespace.test_attribute\",\"colliding_attribute_key\":\"namespace.test.attribute\",\"constant_name\":\"namespace_test_attribute\"}, message=Attribute 'namespace.test_attribute' has the same constant name 'namespace_test_attribute' as 'namespace.test.attribute'., level=Violation, signal_type=None, signal_name=None, provenance: current"
     },
     "error": {
       "provenance": "current",
       "type": "policy_violation",
       "violation": {
         "context": {
-          "attribute_key": "test_attribute",
-          "colliding_attribute_key": "test.attribute",
-          "constant_name": "test_attribute"
+          "attribute_key": "namespace.test_attribute",
+          "colliding_attribute_key": "namespace.test.attribute",
+          "constant_name": "namespace_test_attribute"
         },
         "id": "naming_convention_attribute_constant_collision",
         "level": "violation",
-        "message": "Attribute 'test_attribute' has the same constant name 'test_attribute' as 'test.attribute'.",
+        "message": "Attribute 'namespace.test_attribute' has the same constant name 'namespace_test_attribute' as 'namespace.test.attribute'.",
         "signal_name": null,
         "signal_type": null,
         "type": "PolicyFinding"
