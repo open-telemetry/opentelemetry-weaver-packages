@@ -1,7 +1,7 @@
 [
   {
     "diagnostic": {
-      "message": "Policy violation: id=stability_event_experimental_attribute, context={\"attribute_key\":\"experimental.attr\",\"event_name\":\"stable.event\",\"requirement_level\":\"required\"}, message=Stable event 'stable.event' references experimental attribute 'experimental.attr' with requirement level 'required', only 'opt_in' level is allowed, level=Violation, signal_type=None, signal_name=None, provenance: current"
+      "message": "Policy violation: id=stability_event_experimental_attribute, context={\"attribute_key\":\"experimental.attr\",\"requirement_level\":\"required\"}, message=Stable event 'stable.event' references experimental attribute 'experimental.attr' with requirement level 'required', only 'opt_in' level is allowed, level=Violation, signal_type=Some(\"event\"), signal_name=Some(\"stable.event\"), provenance: current"
     },
     "error": {
       "provenance": "current",
@@ -9,14 +9,13 @@
       "violation": {
         "context": {
           "attribute_key": "experimental.attr",
-          "event_name": "stable.event",
           "requirement_level": "required"
         },
         "id": "stability_event_experimental_attribute",
         "level": "violation",
         "message": "Stable event 'stable.event' references experimental attribute 'experimental.attr' with requirement level 'required', only 'opt_in' level is allowed",
-        "signal_name": null,
-        "signal_type": null,
+        "signal_name": "stable.event",
+        "signal_type": "event",
         "type": "PolicyFinding"
       }
     }

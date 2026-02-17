@@ -20,7 +20,9 @@ deny contains finding if {
         "id": "stability_entity_no_identity",
         "message": sprintf("Stable entity '%s' has no identifying attributes", [entity.type]),
         "level": "violation",
-        "context": { "entity_type": entity.type },
+        "context": {},
+        "signal_type": "entity",
+        "signal_name": entity.type,
     }
 }
 
@@ -34,7 +36,8 @@ deny contains finding if {
         "id": "stability_entity_no_identity",
         "message": sprintf("Stable entity '%s' has no identifying attributes", [entity.type]),
         "level": "violation",
-        "context": { "entity_type": entity.type },
+        "signal_type": "entity",
+        "signal_name": entity.type,
     }
 }
 
@@ -52,10 +55,11 @@ deny contains finding if {
         "message": sprintf("Stable metric '%s' references experimental attribute '%s' with requirement level '%s', only 'opt_in' level is allowed", [metric.name, attr.key, attr.requirement_level]),
         "level": "violation",
         "context": {
-            "metric_name": metric.name,
             "attribute_key": attr.key,
             "requirement_level": attr.requirement_level
-        }
+        },
+        "signal_type": "metric",
+        "signal_name": metric.name,
     }
 }
 
@@ -73,10 +77,11 @@ deny contains finding if {
         "message": sprintf("Stable event '%s' references experimental attribute '%s' with requirement level '%s', only 'opt_in' level is allowed", [event.name, attr.key, attr.requirement_level]),
         "level": "violation",
         "context": {
-            "event_name": event.name,
             "attribute_key": attr.key,
             "requirement_level": attr.requirement_level
-        }
+        },
+        "signal_type": "event",
+        "signal_name": event.name,
     }
 }
 
@@ -94,10 +99,11 @@ deny contains finding if {
         "message": sprintf("Stable span '%s' references experimental attribute '%s' with requirement level '%s', only 'opt_in' level is allowed", [span.type, attr.key, attr.requirement_level]),
         "level": "violation",
         "context": {
-            "span_type": span.type,
             "attribute_key": attr.key,
             "requirement_level": attr.requirement_level
-        }
+        },
+        "signal_type": "span",
+        "signal_name": span.type,
     }
 }
 
@@ -116,9 +122,10 @@ deny contains finding if {
         "message": sprintf("Stable entity '%s' references experimental attribute '%s' in %s with requirement level '%s', only 'opt_in' level is allowed", [entity.type, attr.key, list_name, attr.requirement_level]),
         "level": "violation",
         "context": {
-            "entity_type": entity.type,
             "attribute_key": attr.key,
             "requirement_level": attr.requirement_level
-        }
+        },
+        "signal_type": "entity",
+        "signal_name": entity.type,
     }
 }

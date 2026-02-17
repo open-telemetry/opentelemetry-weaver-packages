@@ -10,9 +10,20 @@ Owners: @open-telemetry/specs-semconv-maintainers
 
 ```
 $ weaver registry check \
+    --v2 \
     -p https://github.com/open-telemetry/opentelemetry-weaver-packages.git[policies/check/stability] \
     -r {your repository} \
     --baseline-registry {your_baseline_version}
+```
+
+For example:
+
+```
+$ weaver registry check \
+  --v2 \
+  -p https://github.com/open-telemetry/opentelemetry-weaver-packages.git[policies/check/stability] \
+  -r https://github.com/open-telemetry/semantic-conventions.git[model] \
+  --baseline-registry https://github.com/open-telemetry/semantic-conventions/archive/refs/tags/v$(LATEST_RELEASED_SEMCONV_VERSION).zip[model]
 ```
 
 ## Details

@@ -212,9 +212,10 @@ deny contains finding if {
         "message": sprintf("Metric '%s' was renamed to '%s', but the new metric does not exist or is deprecated.", [metric.name, new_name]),
         "level": "violation",
         "context": {
-            "metric_name": metric.name,
             "renamed_to": new_name
-        }
+        },
+        "signal_type": "metric",
+        "signal_name": metric.name,
     }
 }
 
@@ -230,9 +231,10 @@ deny contains finding if {
         "message": sprintf("Event '%s' was renamed to '%s', but the new event does not exist or is deprecated.", [event.name, new_name]),
         "level": "violation",
         "context": {
-            "event_name": event.name,
             "renamed_to": new_name
-        }
+        },
+        "signal_type": "event",
+        "signal_name": event.name,
     }
 }
 
@@ -248,9 +250,10 @@ deny contains finding if {
         "message": sprintf("Span '%s' was renamed to '%s', but the new span does not exist or is deprecated.", [span.type, new_name]),
         "level": "violation",
         "context": {
-            "span_type": span.type,
             "renamed_to": new_name
-        }
+        },
+        "signal_type": "span",
+        "signal_name": span.type,
     }
 }
 
@@ -266,9 +269,10 @@ deny contains finding if {
         "message": sprintf("Entity '%s' was renamed to '%s', but the new entity does not exist or is deprecated.", [entity.type, new_name]),
         "level": "violation",
         "context": {
-            "entity_type": entity.type,
             "renamed_to": new_name
-        }
+        },
+        "signal_type": "entity",
+        "signal_name": entity.type,
     }
 }
 
