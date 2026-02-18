@@ -8,17 +8,15 @@ deny contains finding if {
     name := metric.name
     not metric.deprecated
 
-    exceptions := {
-        # legacy hardware metrics that are known to cause collisions
-        "hw.battery.charge", "hw.cpu.speed", "hw.fan.speed", "hw.temperature", "hw.voltage"
-    }
-    not exceptions[name]
-
     prefix := concat("", [name, "."])
 
     some other_metric in input.registry.metrics
     other_name := other_metric.name
     not other_metric.deprecated
+
+    # Allow exceptions on annotations from either metric.
+    exceptions := { policy | some policy in metric.annotations.naming_conventions.policy_exceptions } | { policy | some policy in other_metric.annotations.naming_conventions.policy_exceptions }
+    not exceptions["metric_namespace_collision"]
 
     name != other_name
     startswith(other_name, prefix)

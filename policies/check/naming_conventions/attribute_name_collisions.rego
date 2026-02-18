@@ -22,7 +22,7 @@ deny contains finding if {
     # Colliding constant name
     replace(other_attr.key, ".", "_") == const_name
 
-    # Not excluded
+    # Not excluded - we support code_genration attribute for semconv.
     not other_attr.annotations["code_generation"]["exclude"]
 
     finding := {
