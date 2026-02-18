@@ -160,7 +160,7 @@ run_policy_test() {
     BASELINE_FLAG="--baseline-registry base"
   fi
 
-  # First make sure model files are correct
+  # First make sure model files are correct.  Here diagnostic output will be about YAML model issues.
   RAW_CHECK_MODEL_OUTPUT="${OBSERVED_DIR}/model-check.stdout"
   ${WEAVER} registry check -r current ${BASELINE_FLAG} --quiet --v2 > "${RAW_CHECK_MODEL_OUTPUT}" 2>&1
   if [ $? -ne 0 ]; then
@@ -168,8 +168,8 @@ run_policy_test() {
     cat "${RAW_CHECK_MODEL_OUTPUT}"
     exit 1
   fi
-  #
-  RAW_DIAGNOSTIC_OUTPUT="${OBSERVED_DIR}/diagnostic-output.raw.json"
+  # Now we run the policy and check the full output.
+  RAW_DIAGNOSTIC_OUTPUT="${OBSERVED_DIR}/diagnostic-output.raw"
   NO_COLOR=1 ${WEAVER} registry check \
     -r current \
     ${BASELINE_FLAG} \
