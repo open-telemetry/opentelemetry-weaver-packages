@@ -60,7 +60,9 @@ deny contains finding if {
         "id": "debug_entity",
         "message": sprintf("entity: %s", [entity]),
         "level": "violation",
-        "context": { "entity": entity }
+        "context": { "extra_property": "some value" }
+        "signal_type": "entity"
+        "signal_name": entity.type
     }
 }
 ```
