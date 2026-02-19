@@ -1,0 +1,7 @@
+version: '2'
+metrics:
+  - name: test.metric
+    brief: A test metric without period
+    stability: stable
+    instrument: counter
+    unit: '1'

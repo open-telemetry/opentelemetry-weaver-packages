@@ -1,0 +1,41 @@
+version: '2'
+attributes:
+  - key: valid.attr
+    type: string
+    brief: Valid name format
+    stability: stable
+  - key: has.namespace
+    type: string
+    brief: Has namespace
+    stability: stable
+  - key: test.enum
+    type: 
+      members:
+        - id: valid_member
+          value: 1
+    brief: Enum with valid member id
+    stability: stable
+  - key: something.else
+    type: string
+    brief: A valid attribute.
+    stability: stable
+
+metrics:
+  - name: valid.metric
+    brief: Valid metric name.
+    stability: stable
+    instrument: counter
+    unit: '1'
+
+events:
+  - name: valid.event
+    brief: Event with valid name.
+    stability: stable
+    attributes:
+      - ref: something.else
+
+entities:
+  - type: valid.entity
+    brief: Valid entity type.
+    stability: stable
+    identity: []

@@ -1,0 +1,39 @@
+version: '2'
+attributes:
+  - key: nonamespace
+    type: string
+    brief: Missing namespace
+    stability: stable
+  - key: test.enum
+    type: 
+      members:
+        - id: Invalid_Member
+          value: 1
+    brief: Enum with invalid member id
+    stability: stable
+
+metrics:
+  - name: Invalid_Metric
+    brief: Invalid metric name (should be dot-separated)
+    stability: stable
+    instrument: counter
+    unit: '1'
+
+events:
+  - name: Invalid_Event
+    brief: Invalid event name
+    stability: stable
+
+entities:
+  - type: Invalid_Entity
+    brief: Invalid entity type
+    stability: stable
+    identity: []
+
+spans:
+  - type: Invalid_Span
+    name:
+      note: TBD
+    kind: client
+    stability: stable
+    brief: Invalid span type

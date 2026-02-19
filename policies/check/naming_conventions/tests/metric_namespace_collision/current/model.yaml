@@ -1,0 +1,26 @@
+version: '2'
+metrics:
+  - name: test.metric
+    brief: A test metric.
+    stability: stable
+    instrument: counter
+    unit: '1'
+  - name: test.metric.colliding
+    brief: A colliding metric.
+    stability: stable
+    instrument: counter
+    unit: '1'
+  - name: hw.battery.charge
+    brief: A colliding metric.
+    stability: stable
+    instrument: counter
+    unit: '1'
+    annotations:
+      naming_conventions:
+        policy_exceptions:
+          - metric_namespace_collision
+  - name: hw.battery
+    brief: A colliding metric.
+    stability: stable
+    instrument: counter
+    unit: '1'
