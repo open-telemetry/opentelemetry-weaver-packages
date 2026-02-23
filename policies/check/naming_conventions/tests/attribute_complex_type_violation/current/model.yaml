@@ -19,3 +19,9 @@ metrics:
     stability: stable
     attributes:
       - ref: test.complex
+entities:
+  - type: entity.test
+    brief: An entity with complexity.
+    stability: stable
+    identity:
+      - ref: test.complex
