@@ -25,7 +25,7 @@ deny contains finding if {
         "context": {
             "attribute_key": attr.key,
         },
-        "message": sprintf("Attribute name '%s' is invalid. Attribute name %s", [attr.key, invalid_name_helper]),
+        "message": sprintf("Attribute key '%s' is invalid. Attribute key %s", [attr.key, invalid_name_helper]),
         "level": "violation",
     }
 }
