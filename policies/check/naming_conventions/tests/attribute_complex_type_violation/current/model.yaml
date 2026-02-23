@@ -11,3 +11,11 @@ attribute_groups:
     visibility: public
     attributes:
       - ref: test.complex
+metrics:
+  - name: metric.test
+    brief: A metric with complexity.
+    instrument: histogram
+    unit: s
+    stability: stable
+    attributes:
+      - ref: test.complex

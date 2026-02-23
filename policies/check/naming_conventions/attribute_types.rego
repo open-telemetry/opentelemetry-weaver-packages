@@ -15,7 +15,6 @@ deny contains finding if {
         "id": "naming_convention_attribute_complex_type_violation",
         "context": {
             "attribute_key": attr.key,
-            "metric_name": metric.name,
             "attribute_type": attr.type,
         },
         "message": sprintf("Attribute '%s' has type '%s' and is referenced on metric '%s'. Complex attributes are only allowed on events and spans.", [attr.key, attr.type, metric.name]),
@@ -35,7 +34,6 @@ deny contains finding if {
         "id": "naming_convention_attribute_complex_type_violation",
         "context": {
             "attribute_key": attr.key,
-            "entity_type": entity.type,
             "attribute_type": attr.type,
         },
         "message": sprintf("Attribute '%s' has type '%s' and is used as identity on entity '%s'. Complex attributes are only allowed on events and spans.", [attr.key, attr.type, entity.type]),
@@ -55,7 +53,6 @@ deny contains finding if {
         "id": "naming_convention_attribute_complex_type_violation",
         "context": {
             "attribute_key": attr.key,
-            "entity_type": entity.type,
             "attribute_type": attr.type,
         },
         "message": sprintf("Attribute '%s' has type '%s' and is used in description on entity '%s'. Complex attributes are only allowed on events and spans.", [attr.key, attr.type, entity.type]),

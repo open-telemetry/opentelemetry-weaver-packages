@@ -1,6 +1,27 @@
 [
   {
     "diagnostic": {
+      "message": "Policy violation: id=naming_convention_attribute_complex_type_violation, context={\"attribute_key\":\"test.complex\",\"attribute_type\":\"template[any]\"}, message=Attribute 'test.complex' has type 'template[any]' and is referenced on metric 'metric.test'. Complex attributes are only allowed on events and spans., level=Violation, signal_type=Some(\"metric\"), signal_name=Some(\"metric.test\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_key": "test.complex",
+          "attribute_type": "template[any]"
+        },
+        "id": "naming_convention_attribute_complex_type_violation",
+        "level": "violation",
+        "message": "Attribute 'test.complex' has type 'template[any]' and is referenced on metric 'metric.test'. Complex attributes are only allowed on events and spans.",
+        "signal_name": "metric.test",
+        "signal_type": "metric",
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
       "message": "Policy violation: id=naming_convention_attribute_complex_type_violation, context={\"attribute_key\":\"test.complex\",\"attribute_type\":\"template[any]\",\"group_id\":\"registry.test\"}, message=Attribute 'test.complex' has type 'template[any]' and is referenced on group 'registry.test'. Complex attributes are only allowed on events and spans., level=Violation, signal_type=None, signal_name=None, provenance: current"
     },
     "error": {
