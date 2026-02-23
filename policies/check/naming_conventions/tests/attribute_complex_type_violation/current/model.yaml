@@ -1,0 +1,27 @@
+version: '2'
+attributes:
+  - key: test.complex
+    type: template[any]
+    brief: A complex attribute
+    stability: stable
+attribute_groups:
+  - id: registry.test
+    brief: Test group
+    stability: stable
+    visibility: public
+    attributes:
+      - ref: test.complex
+metrics:
+  - name: metric.test
+    brief: A metric with complexity.
+    instrument: histogram
+    unit: s
+    stability: stable
+    attributes:
+      - ref: test.complex
+entities:
+  - type: entity.test
+    brief: An entity with complexity.
+    stability: stable
+    identity:
+      - ref: test.complex
