@@ -24,7 +24,6 @@ deny contains finding if {
     finding := {
         "id": "naming_convention_metric_namespace_collision",
         "context": {
-            "metric_name": name,
             "colliding_metric_name": other_name,
         },
         "message": sprintf("Metric with name '%s' is used as a namespace in the following metric '%s'.", [name, other_name]),

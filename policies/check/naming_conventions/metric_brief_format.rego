@@ -17,7 +17,6 @@ deny contains finding if {
     finding := {
         "id": "naming_convention_metric_brief_period",
         "context": {
-            "metric_name": metric.name,
             "brief": trimmed_brief,
         },
         "message": sprintf("Non-empty metric brief '%s' must end with a period (.).", [trimmed_brief]),

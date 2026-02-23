@@ -1,15 +1,14 @@
 [
   {
     "diagnostic": {
-      "message": "Policy violation: id=naming_convention_metric_namespace_collision, context={\"colliding_metric_name\":\"test.metric.colliding\",\"metric_name\":\"test.metric\"}, message=Metric with name 'test.metric' is used as a namespace in the following metric 'test.metric.colliding'., level=Violation, signal_type=Some(\"metric\"), signal_name=Some(\"test.metric\"), provenance: current"
+      "message": "Policy violation: id=naming_convention_metric_namespace_collision, context={\"colliding_metric_name\":\"test.metric.colliding\"}, message=Metric with name 'test.metric' is used as a namespace in the following metric 'test.metric.colliding'., level=Violation, signal_type=Some(\"metric\"), signal_name=Some(\"test.metric\"), provenance: current"
     },
     "error": {
       "provenance": "current",
       "type": "policy_violation",
       "violation": {
         "context": {
-          "colliding_metric_name": "test.metric.colliding",
-          "metric_name": "test.metric"
+          "colliding_metric_name": "test.metric.colliding"
         },
         "id": "naming_convention_metric_namespace_collision",
         "level": "violation",

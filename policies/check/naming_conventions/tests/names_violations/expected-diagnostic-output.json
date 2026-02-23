@@ -114,15 +114,14 @@
   },
   {
     "diagnostic": {
-      "message": "Policy violation: id=naming_convention_metric_brief_period, context={\"brief\":\"Invalid metric name (should be dot-separated)\",\"metric_name\":\"Invalid_Metric\"}, message=Non-empty metric brief 'Invalid metric name (should be dot-separated)' must end with a period (.)., level=Violation, signal_type=Some(\"metric\"), signal_name=Some(\"Invalid_Metric\"), provenance: current"
+      "message": "Policy violation: id=naming_convention_metric_brief_period, context={\"brief\":\"Invalid metric name (should be dot-separated)\"}, message=Non-empty metric brief 'Invalid metric name (should be dot-separated)' must end with a period (.)., level=Violation, signal_type=Some(\"metric\"), signal_name=Some(\"Invalid_Metric\"), provenance: current"
     },
     "error": {
       "provenance": "current",
       "type": "policy_violation",
       "violation": {
         "context": {
-          "brief": "Invalid metric name (should be dot-separated)",
-          "metric_name": "Invalid_Metric"
+          "brief": "Invalid metric name (should be dot-separated)"
         },
         "id": "naming_convention_metric_brief_period",
         "level": "violation",
