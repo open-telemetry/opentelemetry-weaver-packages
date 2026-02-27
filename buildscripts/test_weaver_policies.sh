@@ -137,7 +137,7 @@ check_output() {
 run_policy_test() {
   TEST_DIR="$1"
   POLICY_PACKAGE_DIR="$2"
-  TEST_NAME=$(realpath --relative-to="$POLICY_PACKAGE_DIR" "$TEST_DIR")
+  TEST_NAME="${TEST_DIR#${POLICY_PACKAGE_DIR}/}"
   local short_test_name="${TEST_NAME#tests/}"
   if ! matches_test_filter "$short_test_name"; then
     return
@@ -217,7 +217,7 @@ run_all_policy_package_tests() {
   if [ -d "policies" ]; then
     for package in ${CUR}/policies/check/*; do
       if [ -d "${package}" ]; then
-        PACKAGE_NAME=$(realpath --relative-to="$package/../.." "$package")
+        PACKAGE_NAME="$(basename "$(dirname "${package}")")/$(basename "${package}")"
         echo "---==== Policy Package - ${PACKAGE_NAME} ====---"
         if [ ! -f "${package}/README.md" ]; then
           log_warn "Missing README"

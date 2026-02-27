@@ -67,15 +67,16 @@ check_output() {
 run_template_test() {
   TEST_DIR="$1"
   TEMPLATE_PACKAGE_DIR="$2"
-  TEST_NAME=$(realpath --relative-to="$TEMPLATE_PACKAGE_DIR" "$TEST_DIR")
   TEMPLATES_ROOT_DIR=$(realpath "${TEMPLATE_PACKAGE_DIR}/../..")
-  TEMPLATE_NAME=$(realpath --relative-to="$TEMPLATES_ROOT_DIR" "$TEMPLATE_PACKAGE_DIR")
-  echo "-> Running test [${TEST_NAME}] ..."
+  TEST_NAME="${TEST_DIR#${TEMPLATE_PACKAGE_DIR}/}"
+  TEMPLATE_NAME="${TEMPLATE_PACKAGE_DIR#${TEMPLATES_ROOT_DIR}/}"
+  echo "-> Running test [${TEMPLATE_NAME}/${TEST_NAME}] ..."
   OBSERVED_DIR="${TEMPLATE_PACKAGE_DIR}/observed-output/${TEST_NAME}"
   rm -rf "${OBSERVED_DIR}"
   mkdir -p "${OBSERVED_DIR}"
   # Note: We force ourselves into test dir, so provenance of files is always consistently relative.
   pushd "${TEST_DIR}"
+  echo "  Running: ${WEAVER} registry generate -r ${REGISTRY_PATH} --v2 --quiet --templates=${TEMPLATES_ROOT_DIR} ${TEMPLATE_NAME} ${OBSERVED_DIR}"
   NO_COLOR=1 ${WEAVER} registry generate \
     -r registry \
     --v2 \
@@ -88,7 +89,7 @@ run_template_test() {
 #   if [ $? -ne 0 ]; then
 #     cat "${OBSERVED_DIR}/stderr"
 #   fi
-  check_output "${OBSERVED_DIR}" "${TEST_DIR}/expected" "${TEST_NAME} - Template Output"
+  check_output "${OBSERVED_DIR}" "${TEST_DIR}/expected" "${TEMPLATE_NAME}/${TEST_NAME} - Template Output"
 }
 
 # Runs a set of policy tests for a given package.
@@ -112,12 +113,12 @@ run_all_policy_template_tests() {
   if [ -d "templates" ]; then
     for package in ${CUR}/templates/*/*; do
       if [ -d "${package}" ]; then
-        PACKAGE_NAME=$(realpath --relative-to="$package/../.." "$package")
+        PACKAGE_NAME="$(basename "$(dirname "${package}")")/$(basename "${package}")"
         echo "---==== Template Package - ${PACKAGE_NAME} ====---"
         if [ ! -f "${package}/README.md" ]; then
           log_warn "Missing README"
         fi
-        if [ -d "${package}/tests" ]; then          
+        if [ -d "${package}/tests" ]; then
           run_tests "${package}"
         else
           echo "⚠️  SKIPPED TESTS: No tests directory"

@@ -1,0 +1,107 @@
+file_format: definition/2
+attributes:
+  - key: cache.key
+    type: string
+    brief: The key identifying the cache entry
+    stability: development
+
+  - key: cache.ttl
+    type: double
+    brief: Time-to-live of the cache entry in seconds
+    stability: development
+
+  - key: cache.miss
+    type: boolean
+    brief: Indicates whether the cache operation resulted in a cache miss
+    stability: development
+
+  - key: cache.operation.name
+    type:
+      members:
+        - id: get
+          value: get
+          brief: Get a value from the cache
+        - id: set
+          value: set
+          brief: Set a value in the cache
+        - id: delete
+          value: delete
+          brief: Delete a value from the cache
+    brief: The name of the cache operation
+    stability: development
+
+metrics:
+  - name: cache.client.operation.duration
+    brief: Duration of cache operations.
+    stability: development
+    instrument: histogram
+    unit: s
+    annotations:
+      code_generation:
+        metric_value_type: double
+    attributes:
+      - ref: cache.operation.name
+        requirement_level: required
+      - ref: cache.miss
+        requirement_level:
+          conditionally_required: If the cache operation is a "get" operation and if the value is true.
+      - ref: server.address
+        requirement_level: recommended
+      - ref: server.port
+        requirement_level: recommended
+      - ref: error.type
+        requirement_level:
+          conditionally_required: if and only if operation has failed
+
+  - name: cache.client.operation.active
+    brief: Number of active cache operations in progress.
+    stability: development
+    instrument: updowncounter
+    unit: "{operation}"
+    annotations:
+      code_generation:
+        metric_value_type: int
+    attributes:
+      - ref: server.address
+        requirement_level: recommended
+      - ref: server.port
+        requirement_level: recommended
+      - ref: cache.operation.name
+        requirement_level: required
+
+spans:
+  - type: cache.client.operation
+    name:
+      note: "{cache.operation.name}"
+    brief: Describes a cache operation
+    kind: client
+    stability: stable
+    attributes:
+      - ref: cache.key
+        requirement_level: required
+      - ref: cache.ttl
+        requirement_level: recommended
+      - ref: cache.miss
+        requirement_level:
+          conditionally_required: If the cache operation is a "get" operation and if the value is true.
+      - ref: cache.operation.name
+        requirement_level: required
+        sampling_relevant: true
+      - ref: server.address
+        requirement_level: recommended
+      - ref: server.port
+        requirement_level: recommended
+      - ref: error.type
+        requirement_level:
+          conditionally_required: if and only if operation has failed
+events:
+  - name: cache.client.operation.exception
+    brief: An exception that occurred during a cache operation
+    stability: stable
+    attributes:
+      - ref: exception.type
+        requirement_level: required
+      - ref: exception.message
+        requirement_level: required
+      - ref: exception.stacktrace
+        requirement_level: recommended
