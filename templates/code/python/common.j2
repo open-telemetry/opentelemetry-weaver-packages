@@ -1,0 +1,14 @@
+{%- macro attr_key(attr) -%}
+{%- if attr.key | split(".") | first == ctx.root_namespace -%}
+{{ attr.key | screaming_snake_case }}
+{%- else -%}
+"{{ attr.key }}"
+{%- endif -%}
+{%- endmacro -%}
+
+{%- macro import_deprecated(semconv) -%}
+    {%- if (semconv | select("deprecated") | list | count > 0) -%}
+from typing_extensions import deprecated
+    {%- endif -%}
+{%- endmacro-%}
+

@@ -1,0 +1,38 @@
+{% import 'common.j2' as c -%}
+from contextlib import AbstractContextManager
+from typing import Optional
+from opentelemetry.trace import Tracer, Span, SpanKind
+
+
+{% for span in ctx.spans %}
+{%- set func_name = span.type | replace(".", "_") %}
+{%- set sampling_attrs = span.attributes | selectattr("sampling_relevant") | list %}
+{%- for attr in sampling_attrs if attr.key | split(".") | first == ctx.root_namespace %}
+{%- if loop.first %}
+from .attributes import {% endif %}{{ attr.key | screaming_snake_case }}{% if not loop.last %}, {% endif %}
+{%- endfor %}
+
+def start_{{ func_name }}(
+    tracer: Tracer,
+    name: str,
+{%- for attr in sampling_attrs | required %}
+    {{ attr.key | replace(".", "_") }}: {{ attr.type | map_text("py_attr_type", "str") }},
+{%- endfor %}
+{%- for attr in sampling_attrs | not_required %}
+    {{ attr.key | replace(".", "_") }}: Optional[{{ attr.type | map_text("py_attr_type", "str") }}] = None,
+{%- endfor %}
+) -> AbstractContextManager[Span]:
+    {%- if span.brief %}
+    """{{ span.brief | trim }}"""
+    {%- endif %}
+    attrs = {
+{%- for attr in sampling_attrs %}
+        {{ c.attr_key(attr) | trim }}: {{ attr.key | replace(".", "_") }},
+{%- endfor %}
+    }
+    return tracer.start_as_current_span(
+        name,
+        kind={{ span.kind | map_text("py_span_kind") }},
+        attributes={k: v for k, v in attrs.items() if v is not None},
+    )
+{% endfor %}

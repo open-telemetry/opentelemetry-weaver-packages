@@ -1,0 +1,104 @@
+{% import 'common.j2' as c -%}
+
+{%- macro write_docstring(metric) -%}
+    {%- if metric is deprecated %}
+Deprecated: {{metric.deprecated.note | comment(format="python")}}.
+    {%- else -%}
+        {%- if metric.brief %}
+{{metric.brief | comment(format="python")}}
+        {%- endif %}
+Instrument: {{ metric.instrument }}
+Unit: {{ metric.unit }}
+        {%- if metric.note %}
+Note: {{metric.note | comment(format="python")}}.
+        {%- endif -%}
+    {%- endif -%}
+{%- endmacro -%}
+
+from typing import Final, Optional
+from opentelemetry.metrics import Meter
+
+{%- set ns = namespace(has_gauge=false) %}
+{%- for metric in ctx.metrics %}
+{%- if metric.instrument == "gauge" %}{%- set ns.has_gauge = true %}{%- endif %}
+{%- endfor %}
+{%- if ns.has_gauge %}
+from typing import Callable, Generator, Iterable, Sequence, Union
+from opentelemetry.metrics import CallbackOptions, ObservableGauge, Observation
+
+# pylint: disable=invalid-name
+CallbackT = Union[
+    Callable[[CallbackOptions], Iterable[Observation]],
+    Generator[Iterable[Observation], CallbackOptions, None],
+]
+{%- endif %}
+
+{%- set imported = namespace(attrs=[]) %}
+{%- for metric in ctx.metrics %}
+{%- for attr in metric.attributes if attr.key | split(".") | first == ctx.root_namespace %}
+{%- set const = attr.key | screaming_snake_case %}
+{%- if const not in imported.attrs %}
+{%- set imported.attrs = imported.attrs + [const] %}
+{%- endif %}
+{%- endfor %}
+{%- endfor %}
+{%- if imported.attrs %}
+from .attributes import {{ imported.attrs | join(", ") }}
+{%- endif %}
+
+{%- for metric in ctx.metrics %}
+{% set const_name = metric.name | screaming_snake_case %}
+{{const_name}}: Final = "{{metric.name}}"
+{%- set doc_string = write_docstring(metric) -%}
+{%- if doc_string %}
+"""{{doc_string}}
+"""
+{%- endif %}
+
+{%- set class_name = metric.name | pascal_case %}
+{%- set metric_attrs = metric.attributes | list %}
+
+class {{class_name}}:
+    {%- set doc_string = write_docstring(metric) %}
+    {%- if doc_string %}
+    """{{doc_string}}
+    """
+    {%- endif %}
+
+    {%- if metric.instrument == "gauge" %}
+    def __init__(self, meter: Meter, callbacks: Optional[Sequence[CallbackT]] = None) -> None:
+        self._instrument = meter.create_observable_gauge(
+            name={{ const_name }},
+            callbacks=callbacks,
+            description="{{ metric.brief | trim | replace('\n', ' ') if metric.brief else "" }}",
+            unit="{{ metric.unit }}",
+        )
+    {%- else %}
+    def __init__(self, meter: Meter) -> None:
+        self._instrument = meter.create_{{ metric.instrument | map_text("py_instrument_factory")}}(
+            name={{ const_name }},
+            description="{{ metric.brief | trim | replace('\n', ' ') if metric.brief else "" }}",
+            unit="{{ metric.unit }}",
+        )
+
+    def {{ metric.instrument | map_text("py_instrument_method") }}(
+        self,
+        amount: {{ metric.annotations.code_generation.metric_value_type | map_text("py_metric_value_type", "float") }},
+{%- for attr in metric_attrs | required %}
+        {{ attr.key | replace(".", "_") }}: {{ attr.type | map_text("py_attr_type", "str") }},
+{%- endfor %}
+{%- for attr in metric_attrs | not_required %}
+        {{ attr.key | replace(".", "_") }}: Optional[{{ attr.type | map_text("py_attr_type", "str") }}] = None,
+{%- endfor %}
+    ) -> None:
+        {%- if metric.brief %}
+        """{{ metric.brief | trim }}"""
+        {%- endif %}
+        attrs = {
+{%- for attr in metric_attrs %}
+            {{ c.attr_key(attr) | trim }}: {{ attr.key | replace(".", "_") }},
+{%- endfor %}
+        }
+        self._instrument.{{ metric.instrument | map_text("py_instrument_method") }}(amount, attributes={k: v for k, v in attrs.items() if v is not None})
+    {%- endif %}
+{% endfor %}

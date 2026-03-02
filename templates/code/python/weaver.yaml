@@ -1,0 +1,66 @@
+templates:
+  - template: schema_init.j2
+    application_mode: single
+    file_name: "__init__.py"
+  - template: init.j2
+    filter: semconv_grouped_attributes({"v2":true})
+    application_mode: each
+    file_name: "{{ ctx.root_namespace | snake_case }}/__init__.py"
+  - template: attributes.j2
+    filter: semconv_grouped_attributes({"v2":true})
+    application_mode: each
+    file_name: "{{ ctx.root_namespace | snake_case }}/attributes.py"
+  - template: metrics.j2
+    filter: semconv_grouped_metrics({"v2":true})
+    application_mode: each
+    file_name: "{{ ctx.root_namespace | snake_case }}/metrics.py"
+  - template: spans.j2
+    filter: >
+      semconv_signal("span"; {"v2":true})
+      | group_by(.root_namespace)
+      | map({ root_namespace: .[0].root_namespace, spans: . })
+    application_mode: each
+    file_name: "{{ ctx.root_namespace | snake_case }}/spans.py"
+  - template: events.j2
+    filter: >
+      semconv_signal("event"; {"v2":true})
+      | group_by(.root_namespace)
+      | map({ root_namespace: .[0].root_namespace, events: . })
+    application_mode: each
+    file_name: "{{ ctx.root_namespace | snake_case }}/events.py"
+comment_formats:
+  python:
+    format: markdown
+    trim: true
+    escape_backslashes: true
+    escape_square_brackets: false
+
+text_maps:
+  py_attr_type:
+    int: int
+    double: float
+    boolean: bool
+  py_span_kind:
+    internal: SpanKind.INTERNAL
+    server: SpanKind.SERVER
+    client: SpanKind.CLIENT
+    producer: SpanKind.PRODUCER
+    consumer: SpanKind.CONSUMER
+  py_instrument_factory:
+    counter: counter
+    histogram: histogram
+    updowncounter: up_down_counter
+    gauge: observable_gauge
+  py_instrument_type:
+    counter: Counter
+    histogram: Histogram
+    updowncounter: UpDownCounter
+    gauge: ObservableGauge
+  py_instrument_method:
+    counter: add
+    histogram: record
+    updowncounter: add
+    gauge: set
+  py_metric_value_type:
+    int: int
+    double: float

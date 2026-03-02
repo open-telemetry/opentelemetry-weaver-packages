@@ -1,0 +1,75 @@
+{% import 'common.j2' as c -%}
+from opentelemetry._logs import Logger, SeverityNumber
+{%- set ns = namespace(has_exception=false, has_optional=false) %}
+{%- for event in ctx.events %}
+{%- if event.name.endswith("exception") %}{%- set ns.has_exception = true %}{%- endif %}
+{%- for attr in event.attributes | not_required if not attr.key.startswith("exception.") %}
+{%- set ns.has_optional = true %}
+{%- endfor %}
+{%- endfor %}
+{%- if ns.has_optional %}
+from typing import Optional
+{%- endif %}
+{%- if ns.has_exception %}
+import traceback
+{%- endif %}
+
+
+{% for event in ctx.events %}
+{%- set func_name = event.name | replace(".", "_") %}
+{%- set is_exception_event = event.name.endswith("exception") %}
+{%- set event_ns = namespace(exception_attrs=[], other_attrs=[]) %}
+{%- for attr in event.attributes %}
+{%- if attr.key.startswith("exception.") %}
+{%- set event_ns.exception_attrs = event_ns.exception_attrs + [attr] %}
+{%- else %}
+{%- set event_ns.other_attrs = event_ns.other_attrs + [attr] %}
+{%- endif %}
+{%- endfor %}
+{%- for attr in event_ns.other_attrs if attr.key | split(".") | first == ctx.root_namespace %}
+{%- if loop.first %}
+from .attributes import {% endif %}{{ attr.key | screaming_snake_case }}{% if not loop.last %}, {% endif %}
+{%- endfor %}
+
+def emit_{{ func_name }}{% if not is_exception_event %}_event{% endif %}(
+    logger: Logger,
+    severity_number: SeverityNumber,
+{%- if is_exception_event and event_ns.exception_attrs %}
+    exception: BaseException,
+{%- endif %}
+{%- for attr in event_ns.other_attrs | required %}
+    {{ attr.key | replace(".", "_") }}: {{ attr.type | map_text("py_attr_type", "str") }},
+{%- endfor %}
+{%- for attr in event_ns.other_attrs | not_required %}
+    {{ attr.key | replace(".", "_") }}: Optional[{{ attr.type | map_text("py_attr_type", "str") }}] = None,
+{%- endfor %}
+) -> None:
+    {%- if event.brief %}
+    """{{ event.brief | trim }}"""
+    {%- endif %}
+{%- if is_exception_event and event_ns.exception_attrs %}
+    _exc_type = type(exception)
+{%- endif %}
+    attrs = {
+{%- if is_exception_event and event_ns.exception_attrs %}
+{%- for attr in event_ns.exception_attrs %}
+{%- if attr.key == "exception.type" %}
+        "exception.type": f"{_exc_type.__module__}.{_exc_type.__qualname__}" if _exc_type.__module__ != "builtins" else _exc_type.__qualname__,
+{%- elif attr.key == "exception.message" %}
+        "exception.message": str(exception),
+{%- elif attr.key == "exception.stacktrace" %}
+        "exception.stacktrace": "".join(traceback.format_exception(type(exception), exception, exception.__traceback__)),
+{%- endif %}
+{%- endfor %}
+{%- endif %}
+{%- for attr in event_ns.other_attrs %}
+        {{ c.attr_key(attr) | trim }}: {{ attr.key | replace(".", "_") }},
+{%- endfor %}
+        "event.name": "{{ event.name }}",
+    }
+    logger.emit(
+        event_name="{{ event.name }}",
+        severity_number=severity_number,
+        attributes={k: v for k, v in attrs.items() if v is not None},
+    )
+{% endfor %}
