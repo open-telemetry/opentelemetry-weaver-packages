@@ -14,6 +14,7 @@ Weaver packages come in two primary forms:
 ## Policies
 
 - [check/backwards-compatibility](policies/check/backwards-compatibility/README.md): Ensures compatibility between versions of schema.
+- [check/naming_conventions](policies/check/naming_conventions/README.md): Enforces naming rules for OpenTelemetry Semantic Conventions.
 - [check/stability](policies/check/stability/README.md): Ensures stability rules around attribute definition and usage are maintained.
 
 ## Missing something?

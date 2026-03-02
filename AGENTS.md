@@ -29,6 +29,7 @@ This repository contains packages for [OpenTelemetry Weaver](https://github.com/
 
 - **Surgical Changes**: Avoid unrelated refactoring. Focus on the package or policy being modified.
 - **Documentation**: Every new package must have a `README.md` explaining its purpose and usage.
+- **README Sync**: Ensure that any new or removed packages are accurately reflected in the main `README.md` file's list of policies and templates.
 - **CI Alignment**: Pull requests will trigger the `Checks` workflow, which runs both template and policy tests. Ensure all tests pass locally before submitting.
 - **Code Style**: 
     - For Jinja templates, follow existing patterns in `templates/`.
