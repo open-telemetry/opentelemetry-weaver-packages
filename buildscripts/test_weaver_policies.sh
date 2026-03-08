@@ -133,6 +133,60 @@ check_output() {
   fi
 }
 
+# Validates that all findings in a diagnostic output file follow the signal naming convention:
+#   - Signal identifiers (metric_name, event_name, span_type, entity_type, etc.) must NOT
+#     appear as keys inside the `context` object — they belong at the top-level signal_type
+#     and signal_name fields only.
+#   - If signal_type is set, signal_name must also be set.
+# Args:
+#     1 - Observed Output file (JSON)
+#     2 - Test name (for display)
+validate_signal_conventions() {
+  local OBSERVED_FILE="$1"
+  local TEST_NAME="$2"
+
+  if [[ ! -f "$OBSERVED_FILE" ]]; then
+    return
+  fi
+
+  # Context keys that identify the signal itself must not appear — use top-level signal_type/signal_name.
+  # Matches any key of the form <signal_type>[_.]<identifier>, e.g. metric_name, span.type, event_name.
+  local SIGNAL_KEY_PATTERN='^(metric|event|span|entity)[_.](name|type)$'
+
+  local VIOLATIONS
+  VIOLATIONS=$(jq -r --arg pattern "$SIGNAL_KEY_PATTERN" '
+    [.[] |
+      select(.error.violation.context != null) |
+      . as $finding |
+      (.error.violation.context | keys | map(select(test($pattern)))) as $bad_keys |
+      select($bad_keys | length > 0) |
+      "  - id=\($finding.error.violation.id), forbidden context keys=\($bad_keys)"
+    ] | .[]
+  ' "$OBSERVED_FILE" 2>/dev/null)
+
+  if [[ -n "$VIOLATIONS" ]]; then
+    echo "  ❌ FAIL: $TEST_NAME - signal identifiers found in context (use top-level signal_type/signal_name instead):"
+    echo "$VIOLATIONS"
+    exit 1
+  fi
+
+  local MISSING_NAMES
+  MISSING_NAMES=$(jq -r '
+    [.[] |
+      select(.error.violation.signal_type != null and .error.violation.signal_name == null) |
+      "  - id=\(.error.violation.id), signal_type=\(.error.violation.signal_type)"
+    ] | .[]
+  ' "$OBSERVED_FILE" 2>/dev/null)
+
+  if [[ -n "$MISSING_NAMES" ]]; then
+    echo "  ❌ FAIL: $TEST_NAME - findings have signal_type set but signal_name is missing:"
+    echo "$MISSING_NAMES"
+    exit 1
+  fi
+
+  echo "  ✅ PASS: $TEST_NAME - signal conventions."
+}
+
 # Runs a policy test
 run_policy_test() {
   TEST_DIR="$1"
@@ -194,6 +248,7 @@ run_policy_test() {
     sed -n '/^\[/,$p' "${RAW_DIAGNOSTIC_OUTPUT}" | jq -S "${JQ_FILTER}" > "${OBSERVED_DIR}/diagnostic-output.json"
   fi
   check_output "${OBSERVED_DIR}/diagnostic-output.json" "${TEST_DIR}/expected-diagnostic-output.json" "${TEST_NAME} - Diagnostic Output"
+  validate_signal_conventions "${OBSERVED_DIR}/diagnostic-output.json" "${TEST_NAME}"
 }
 
 # Runs a set of policy tests for a given package.

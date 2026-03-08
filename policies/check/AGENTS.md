@@ -49,7 +49,14 @@ Actual results are written to:
 The test script automatically pretty-prints this JSON using `jq` for easier comparison.
 
 ### Rego Style
-When creating a finding for a signal, use the `signal_type` and `signal_name` optional fields.
+
+#### Signal identification in findings
+
+When a finding applies to a specific signal (metric, span, event, entity), always set the
+top-level `signal_type` and `signal_name` fields on the finding object.
+
+The `context` object should only contain additional diagnostic details beyond the signal
+identity (e.g. `missing_attributes`, `previous_unit`, `current_instrument`).
 
 #### Rego Debugging
 You can add temporary `deny` rules to dump the state of variables or the entire registry:

@@ -273,11 +273,11 @@ deny contains finding if {
     # Generate human readable error.
     finding := {
         "id": "compatibility_metric_missing",
-        "context": {
-            "metric_name": metric.name,
-        },
+        "context": {},
         "message": sprintf("Metric '%s' no longer exists in semantic conventions", [metric.name]),
         "level": "violation",
+        "signal_type": "metric",
+        "signal_name": metric.name,
     }
 }
 
@@ -296,11 +296,11 @@ deny contains finding if {
     # Generate human readable error.
     finding := {
         "id": "compatibility_metric_missing",
-        "context": {
-            "metric_name": metric.name,
-        },
+        "context": {},
         "message": sprintf("Metric '%s' cannot change from stable", [metric.name]),
         "level": "violation",
+        "signal_type": "metric",
+        "signal_name": metric.name,
     }
 }
 
@@ -321,12 +321,13 @@ deny contains finding if {
     finding := {
         "id": "compatibility_metric_changed_unit",
         "context": {
-            "metric_name": metric.name,
             "previous_unit": metric.unit,
             "current_unit": nmetric.unit,
         },
         "message": sprintf("Metric '%s' cannot change unit (was '%s', now: '%s')", [metric.name, metric.unit, nmetric.unit]),
         "level": "violation",
+        "signal_type": "metric",
+        "signal_name": metric.name,
     }
 }
 
@@ -346,12 +347,13 @@ deny contains finding if {
     finding := {
         "id": "compatibility_metric_changed_instrument",
         "context": {
-            "metric_name": metric.name,
             "previous_instrument": metric.instrument,
             "current_instrument": nmetric.instrument,
         },
         "message": sprintf("Metric '%s' cannot change instrument (was '%s', now: '%s')", [metric.name, metric.instrument, nmetric.instrument]),
         "level": "violation",
+        "signal_type": "metric",
+        "signal_name": metric.name,
     }
 }
 
@@ -381,11 +383,12 @@ deny contains finding if {
     finding := {
         "id": "compatibility_metric_changed_attributes",
         "context": {
-            "metric_name": metric.name,
             "missing_attributes": missing_attributes,
         },
         "message": sprintf("Metric '%s' cannot change required/recommended attributes (missing '%s')", [metric.name, missing_attributes]),
         "level": "violation",
+        "signal_type": "metric",
+        "signal_name": metric.name,
     }
 }
 
@@ -415,11 +418,12 @@ deny contains finding if {
     finding := {
         "id": "compatibility_metric_added_attributes",
         "context": {
-            "metric_name": metric.name,
             "added_attributes": added_attributes,
         },
         "message": sprintf("Metric '%s' cannot change required/recommended attributes (added '%s')", [metric.name, added_attributes]),
         "level": "violation",
+        "signal_type": "metric",
+        "signal_name": metric.name,
     }
 }
 
@@ -441,11 +445,11 @@ deny contains finding if {
     # Generate human readable error.
     finding := {
         "id": "compatibility_entity_missing",
-        "context": {
-            "entity_type": entity.type,
-        },
+        "context": {},
         "message": sprintf("Entity '%s' no longer exists in semantic conventions", [entity.type]),
         "level": "violation",
+        "signal_type": "entity",
+        "signal_name": entity.type,
     }
 }
 
@@ -473,11 +477,12 @@ deny contains finding if {
     finding := {
         "id": "compatibility_entity_missing_attribute",
         "context": {
-            "entity_type": entity.type,
             "identity_missing_attributes": missing_attributes
         },
         "message": sprintf("Entity '%s' cannot remove attributes from identity (missing '%s')", [entity.type, missing_attributes]),
         "level": "violation",
+        "signal_type": "entity",
+        "signal_name": entity.type,
     }
 }
 
@@ -505,11 +510,12 @@ deny contains finding if {
     finding := {
         "id": "compatibility_entity_missing_attribute",
         "context": {
-            "entity_type": entity.type,
             "description_missing_attributes": missing_attributes
         },
         "message": sprintf("Entity '%s' cannot remove attributes from description (missing '%s')", [entity.type, missing_attributes]),
         "level": "violation",
+        "signal_type": "entity",
+        "signal_name": entity.type,
     }
 }
 
@@ -537,11 +543,12 @@ deny contains finding if {
     finding := {
         "id": "compatibility_entity_changed_identity",
         "context": {
-            "entity_type": entity.type,
             "added_attributes": added_attributes
         },
         "message": sprintf("Entity '%s' cannot change identity. (Found new attributes '%s')", [entity.type, added_attributes]),
         "level": "violation",
+        "signal_type": "entity",
+        "signal_name": entity.type,
     }
 }
 
@@ -563,11 +570,11 @@ deny contains finding if {
     # Generate human readable error.
     finding := {
         "id": "compatibility_event_removed",
-        "context": {
-            "event_name": event.name,
-        },
+        "context": {},
         "message": sprintf("Event '%s' no longer exists in semantic conventions", [event.name]),
         "level": "violation",
+        "signal_type": "event",
+        "signal_name": event.name,
     }
 }
 
@@ -586,11 +593,11 @@ deny contains finding if {
     # Generate human readable error.
     finding := {
         "id": "compatibility_event_changed_stability",
-        "context": {
-            "event_name": event.name,
-        },
+        "context": {},
         "message": sprintf("Event '%s' cannot change from stable", [event.name]),
         "level": "violation",
+        "signal_type": "event",
+        "signal_name": event.name,
     }
 }
 
@@ -618,11 +625,12 @@ deny contains finding if {
     finding := {
         "id": "compatibility_event_dropped_attributes",
         "context": {
-            "event_name": event.name,
             "missing_attributes": missing_attributes,
         },
         "message": sprintf("Event '%s' cannot remove stable attributes (missing '%s')", [event.name, missing_attributes]),
         "level": "violation",
+        "signal_type": "event",
+        "signal_name": event.name,
     }
 }
 
@@ -646,11 +654,11 @@ deny contains finding if {
     # Generate human readable error.
     finding := {
         "id": "compatibility_span_missing",
-        "context": {
-            "span_type": span.type,
-        },
+        "context": {},
         "message": sprintf("Span '%s' no longer exists in semantic conventions", [span.type]),
         "level": "violation",
+        "signal_type": "span",
+        "signal_name": span.type,
     }
 }
 
@@ -670,11 +678,11 @@ deny contains finding if {
     # Generate human readable error.
     finding := {
         "id": "compatibility_span_changed_stability",
-        "context": {
-            "span_type": span.type,
-        },
+        "context": {},
         "message": sprintf("Span '%s' cannot change from stable", [span.type]),
         "level": "violation",
+        "signal_type": "span",
+        "signal_name": span.type,
     }
 }
 
@@ -695,12 +703,13 @@ deny contains finding if {
     finding := {
         "id": "compatibility_span_changed_kind",
         "context": {
-            "span_type": span.type,
             "previous": span.kind,
             "current": nspan.kind,
         },
         "message": sprintf("Span '%s' cannot change kind (was '%s', now '%s').", [span.type, span.kind, nspan.kind]),
         "level": "violation",
+        "signal_type": "span",
+        "signal_name": span.type,
     }
 }
 
@@ -729,11 +738,12 @@ deny contains finding if {
     finding := {
         "id": "compatibility_span_dropped_attributes",
         "context": {
-            "span_type": span.type,
             "missing_attributes": missing_attributes,
         },
         "message": sprintf("Span '%s' cannot remove stable attributes (missing '%s')", [span.type, missing_attributes]),
         "level": "violation",
+        "signal_type": "span",
+        "signal_name": span.type,
     }
 }
 

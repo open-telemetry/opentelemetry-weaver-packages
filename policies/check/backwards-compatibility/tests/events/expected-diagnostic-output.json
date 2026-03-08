@@ -1,34 +1,31 @@
 [
   {
     "diagnostic": {
-      "message": "Policy violation: id=compatibility_event_changed_stability, context={\"event_name\":\"some.event.change_stability\"}, message=Event 'some.event.change_stability' cannot change from stable, level=Violation, signal_type=None, signal_name=None, provenance: current"
+      "message": "Policy violation: id=compatibility_event_changed_stability, context={}, message=Event 'some.event.change_stability' cannot change from stable, level=Violation, signal_type=Some(\"event\"), signal_name=Some(\"some.event.change_stability\"), provenance: current"
     },
     "error": {
       "provenance": "current",
       "type": "policy_violation",
       "violation": {
-        "context": {
-          "event_name": "some.event.change_stability"
-        },
+        "context": {},
         "id": "compatibility_event_changed_stability",
         "level": "violation",
         "message": "Event 'some.event.change_stability' cannot change from stable",
-        "signal_name": null,
-        "signal_type": null,
+        "signal_name": "some.event.change_stability",
+        "signal_type": "event",
         "type": "PolicyFinding"
       }
     }
   },
   {
     "diagnostic": {
-      "message": "Policy violation: id=compatibility_event_dropped_attributes, context={\"event_name\":\"some.event.missing.attrs\",\"missing_attributes\":[\"b\",\"c\"]}, message=Event 'some.event.missing.attrs' cannot remove stable attributes (missing '{\"b\", \"c\"}'), level=Violation, signal_type=None, signal_name=None, provenance: current"
+      "message": "Policy violation: id=compatibility_event_dropped_attributes, context={\"missing_attributes\":[\"b\",\"c\"]}, message=Event 'some.event.missing.attrs' cannot remove stable attributes (missing '{\"b\", \"c\"}'), level=Violation, signal_type=Some(\"event\"), signal_name=Some(\"some.event.missing.attrs\"), provenance: current"
     },
     "error": {
       "provenance": "current",
       "type": "policy_violation",
       "violation": {
         "context": {
-          "event_name": "some.event.missing.attrs",
           "missing_attributes": [
             "b",
             "c"
@@ -37,28 +34,26 @@
         "id": "compatibility_event_dropped_attributes",
         "level": "violation",
         "message": "Event 'some.event.missing.attrs' cannot remove stable attributes (missing '{\"b\", \"c\"}')",
-        "signal_name": null,
-        "signal_type": null,
+        "signal_name": "some.event.missing.attrs",
+        "signal_type": "event",
         "type": "PolicyFinding"
       }
     }
   },
   {
     "diagnostic": {
-      "message": "Policy violation: id=compatibility_event_removed, context={\"event_name\":\"some.missing.event\"}, message=Event 'some.missing.event' no longer exists in semantic conventions, level=Violation, signal_type=None, signal_name=None, provenance: current"
+      "message": "Policy violation: id=compatibility_event_removed, context={}, message=Event 'some.missing.event' no longer exists in semantic conventions, level=Violation, signal_type=Some(\"event\"), signal_name=Some(\"some.missing.event\"), provenance: current"
     },
     "error": {
       "provenance": "current",
       "type": "policy_violation",
       "violation": {
-        "context": {
-          "event_name": "some.missing.event"
-        },
+        "context": {},
         "id": "compatibility_event_removed",
         "level": "violation",
         "message": "Event 'some.missing.event' no longer exists in semantic conventions",
-        "signal_name": null,
-        "signal_type": null,
+        "signal_name": "some.missing.event",
+        "signal_type": "event",
         "type": "PolicyFinding"
       }
     }
