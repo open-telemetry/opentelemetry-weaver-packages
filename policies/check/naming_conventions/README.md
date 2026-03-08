@@ -7,9 +7,9 @@ Owners: @open-telemetry/specs-semconv-maintainers
 
 ## Usage
 
-```
-$ weaver registry check 
-    -p https://github.com/open-telemetry/opentelemetry-weaver-packages.git[policies/check/naming_conventions] 
+```bash
+$ weaver registry check
+    -p https://github.com/open-telemetry/opentelemetry-weaver-packages.git[policies/check/naming_conventions]
     -r {your repository}
 ```
 
@@ -35,17 +35,17 @@ Example:
 
 ```yaml
 metrics:
-- name: hw.battery.charge
-  brief: A colliding metric.
-  stability: stable
-  instrument: counter
-  unit: '1'
-  annotations:
-    # Defines controls for naming_conventions policies
-    naming_conventions:
-      policy_exceptions:
-        # I should document why this exception is allowed.
-        - metric_namespace_collision
+  - name: hw.battery.charge
+    brief: A colliding metric.
+    stability: stable
+    instrument: counter
+    unit: "1"
+    annotations:
+      # Defines controls for naming_conventions policies
+      naming_conventions:
+        policy_exceptions:
+          # I should document why this exception is allowed.
+          - metric_namespace_collision
 ```
 
 All exceptions should be defined in the `naming_conventions.policy_exceptions` annotation for the signal causing the violation.
@@ -53,7 +53,6 @@ All exceptions should be defined in the `naming_conventions.policy_exceptions` a
 Supported policy_exception strings:
 
 - `metric_namespace_collision`: For metrics which have namespace conflicts.
-
 
 The `attribute_constant_collision` policy violation can be resolved by letting code generation drop the conflciting attribute via the `code_generation` annotation, for example:
 

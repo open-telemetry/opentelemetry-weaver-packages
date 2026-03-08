@@ -99,10 +99,24 @@ check_output() {
       
       # Filter out Weaver's unstable version warnings from observed file for comparison
       # We expect the expected file to ALREADY be clean of these warnings.
-      JQ_FILTER='map(select(.diagnostic.message | contains("Version `2` schema file format is not yet stable") | not))'
-      
-      jq -S "${JQ_FILTER}" "$OBSERVED_FILE" > "$TEMP_OBSERVED"
-      jq -S . "$EXPECTED_FILE" > "$TEMP_EXPECTED"
+      VERSION_FILTER='map(select(.diagnostic.message | contains("Version `2` schema file format is not yet stable") | not))'
+
+      # Normalize empty/null/missing context so tests are robust to omitting context: {}.
+      # Also strips the ", context={}" segment from the human-readable diagnostic message.
+      NORMALIZE_FILTER='
+        map(
+          if (.error.violation | (has("context") | not))
+              or .error.violation.context == {}
+              or .error.violation.context == null
+          then
+            del(.error.violation.context) |
+            .diagnostic.message |= gsub(", context=\\{}"; "")
+          else . end
+        )
+      '
+
+      jq -S "${VERSION_FILTER} | ${NORMALIZE_FILTER} | sort_by(.diagnostic.message)" "$OBSERVED_FILE" > "$TEMP_OBSERVED"
+      jq -S "${NORMALIZE_FILTER} | sort_by(.diagnostic.message)" "$EXPECTED_FILE" > "$TEMP_EXPECTED"
       diff "$TEMP_OBSERVED" "$TEMP_EXPECTED" > /dev/null
       DIFF_RESULT=$?
       if [ $DIFF_RESULT -eq 0 ]; then
@@ -191,7 +205,7 @@ validate_signal_conventions() {
 run_policy_test() {
   TEST_DIR="$1"
   POLICY_PACKAGE_DIR="$2"
-  TEST_NAME=$(realpath --relative-to="$POLICY_PACKAGE_DIR" "$TEST_DIR")
+  TEST_NAME="${TEST_DIR#${POLICY_PACKAGE_DIR}/}"
   local short_test_name="${TEST_NAME#tests/}"
   if ! matches_test_filter "$short_test_name"; then
     return
@@ -272,7 +286,7 @@ run_all_policy_package_tests() {
   if [ -d "policies" ]; then
     for package in ${CUR}/policies/check/*; do
       if [ -d "${package}" ]; then
-        PACKAGE_NAME=$(realpath --relative-to="$package/../.." "$package")
+        PACKAGE_NAME="${package#${CUR}/policies/check/}"
         echo "---==== Policy Package - ${PACKAGE_NAME} ====---"
         if [ ! -f "${package}/README.md" ]; then
           log_warn "Missing README"

@@ -1,12 +1,10 @@
 # Contributing
 
-
 Welcome to OpenTelemetry weaver packages repository!
 
 Before you start - see OpenTelemetry general
 [contributing](https://github.com/open-telemetry/community/blob/main/guides/contributor/README.md)
 requirements and recommendations.
-
 
 ## Sign the CLA
 
@@ -20,6 +18,23 @@ Weaver packages come in two primary forms:
 - `templates`: Code generation, Documentation generation, etc.
 - `policies`: Verification and validation rules that can be applied to a repository.
 
+## Running Tests
+
+To run all tests from the root of the repository:
+
+```bash
+make test
+```
+
+Individual targets:
+
+```bash
+make test-policies    # policy packages only
+make test-templates   # template packages only
+```
+
+Requires `weaver` on your PATH. Set the `WEAVER` environment variable to use a custom path.
+
 ## Templates
 
 Weaver template packages consist of a `weaver.yaml`, a set of jinja templates, a `README.md` and `tests` directory filled with tests for the templates.
@@ -31,7 +46,7 @@ Templates are divided into two categories:
 
 ### Testing Policy Packages
 
-To run the tests for a given template package, you can run the `buildscripts/test_weaver_templates.sh` file either within the template package directory, or at the root of this repository.
+To run the tests for a given template package, you can run `make test-templates` from the root, or run `buildscripts/test_weaver_templates.sh` directly either within the template package directory or at the root of this repository.
 
 ### Anatomy of a template package
 
@@ -40,9 +55,8 @@ To run the tests for a given template package, you can run the `buildscripts/tes
 - `README.md`: A file describing the package.
 - `tests` directory contains any number of test directories.
   - "name" directory - The name of the directory is the name of the test.
-    - `registry` - This is the directory where you put a weaver registry.  This will be used with the `--registry` flag in `weaver registry generate`.
+    - `registry` - This is the directory where you put a weaver registry. This will be used with the `--registry` flag in `weaver registry generate`.
     - `expected` - This directory contains the expected files you want to be generated for this test.
-
 
 ## Policies
 
@@ -55,7 +69,7 @@ Policies are divided into two categories:
 
 ### Testing Policy Packages
 
-To run the tests for a given policy package, you can run the `buildscripts/test_weaver_policies.sh` file either within the policy package directory, or at the root of this repository.
+To run the tests for a given policy package, you can run `make test-policies` from the root, or run `buildscripts/test_weaver_policies.sh` directly either within the policy package directory or at the root of this repository.
 
 ### Anatomy of a `check` policy package
 
@@ -63,7 +77,7 @@ To run the tests for a given policy package, you can run the `buildscripts/test_
 - `README.md` - A file describing your package.
 - `tests` directory contains any number of test directories.
   - "name" directory - The name of the directory is the name of the test.
-    - `base` - This is the directory where you put a "baseline" weaver registry.  This will be used with the `--baseline-registry` flag in `weaver registry check`.
+    - `base` - This is the directory where you put a "baseline" weaver registry. This will be used with the `--baseline-registry` flag in `weaver registry check`.
     - `current` - This is the directory where you put a weaver registry. This will be used with the `--registry` flag in `weaver registry check`.
     - `expected-diagnostic-output.json` - This file represents the `PolicyFinding`s you expect your package will output for the given registries of this test.
 

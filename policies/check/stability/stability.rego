@@ -18,9 +18,9 @@ deny contains finding if {
     
     finding := {
         "id": "stability_entity_no_identity",
+        "context": {},
         "message": sprintf("Stable entity '%s' has no identifying attributes", [entity.type]),
         "level": "violation",
-        "context": {},
         "signal_type": "entity",
         "signal_name": entity.type,
     }
@@ -34,6 +34,7 @@ deny contains finding if {
     
     finding := {
         "id": "stability_entity_no_identity",
+        "context": {},
         "message": sprintf("Stable entity '%s' has no identifying attributes", [entity.type]),
         "level": "violation",
         "signal_type": "entity",
