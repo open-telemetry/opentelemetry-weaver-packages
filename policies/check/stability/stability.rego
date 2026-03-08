@@ -15,7 +15,7 @@ deny contains finding if {
     some entity in input.registry.entities
     entity.stability == "stable"
     not entity.identity
-    
+
     finding := {
         "id": "stability_entity_no_identity",
         "context": {},
@@ -29,9 +29,9 @@ deny contains finding if {
 deny contains finding if {
     some entity in input.registry.entities
     entity.stability == "stable"
-    
+
     count(entity.identity) < 1
-    
+
     finding := {
         "id": "stability_entity_no_identity",
         "context": {},
@@ -47,7 +47,7 @@ deny contains finding if {
     some metric in input.registry.metrics
     metric.stability == "stable"
     some attr in metric.attributes
-    
+
     attr.stability != "stable"
     not is_opt_in(attr.requirement_level)
 
@@ -69,7 +69,7 @@ deny contains finding if {
     some event in input.registry.events
     event.stability == "stable"
     some attr in event.attributes
-    
+
     attr.stability != "stable"
     not is_opt_in(attr.requirement_level)
 
@@ -91,7 +91,7 @@ deny contains finding if {
     some span in input.registry.spans
     span.stability == "stable"
     some attr in span.attributes
-    
+
     attr.stability != "stable"
     not is_opt_in(attr.requirement_level)
 
@@ -114,7 +114,7 @@ deny contains finding if {
     entity.stability == "stable"
     some list_name in ["identity", "description"]
     some attr in entity[list_name]
-    
+
     attr.stability != "stable"
     not is_opt_in(attr.requirement_level)
 
