@@ -7,7 +7,7 @@ Owners: @open-telemetry/specs-semconv-maintainers
 
 ## Usage
 
-```
+```bash
 $ weaver registry check \
     -p https://github.com/open-telemetry/opentelemetry-weaver-packages.git[policies/check/backwards-compatibility] \
     -r {your repository} \

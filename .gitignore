@@ -1,2 +1,6 @@
 
 **/observed-output/*
+node_modules/
+.claude/
+package-lock.json
+package.json

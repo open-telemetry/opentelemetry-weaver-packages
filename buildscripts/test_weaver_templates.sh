@@ -67,9 +67,9 @@ check_output() {
 run_template_test() {
   TEST_DIR="$1"
   TEMPLATE_PACKAGE_DIR="$2"
-  TEST_NAME=$(realpath --relative-to="$TEMPLATE_PACKAGE_DIR" "$TEST_DIR")
   TEMPLATES_ROOT_DIR=$(realpath "${TEMPLATE_PACKAGE_DIR}/../..")
-  TEMPLATE_NAME=$(realpath --relative-to="$TEMPLATES_ROOT_DIR" "$TEMPLATE_PACKAGE_DIR")
+  TEST_NAME="${TEST_DIR#${TEMPLATE_PACKAGE_DIR}/}"
+  TEMPLATE_NAME="${TEMPLATE_PACKAGE_DIR#${TEMPLATES_ROOT_DIR}/}"
   echo "-> Running test [${TEST_NAME}] ..."
   OBSERVED_DIR="${TEMPLATE_PACKAGE_DIR}/observed-output/${TEST_NAME}"
   rm -rf "${OBSERVED_DIR}"
@@ -112,7 +112,7 @@ run_all_policy_template_tests() {
   if [ -d "templates" ]; then
     for package in ${CUR}/templates/*/*; do
       if [ -d "${package}" ]; then
-        PACKAGE_NAME=$(realpath --relative-to="$package/../.." "$package")
+        PACKAGE_NAME="${package#${CUR}/templates/}"
         echo "---==== Template Package - ${PACKAGE_NAME} ====---"
         if [ ! -f "${package}/README.md" ]; then
           log_warn "Missing README"

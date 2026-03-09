@@ -1,7 +1,7 @@
 [
   {
     "diagnostic": {
-      "message": "Policy violation: id=compatibility_entity_changed_identity, context={\"added_attributes\":[\"b\"],\"entity_type\":\"some.entity.changed.id\"}, message=Entity 'some.entity.changed.id' cannot change identity. (Found new attributes '{\"b\"}'), level=Violation, signal_type=None, signal_name=None, provenance: current"
+      "message": "Policy violation: id=compatibility_entity_changed_identity, context={\"added_attributes\":[\"b\"]}, message=Entity 'some.entity.changed.id' cannot change identity. (Found new attributes '{\"b\"}'), level=Violation, signal_type=Some(\"entity\"), signal_name=Some(\"some.entity.changed.id\"), provenance: current"
     },
     "error": {
       "provenance": "current",
@@ -10,21 +10,20 @@
         "context": {
           "added_attributes": [
             "b"
-          ],
-          "entity_type": "some.entity.changed.id"
+          ]
         },
         "id": "compatibility_entity_changed_identity",
         "level": "violation",
         "message": "Entity 'some.entity.changed.id' cannot change identity. (Found new attributes '{\"b\"}')",
-        "signal_name": null,
-        "signal_type": null,
+        "signal_name": "some.entity.changed.id",
+        "signal_type": "entity",
         "type": "PolicyFinding"
       }
     }
   },
   {
     "diagnostic": {
-      "message": "Policy violation: id=compatibility_entity_missing_attribute, context={\"description_missing_attributes\":[\"c\"],\"entity_type\":\"some.entity.missing.attrs\"}, message=Entity 'some.entity.missing.attrs' cannot remove attributes from description (missing '{\"c\"}'), level=Violation, signal_type=None, signal_name=None, provenance: current"
+      "message": "Policy violation: id=compatibility_entity_missing_attribute, context={\"description_missing_attributes\":[\"c\"]}, message=Entity 'some.entity.missing.attrs' cannot remove attributes from description (missing '{\"c\"}'), level=Violation, signal_type=Some(\"entity\"), signal_name=Some(\"some.entity.missing.attrs\"), provenance: current"
     },
     "error": {
       "provenance": "current",
@@ -33,28 +32,26 @@
         "context": {
           "description_missing_attributes": [
             "c"
-          ],
-          "entity_type": "some.entity.missing.attrs"
+          ]
         },
         "id": "compatibility_entity_missing_attribute",
         "level": "violation",
         "message": "Entity 'some.entity.missing.attrs' cannot remove attributes from description (missing '{\"c\"}')",
-        "signal_name": null,
-        "signal_type": null,
+        "signal_name": "some.entity.missing.attrs",
+        "signal_type": "entity",
         "type": "PolicyFinding"
       }
     }
   },
   {
     "diagnostic": {
-      "message": "Policy violation: id=compatibility_entity_missing_attribute, context={\"entity_type\":\"some.entity.missing.attrs\",\"identity_missing_attributes\":[\"b\"]}, message=Entity 'some.entity.missing.attrs' cannot remove attributes from identity (missing '{\"b\"}'), level=Violation, signal_type=None, signal_name=None, provenance: current"
+      "message": "Policy violation: id=compatibility_entity_missing_attribute, context={\"identity_missing_attributes\":[\"b\"]}, message=Entity 'some.entity.missing.attrs' cannot remove attributes from identity (missing '{\"b\"}'), level=Violation, signal_type=Some(\"entity\"), signal_name=Some(\"some.entity.missing.attrs\"), provenance: current"
     },
     "error": {
       "provenance": "current",
       "type": "policy_violation",
       "violation": {
         "context": {
-          "entity_type": "some.entity.missing.attrs",
           "identity_missing_attributes": [
             "b"
           ]
@@ -62,28 +59,26 @@
         "id": "compatibility_entity_missing_attribute",
         "level": "violation",
         "message": "Entity 'some.entity.missing.attrs' cannot remove attributes from identity (missing '{\"b\"}')",
-        "signal_name": null,
-        "signal_type": null,
+        "signal_name": "some.entity.missing.attrs",
+        "signal_type": "entity",
         "type": "PolicyFinding"
       }
     }
   },
   {
     "diagnostic": {
-      "message": "Policy violation: id=compatibility_entity_missing, context={\"entity_type\":\"some.missing.entity\"}, message=Entity 'some.missing.entity' no longer exists in semantic conventions, level=Violation, signal_type=None, signal_name=None, provenance: current"
+      "message": "Policy violation: id=compatibility_entity_missing, context={}, message=Entity 'some.missing.entity' no longer exists in semantic conventions, level=Violation, signal_type=Some(\"entity\"), signal_name=Some(\"some.missing.entity\"), provenance: current"
     },
     "error": {
       "provenance": "current",
       "type": "policy_violation",
       "violation": {
-        "context": {
-          "entity_type": "some.missing.entity"
-        },
+        "context": {},
         "id": "compatibility_entity_missing",
         "level": "violation",
         "message": "Entity 'some.missing.entity' no longer exists in semantic conventions",
-        "signal_name": null,
-        "signal_type": null,
+        "signal_name": "some.missing.entity",
+        "signal_type": "entity",
         "type": "PolicyFinding"
       }
     }

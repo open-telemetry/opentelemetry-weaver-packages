@@ -5,10 +5,9 @@ Enforces component lifecycle rules for OpenTelemetry Projects.
 Stability: Development
 Owners: @open-telemetry/specs-semconv-maintainers
 
-
 ## Usage
 
-```
+```bash
 $ weaver registry check \
     --v2 \
     -p https://github.com/open-telemetry/opentelemetry-weaver-packages.git[policies/check/stability] \
@@ -18,7 +17,7 @@ $ weaver registry check \
 
 For example:
 
-```
+```bash
 $ weaver registry check \
   --v2 \
   -p https://github.com/open-telemetry/opentelemetry-weaver-packages.git[policies/check/stability] \
