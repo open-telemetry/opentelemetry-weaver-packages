@@ -4,7 +4,3 @@ node_modules/
 .claude/
 package-lock.json
 package.json
-.vscode
-venv
-__pycache__/
-node_modules/
