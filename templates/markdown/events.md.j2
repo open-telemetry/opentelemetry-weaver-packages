@@ -1,0 +1,20 @@
+{% import "_macros.j2" as macros %}
+# Events: `{{ ctx.root_namespace }}`
+
+This document describes the `{{ ctx.root_namespace }}` events.
+
+{% for event in ctx.events | sort(attribute="id") %}
+## `{{ event.id }}` {{ macros.stability_badge(event.stability, event.deprecated) }}
+
+{{ event.brief | default("") | trim }}
+
+{% if event.note %}{{ event.note | trim }}{% endif %}
+
+**Name**: `{{ event.name }}`
+
+{% if event.attributes %}
+### Attributes
+
+{{ macros.attribute_table(event.attributes) }}
+{% endif %}
+{% endfor %}

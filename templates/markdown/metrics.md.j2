@@ -1,0 +1,22 @@
+{% import "_macros.j2" as macros %}
+# Metrics: `{{ ctx.root_namespace }}`
+
+This document describes the `{{ ctx.root_namespace }}` metrics.
+
+{% for metric in ctx.metrics | sort(attribute="name") %}
+## `{{ metric.name }}` {{ macros.stability_badge(metric.stability, metric.deprecated) }}
+
+{{ metric.brief | trim }}
+
+{% if metric.note %}{{ metric.note | trim }}{% endif %}
+
+**Instrument**: `{{ metric.instrument }}`
+
+**Unit**: `{{ metric.unit }}`
+
+{% if metric.attributes %}
+### Attributes
+
+{{ macros.attribute_table(metric.attributes) }}
+{% endif %}
+{% endfor %}
