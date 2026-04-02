@@ -1,0 +1,7 @@
+file_format: definition/2
+entities:
+  - type: some.entity
+    brief: this is an entity
+    stability: stable
+    identity:
+    - ref: my.key

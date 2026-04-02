@@ -1,0 +1,30 @@
+file_format: definition/2
+attributes:
+- key: my.key
+  type: string
+  brief: A key in my registry
+  stability: stable
+
+events:
+  - name: some.event.triggers_something
+    brief: this is an event that triggers something
+    stability: stable
+    attributes:
+    - ref: my.key
+      requirement_level: required
+  - name: some.event.with.attrs
+    note: TBD
+    brief: this is an event with attributes
+    stability: stable
+    attributes:
+    - ref: my.key
+      requirement_level: required
+  - name: some.event.development
+    brief: this is a development event
+    stability: development
+  - name: some.deprecated.event
+    brief: this is a deprecated event
+    stability: stable
+    deprecated:
+      reason: obsoleted
+      note: Use `some.event.triggers_something` instead.
