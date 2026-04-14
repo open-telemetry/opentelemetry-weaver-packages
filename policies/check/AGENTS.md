@@ -109,7 +109,7 @@ Key paths in `input`:
 
 #### V2 Test Models (`model.yaml`)
 
-Models using `version: '2'` must strictly adhere to the V2 semantic convention structure. For example, `attribute_groups` require `id`, `stability`, `visibility`, `brief`, and `attributes`.
+Models using `file_format: definition/2` must strictly adhere to the V2 semantic convention structure. For example, `attribute_groups` require `id`, `stability`, `visibility`, `brief`, and `attributes`.
 
 #### Handling V2 Schema Warnings
 

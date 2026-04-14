@@ -99,7 +99,7 @@ check_output() {
       
       # Filter out Weaver's unstable version warnings from observed file for comparison
       # We expect the expected file to ALREADY be clean of these warnings.
-      VERSION_FILTER='map(select(.diagnostic.message | contains("Version `2` schema file format is not yet stable") | not))'
+      VERSION_FILTER='map(select(.diagnostic.message | contains("is not yet stable") | not))'
 
       # Normalize empty/null/missing context so tests are robust to omitting context: {}.
       # Also strips the ", context={}" segment from the human-readable diagnostic message.
@@ -258,7 +258,7 @@ run_policy_test() {
     # Strip coverage report or any other non-JSON output before passing to jq
     # Also filter out Weaver's unstable version warnings
     # TODO - extract coverage report into separate file for display.
-    JQ_FILTER='map(select(.diagnostic.message | contains("Version `2` schema file format is not yet stable") | not))'
+    JQ_FILTER='map(select(.diagnostic.message | contains("is not yet stable") | not))'
     sed -n '/^\[/,$p' "${RAW_DIAGNOSTIC_OUTPUT}" | jq -S "${JQ_FILTER}" > "${OBSERVED_DIR}/diagnostic-output.json"
   fi
   check_output "${OBSERVED_DIR}/diagnostic-output.json" "${TEST_DIR}/expected-diagnostic-output.json" "${TEST_NAME} - Diagnostic Output"

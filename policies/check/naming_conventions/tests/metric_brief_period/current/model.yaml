@@ -1,4 +1,4 @@
-version: '2'
+file_format: definition/2
 metrics:
   - name: test.metric
     brief: A test metric without period
