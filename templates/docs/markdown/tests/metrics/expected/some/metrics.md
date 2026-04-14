@@ -6,7 +6,6 @@ This document describes the `some` metrics.
 
 this is a deprecated metric
 
-
 **Instrument**: `counter`
 
 **Unit**: `s`
@@ -14,7 +13,6 @@ this is a deprecated metric
 ## `some.metric.attrs` ![Stable](https://img.shields.io/badge/-stable-lightgreen)
 
 this is a metric with attributes
-
 
 **Instrument**: `counter`
 
@@ -30,7 +28,6 @@ this is a metric with attributes
 
 this is a metric with items
 
-
 **Instrument**: `gauge`
 
 **Unit**: `ms`
@@ -40,6 +37,7 @@ this is a metric with items
 this is a metric with a note
 
 This is an additional note about the metric.
+
 **Instrument**: `histogram`
 
 **Unit**: `ms`
@@ -47,7 +45,6 @@ This is an additional note about the metric.
 ## `some.stable.metric` ![Stable](https://img.shields.io/badge/-stable-lightgreen)
 
 this is a stable metric
-
 
 **Instrument**: `counter`
 

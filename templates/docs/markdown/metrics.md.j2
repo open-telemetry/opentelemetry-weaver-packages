@@ -8,8 +8,9 @@ This document describes the `{{ ctx.root_namespace }}` metrics.
 
 {{ metric.brief | trim }}
 
-{% if metric.note %}{{ metric.note | trim }}{% endif %}
+{% if metric.note %}{{ metric.note | trim }}
 
+{% endif %}
 **Instrument**: `{{ metric.instrument }}`
 
 **Unit**: `{{ metric.unit }}`

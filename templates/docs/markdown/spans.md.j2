@@ -4,12 +4,13 @@
 This document describes the `{{ ctx.root_namespace }}` spans.
 
 {% for span in ctx.spans | sort(attribute="type") %}
-## `{{ span.type }}`  {{ macros.stability_badge(span.stability, span.deprecated) }}
+## `{{ span.type }}` {{ macros.stability_badge(span.stability, span.deprecated) }}
 
 {{ span.brief | trim }}
 
-{% if span.note %}{{ span.note | trim }}{% endif %}
+{% if span.note %}{{ span.note | trim }}
 
+{% endif %}
 **Kind**: `{{ span.kind }}`
 
 **Name**: `{{ span.name.note }}`

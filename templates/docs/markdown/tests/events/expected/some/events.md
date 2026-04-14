@@ -2,24 +2,21 @@
 
 This document describes the `some` events.
 
-## `` ![Deprecated](https://img.shields.io/badge/-deprecated-red)
+## `some.deprecated.event` ![Deprecated](https://img.shields.io/badge/-deprecated-red)
 
 this is a deprecated event
 
-
 **Name**: `some.deprecated.event`
 
-## `` ![Development](https://img.shields.io/badge/-development-blue)
+## `some.event.development` ![Development](https://img.shields.io/badge/-development-blue)
 
 this is a development event
 
-
 **Name**: `some.event.development`
 
-## `` ![Stable](https://img.shields.io/badge/-stable-lightgreen)
+## `some.event.triggers_something` ![Stable](https://img.shields.io/badge/-stable-lightgreen)
 
 this is an event that triggers something
-
 
 **Name**: `some.event.triggers_something`
 
@@ -29,11 +26,12 @@ this is an event that triggers something
 |-----------|------|-------------------|-------------|
 | `my.key` | `string` | Required | A key in my registry |
 
-## `` ![Stable](https://img.shields.io/badge/-stable-lightgreen)
+## `some.event.with.attrs` ![Stable](https://img.shields.io/badge/-stable-lightgreen)
 
 this is an event with attributes
 
 TBD
+
 **Name**: `some.event.with.attrs`
 
 ### Attributes

@@ -15,24 +15,24 @@ templates:
 
   - template: spans.md.j2
     filter: >
-      semconv_signal("span"; {"v2":true})
+      try (semconv_signal("span"; {"v2":true})
       | group_by(.root_namespace)
-      | map({ root_namespace: .[0].root_namespace, spans: . | sort_by(.type) })
+      | map({ root_namespace: .[0].root_namespace, spans: . | sort_by(.type) })) catch empty
     application_mode: each
     file_name: "{{ ctx.root_namespace | snake_case }}/spans.md"
 
   - template: events.md.j2
     filter: >
-      semconv_signal("event"; {"v2":true})
+      try (semconv_signal("event"; {"v2":true})
       | group_by(.root_namespace)
-      | map({ root_namespace: .[0].root_namespace, events: . | sort_by(.name) })
+      | map({ root_namespace: .[0].root_namespace, events: . | sort_by(.name) })) catch empty
     application_mode: each
     file_name: "{{ ctx.root_namespace | snake_case }}/events.md"
 
   - template: entities.md.j2
     filter: >
-      semconv_signal("entity"; {"v2":true})
+      try (semconv_signal("entity"; {"v2":true})
       | group_by(.root_namespace)
-      | map({ root_namespace: .[0].root_namespace, entities: . | sort_by(.type) })
+      | map({ root_namespace: .[0].root_namespace, entities: . | sort_by(.type) })) catch empty
     application_mode: single
     file_name: "entities.md"

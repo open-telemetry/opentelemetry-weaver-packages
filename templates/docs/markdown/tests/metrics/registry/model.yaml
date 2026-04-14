@@ -1,4 +1,10 @@
 file_format: definition/2
+attributes:
+- key: my.key
+  type: string
+  brief: A key in my registry
+  stability: stable
+
 metrics:
   - name: some.stable.metric
     brief: this is a stable metric

@@ -1,1 +1,17 @@
 file_format: definition/2
+attributes:
+- key: my.key
+  type: string
+  brief: A key in my registry
+  stability: stable
+- key: my.enum
+  type:
+    members:
+      - id: value_one
+        value: one
+        brief: First value
+      - id: value_two
+        value: two
+        brief: Second value
+  brief: An enum attribute
+  stability: stable
