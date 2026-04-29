@@ -1,10 +1,8 @@
-# Entities
+# Entities: `some`
 
-This document describes the entity semantic conventions.
+This document describes the `some` entities.
 
-## Namespace: `some`
-
-### `some.entity` ![Stable](https://img.shields.io/badge/-stable-lightgreen)
+## `some.entity` ![Stable](https://img.shields.io/badge/-stable-lightgreen)
 
 this is an entity
 
@@ -12,13 +10,13 @@ this is an entity
 |----------|-------|
 | Stability | Stable |
 
-#### Identity
+### Identity
 
 | Attribute | Type | Requirement Level | Description |
 |-----------|------|-------------------|-------------|
 | `some.key` | `string` | Required | A key in my registry |
 
-#### Description
+### Description
 
 | Attribute | Type | Requirement Level | Description |
 |-----------|------|-------------------|-------------|

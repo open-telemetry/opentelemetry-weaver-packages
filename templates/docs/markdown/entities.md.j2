@@ -1,13 +1,10 @@
 {% import "_macros.j2" as macros %}
-# Entities
+# Entities: `{{ ctx.root_namespace }}`
 
-This document describes the entity semantic conventions.
+This document describes the `{{ ctx.root_namespace }}` entities.
 
-{% for grouped_entities in ctx %}
-## Namespace: `{{ grouped_entities.root_namespace }}`
-
-{% for entity in grouped_entities.entities | sort(attribute="type") %}
-### `{{ entity.type }}` {{ macros.stability_badge(entity.stability, entity.deprecated) }}
+{% for entity in ctx.entities | sort(attribute="type") %}
+## `{{ entity.type }}` {{ macros.stability_badge(entity.stability, entity.deprecated) }}
 
 {{ entity.brief | default("") | trim }}
 
@@ -22,14 +19,13 @@ This document describes the entity semantic conventions.
 {% endif %}
 
 {% if entity.identity %}
-#### Identity
+### Identity
 
 {{ macros.attribute_table(entity.identity) }}
 {% endif %}
 {% if entity.description %}
-#### Description
+### Description
 
 {{ macros.attribute_table(entity.description) }}
 {% endif %}
-{% endfor %}
 {% endfor %}

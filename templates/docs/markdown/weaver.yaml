@@ -34,8 +34,8 @@ templates:
       try (semconv_signal("entity"; {"v2":true, "exclude_deprecated":true})
       | group_by(.root_namespace)
       | map({ root_namespace: .[0].root_namespace, entities: . | sort_by(.type) })) catch empty
-    application_mode: single
-    file_name: "entities.md"
+    application_mode: each
+    file_name: "{{ ctx.root_namespace | snake_case }}/entities.md"
 
   - template: deprecated.md.j2
     filter: >
