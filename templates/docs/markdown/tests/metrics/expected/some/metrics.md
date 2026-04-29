@@ -2,14 +2,6 @@
 
 This document describes the `some` metrics.
 
-## `some.deprecated.metric` ![Deprecated](https://img.shields.io/badge/-deprecated-red)
-
-this is a deprecated metric
-
-**Instrument**: `counter`
-
-**Unit**: `s`
-
 ## `some.metric.attrs` ![Stable](https://img.shields.io/badge/-stable-lightgreen)
 
 this is a metric with attributes

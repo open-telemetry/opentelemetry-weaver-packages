@@ -35,6 +35,6 @@ metrics:
     stability: stable
     deprecated:
       reason: obsoleted
-      note: Use `some.stable.metric` instead.
-    instrument: counter
-    unit: s
+      note: This metric is no longer supported.
+    instrument: gauge
+    unit: some.deprecated.unit

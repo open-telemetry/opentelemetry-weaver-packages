@@ -2,14 +2,6 @@
 
 This document describes the `some` spans.
 
-## `some.deprecated.span` ![Deprecated](https://img.shields.io/badge/-deprecated-red)
-
-this is a deprecated span.
-
-**Kind**: `client`
-
-**Name**: `some.deprecated.span`
-
 ## `some.span` ![Stable](https://img.shields.io/badge/-stable-lightgreen)
 
 this is a span.

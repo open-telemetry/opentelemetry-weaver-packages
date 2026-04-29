@@ -4,18 +4,18 @@ whitespace_control:
 
 templates:
   - template: attributes.md.j2
-    filter: try semconv_grouped_attributes({"v2":true}) catch empty
+    filter: try semconv_grouped_attributes({"v2":true, "exclude_deprecated":true}) catch empty
     application_mode: each
     file_name: "{{ ctx.root_namespace | snake_case }}/attributes.md"
 
   - template: metrics.md.j2
-    filter: try semconv_grouped_metrics({"v2":true}) catch empty
+    filter: try semconv_grouped_metrics({"v2":true, "exclude_deprecated":true}) catch empty
     application_mode: each
     file_name: "{{ ctx.root_namespace | snake_case }}/metrics.md"
 
   - template: spans.md.j2
     filter: >
-      try (semconv_signal("span"; {"v2":true})
+      try (semconv_signal("span"; {"v2":true, "exclude_deprecated":true})
       | group_by(.root_namespace)
       | map({ root_namespace: .[0].root_namespace, spans: . | sort_by(.type) })) catch empty
     application_mode: each
@@ -23,7 +23,7 @@ templates:
 
   - template: events.md.j2
     filter: >
-      try (semconv_signal("event"; {"v2":true})
+      try (semconv_signal("event"; {"v2":true, "exclude_deprecated":true})
       | group_by(.root_namespace)
       | map({ root_namespace: .[0].root_namespace, events: . | sort_by(.name) })) catch empty
     application_mode: each
@@ -31,8 +31,20 @@ templates:
 
   - template: entities.md.j2
     filter: >
-      try (semconv_signal("entity"; {"v2":true})
+      try (semconv_signal("entity"; {"v2":true, "exclude_deprecated":true})
       | group_by(.root_namespace)
       | map({ root_namespace: .[0].root_namespace, entities: . | sort_by(.type) })) catch empty
     application_mode: single
     file_name: "entities.md"
+
+  - template: deprecated.md.j2
+    filter: >
+      {
+        attributes: (try (.registry.attributes | map(select(has("deprecated")))) catch []),
+        metrics: (try (.registry.metrics | map(select(has("deprecated")))) catch []),
+        spans: (try (.registry.spans | map(select(has("deprecated")))) catch []),
+        events: (try (.registry.events | map(select(has("deprecated")))) catch []),
+        entities: (try (.registry.entities | map(select(has("deprecated")))) catch [])
+      }
+    application_mode: single
+    file_name: "deprecated.md"

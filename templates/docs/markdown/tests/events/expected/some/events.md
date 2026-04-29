@@ -2,12 +2,6 @@
 
 This document describes the `some` events.
 
-## `some.deprecated.event` ![Deprecated](https://img.shields.io/badge/-deprecated-red)
-
-this is a deprecated event
-
-**Name**: `some.deprecated.event`
-
 ## `some.event.development` ![Development](https://img.shields.io/badge/-development-blue)
 
 this is a development event

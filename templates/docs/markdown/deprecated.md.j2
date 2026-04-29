@@ -1,0 +1,80 @@
+{% import "_macros.j2" as macros %}
+# Deprecated
+
+This document lists deprecated signals and attributes.
+
+{% if ctx.attributes %}
+## Attributes
+
+{% for attr in ctx.attributes | sort(attribute="key") %}
+### `{{ attr.key }}`
+
+{{ attr.brief | default("") | trim }}
+
+**Reason**: {{ attr.deprecated.reason }}
+
+{% if attr.deprecated.note %}**Note**: {{ attr.deprecated.note }}
+
+{% endif %}
+{% endfor %}
+{% endif %}
+{% if ctx.metrics %}
+## Metrics
+
+{% for metric in ctx.metrics | sort(attribute="name") %}
+### `{{ metric.name }}`
+
+{{ metric.brief | default("") | trim }}
+
+**Reason**: {{ metric.deprecated.reason }}
+
+{% if metric.deprecated.note %}**Note**: {{ metric.deprecated.note }}
+
+{% endif %}
+{% endfor %}
+{% endif %}
+{% if ctx.spans %}
+## Spans
+
+{% for span in ctx.spans | sort(attribute="type") %}
+### `{{ span.type }}`
+
+{{ span.brief | default("") | trim }}
+
+**Reason**: {{ span.deprecated.reason }}
+
+{% if span.deprecated.note %}**Note**: {{ span.deprecated.note }}
+
+{% endif %}
+{% endfor %}
+{% endif %}
+{% if ctx.events %}
+## Events
+
+{% for event in ctx.events | sort(attribute="name") %}
+### `{{ event.name }}`
+
+{{ event.brief | default("") | trim }}
+
+**Reason**: {{ event.deprecated.reason }}
+
+{% if event.deprecated.note %}**Note**: {{ event.deprecated.note }}
+
+{% endif %}
+{% endfor %}
+{% endif %}
+{% if ctx.entities %}
+## Entities
+
+{% for entity in ctx.entities | sort(attribute="type") %}
+### `{{ entity.type }}`
+
+{{ entity.brief | default("") | trim }}
+
+**Reason**: {{ entity.deprecated.reason }}
+
+{% if entity.deprecated.note %}**Note**: {{ entity.deprecated.note }}
+
+{% endif %}
+{% endfor %}
+{% endif %}
