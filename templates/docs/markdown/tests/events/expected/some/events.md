@@ -18,7 +18,7 @@ this is an event that triggers something
 
 | Attribute | Type | Requirement Level | Description |
 |-----------|------|-------------------|-------------|
-| `my.key` | `string` | Required | A key in my registry |
+| `some.key` | `string` | Required | A key in my registry |
 
 ## `some.event.with.attrs` ![Stable](https://img.shields.io/badge/-stable-lightgreen)
 
@@ -32,5 +32,5 @@ TBD
 
 | Attribute | Type | Requirement Level | Description |
 |-----------|------|-------------------|-------------|
-| `my.key` | `string` | Required | A key in my registry |
+| `some.key` | `string` | Required | A key in my registry |
 

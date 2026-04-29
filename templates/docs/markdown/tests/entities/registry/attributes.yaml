@@ -1,10 +1,10 @@
 file_format: definition/2
 attributes:
-- key: my.key
+- key: some.key
   type: string
   brief: A key in my registry
   stability: stable
-- key: my.description
+- key: some.description
   type: string
   brief: A descriptive attribute
   stability: stable

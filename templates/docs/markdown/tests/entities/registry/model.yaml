@@ -4,8 +4,8 @@ entities:
     brief: this is an entity
     stability: stable
     identity:
-    - ref: my.key
+    - ref: some.key
       requirement_level: required
     description:
-    - ref: my.description
+    - ref: some.description
       requirement_level: recommended

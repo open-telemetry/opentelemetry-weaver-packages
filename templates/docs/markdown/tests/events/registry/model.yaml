@@ -1,6 +1,6 @@
 file_format: definition/2
 attributes:
-- key: my.key
+- key: some.key
   type: string
   brief: A key in my registry
   stability: stable
@@ -10,14 +10,14 @@ events:
     brief: this is an event that triggers something
     stability: stable
     attributes:
-    - ref: my.key
+    - ref: some.key
       requirement_level: required
   - name: some.event.with.attrs
     note: TBD
     brief: this is an event with attributes
     stability: stable
     attributes:
-    - ref: my.key
+    - ref: some.key
       requirement_level: required
   - name: some.event.development
     brief: this is a development event

@@ -22,7 +22,7 @@ this is a span with attributes.
 
 | Attribute | Type | Requirement Level | Description |
 |-----------|------|-------------------|-------------|
-| `my.key` | `string` | Required | A key in my registry |
+| `some.key` | `string` | Required | A key in my registry |
 
 ## `some.span.with.note` ![Development](https://img.shields.io/badge/-development-blue)
 

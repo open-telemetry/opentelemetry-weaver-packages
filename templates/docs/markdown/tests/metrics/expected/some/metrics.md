@@ -14,7 +14,7 @@ this is a metric with attributes
 
 | Attribute | Type | Requirement Level | Description |
 |-----------|------|-------------------|-------------|
-| `my.key` | `string` | Required | A key in my registry |
+| `some.key` | `string` | Required | A key in my registry |
 
 ## `some.metric.items` ![Stable](https://img.shields.io/badge/-stable-lightgreen)
 

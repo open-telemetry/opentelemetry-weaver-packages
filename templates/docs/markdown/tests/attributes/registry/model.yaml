@@ -1,10 +1,10 @@
 file_format: definition/2
 attributes:
-- key: my.key
+- key: some.key
   type: string
   brief: A key in my registry
   stability: stable
-- key: my.enum
+- key: some.enum
   type:
     members:
       - id: value_one

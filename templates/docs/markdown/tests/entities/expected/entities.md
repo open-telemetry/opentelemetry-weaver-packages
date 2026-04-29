@@ -16,11 +16,11 @@ this is an entity
 
 | Attribute | Type | Requirement Level | Description |
 |-----------|------|-------------------|-------------|
-| `my.key` | `string` | Required | A key in my registry |
+| `some.key` | `string` | Required | A key in my registry |
 
 #### Description
 
 | Attribute | Type | Requirement Level | Description |
 |-----------|------|-------------------|-------------|
-| `my.description` | `string` | Recommended | A descriptive attribute |
+| `some.description` | `string` | Recommended | A descriptive attribute |
 

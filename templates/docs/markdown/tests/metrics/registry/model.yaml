@@ -1,6 +1,6 @@
 file_format: definition/2
 attributes:
-- key: my.key
+- key: some.key
   type: string
   brief: A key in my registry
   stability: stable
@@ -22,7 +22,7 @@ metrics:
     instrument: counter
     unit: s
     attributes:
-    - ref: my.key
+    - ref: some.key
       requirement_level: required
   - name: some.metric.with.note
     brief: this is a metric with a note
