@@ -21,10 +21,15 @@ This document describes the entity semantic conventions.
 {% if entity.deprecated %}| Deprecated | {{ entity.deprecated.note }} |
 {% endif %}
 
-{% if entity.attributes %}
-#### Attributes
+{% if entity.identity %}
+#### Identity
 
-{{ macros.attribute_table(entity.attributes) }}
+{{ macros.attribute_table(entity.identity) }}
+{% endif %}
+{% if entity.description %}
+#### Description
+
+{{ macros.attribute_table(entity.description) }}
 {% endif %}
 {% endfor %}
 {% endfor %}

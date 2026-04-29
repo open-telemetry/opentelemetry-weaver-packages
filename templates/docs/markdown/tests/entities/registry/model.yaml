@@ -5,3 +5,7 @@ entities:
     stability: stable
     identity:
     - ref: my.key
+      requirement_level: required
+    description:
+    - ref: my.description
+      requirement_level: recommended

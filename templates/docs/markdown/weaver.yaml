@@ -4,12 +4,12 @@ whitespace_control:
 
 templates:
   - template: attributes.md.j2
-    filter: semconv_grouped_attributes({"v2":true})
+    filter: try semconv_grouped_attributes({"v2":true}) catch empty
     application_mode: each
     file_name: "{{ ctx.root_namespace | snake_case }}/attributes.md"
 
   - template: metrics.md.j2
-    filter: semconv_grouped_metrics({"v2":true})
+    filter: try semconv_grouped_metrics({"v2":true}) catch empty
     application_mode: each
     file_name: "{{ ctx.root_namespace | snake_case }}/metrics.md"
 

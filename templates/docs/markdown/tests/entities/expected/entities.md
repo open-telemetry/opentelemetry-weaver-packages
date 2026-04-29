@@ -12,3 +12,15 @@ this is an entity
 |----------|-------|
 | Stability | Stable |
 
+#### Identity
+
+| Attribute | Type | Requirement Level | Description |
+|-----------|------|-------------------|-------------|
+| `my.key` | `string` | Required | A key in my registry |
+
+#### Description
+
+| Attribute | Type | Requirement Level | Description |
+|-----------|------|-------------------|-------------|
+| `my.description` | `string` | Recommended | A descriptive attribute |
+

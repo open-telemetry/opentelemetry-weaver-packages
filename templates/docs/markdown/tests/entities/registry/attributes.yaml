@@ -4,3 +4,7 @@ attributes:
   type: string
   brief: A key in my registry
   stability: stable
+- key: my.description
+  type: string
+  brief: A descriptive attribute
+  stability: stable
