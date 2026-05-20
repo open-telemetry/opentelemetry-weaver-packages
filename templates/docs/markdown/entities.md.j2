@@ -1,0 +1,31 @@
+{% import "_macros.j2" as macros %}
+# Entities: `{{ ctx.root_namespace }}`
+
+This document describes the `{{ ctx.root_namespace }}` entities.
+
+{% for entity in ctx.entities | sort(attribute="type") %}
+## `{{ entity.type }}` {{ macros.stability_badge(entity.stability, entity.deprecated) }}
+
+{{ entity.brief | default("") | trim }}
+
+{% if entity.note %}{{ entity.note | trim }}
+
+{% endif %}
+| Property | Value |
+|----------|-------|
+{% if entity.stability %}| Stability | {{ entity.stability | capitalize }} |
+{% endif %}
+{% if entity.deprecated %}| Deprecated | {{ entity.deprecated.note }} |
+{% endif %}
+
+{% if entity.identity %}
+### Identity
+
+{{ macros.attribute_table(entity.identity) }}
+{% endif %}
+{% if entity.description %}
+### Description
+
+{{ macros.attribute_table(entity.description) }}
+{% endif %}
+{% endfor %}

@@ -1,0 +1,38 @@
+{#- Helper macros for markdown documentation templates -#}
+
+{#- Formats a brief description for inline use in tables -#}
+{% macro brief_inline(text) %}{{ text | default("") | trim | replace("\n", "<br>") }}{% endmacro %}
+
+{#- Formats the requirement level for display -#}
+{%- macro requirement_level(level) -%}
+{%- if level == "required" -%}Required
+{%- elif level.conditionally_required -%}Conditionally Required - {{ level.conditionally_required }}
+{%- elif level.recommended -%}Recommended - {{ level.recommended }}
+{%- elif level == "recommended" -%}Recommended
+{%- elif level.opt_in -%}Opt-In - {{ level.opt_in }}
+{%- elif level == "opt_in" -%}Opt-In
+{%- else -%}{{ level }}
+{%- endif -%}
+{%- endmacro -%}
+
+{#- Formats the attribute type for display -#}
+{%- macro attribute_type(attr) -%}
+{%- if attr is enum %}Enum{% else %}`{{ attr.type }}`{% endif -%}
+{%- endmacro -%}
+
+{#- Renders an attribute table for any signal -#}
+{%- macro attribute_table(attributes) -%}
+| Attribute | Type | Requirement Level | Description |
+|-----------|------|-------------------|-------------|
+{% for attr in attributes | attribute_sort %}| `{{ attr.key }}` | {{ attribute_type(attr) }} | {{ requirement_level(attr.requirement_level) }} | {{ brief_inline(attr.brief) }} |
+{% endfor %}
+{%- endmacro -%}
+
+{#- Renders a stability badge, or a deprecated badge if deprecated -#}
+{%- macro stability_badge(stability, deprecated) -%}
+{%- if deprecated -%}![Deprecated](https://img.shields.io/badge/-deprecated-red)
+{%- elif stability == "stable" -%}![Stable](https://img.shields.io/badge/-stable-lightgreen)
+{%- elif stability == "release_candidate" -%}![Release Candidate](https://img.shields.io/badge/-rc-mediumorchid)
+{%- else -%}![Development](https://img.shields.io/badge/-development-blue)
+{%- endif -%}
+{%- endmacro -%}
