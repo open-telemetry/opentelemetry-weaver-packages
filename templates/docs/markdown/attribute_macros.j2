@@ -1,0 +1,67 @@
+{% import 'examples_macros.j2' as examples %}
+{% import 'links.j2' as links %}
+
+{# v2 attribute_catalog entries use `key`. v1 used `name`. We accept both for compatibility with snippet contexts that pass v1-shaped attribute objects. #}
+{% macro name(attribute) -%}
+{%- if attribute.key is defined %}{{ attribute.key }}{% else %}{{ attribute.name }}{% endif %}
+{%- endmacro %}
+
+{% macro type(attribute) %}{%- if attribute.type is mapping %}
+{%- if attribute.type.members[0].value is string %}string{%- endif %}
+{%- if attribute.type.members[0].value is int %}int{%- endif %}
+{%- if attribute.type.members[0].value is float %}double{%- endif %}
+{%- elif attribute.type == "template[boolean]" %}boolean
+{%- elif attribute.type == "template[int]" %}int
+{%- elif attribute.type == "template[double]" %}double
+{%- elif attribute.type == "template[string]" %}string
+{%- elif attribute.type == "template[boolean[]]" %}boolean[]
+{%- elif attribute.type == "template[int[]]" %}int[]
+{%- elif attribute.type == "template[double[]]" %}double[]
+{%- elif attribute.type == "template[string[]]" %}string[]
+{%- else %}{{ attribute.type | trim }}{%- endif %}{% endmacro %}
+
+{% macro display_name(group_id) -%}
+{{ group_id | split_id | join(" ") | title_case | acronym }} Attributes
+{%- endmacro %}
+
+{# v2 link rendering: attribute.provenance is set for locally-defined attributes
+   (their YAML file lives under ./model/) and is null for attributes imported
+   from a dependency. The local-vs-upstream URL construction is owned by
+   links.j2, driven entirely by weaver.yaml params. `upstream_docs_base` is kept
+   in the signature for call-site compatibility but is no longer read here. #}
+{% macro name_with_link(attribute, attribute_registry_base_url, upstream_docs_base) -%}
+[`{{ name(attribute) | trim }}`]({{ links.attribute_doc_url(attribute, attribute_registry_base_url) | trim }})
+{%- endmacro %}
+
+{% macro heading_link_fragments(title) %}{{ title | trim | lower | replace(" ", "-") | replace("(", "") | replace(")", "") | replace("/", "") | replace("\\", "") | replace(".", "") | replace("!", "") | replace("?", "") | replace("~", "") | replace("#", "")}}{% endmacro %}
+
+{% macro humanize(text) %}{{- text.replace('_', ' ') -}}{% endmacro %}
+
+{% macro sentence_case(text) %}{{- text[:1].upper() + text[1:].lower() -}}{% endmacro %}
+
+{% macro schema_note(attribute) -%}
+{%- set schema_path = '' -%}
+{%- set annotations = attribute.annotations | default({}, true) -%}
+{%- if annotations is mapping and 'type' in annotations and annotations['type'] is mapping and 'json_schema' in annotations['type'] -%}
+{%- set schema_path = annotations['type']['json_schema'] | trim | trim('/') -%}
+{%- endif -%}
+{%- if schema_path -%}
+Instrumentations MUST follow [JSON schema](/{{ schema_path }}).
+
+When the attribute is recorded on events, it MUST be recorded in structured form. When recorded on spans, it MAY be recorded as a JSON string if structured format is not supported and SHOULD be recorded in structured form otherwise.
+{%- endif -%}
+{%- endmacro %}
+
+{% macro note(attribute) -%}
+{%- set base_note = attribute.note | default('', true) | trim -%}
+{%- set generated_schema_note = schema_note(attribute) | trim -%}
+{%- if base_note and generated_schema_note -%}
+{{ base_note }}
+
+{{ generated_schema_note }}
+{%- elif base_note -%}
+{{ base_note }}
+{%- elif generated_schema_note -%}
+{{ generated_schema_note }}
+{%- endif -%}
+{%- endmacro %}

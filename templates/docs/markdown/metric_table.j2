@@ -1,0 +1,9 @@
+{% import 'stability.j2' as stability %}
+{% import 'notes.j2' as notes %}
+{% import 'metric_macros.j2' as metrics %}
+
+{# v2 metric objects expose: name, instrument, unit, brief, note, stability, attributes, entity_associations. #}
+{% macro generate(group) %}| Name | Instrument Type | Unit (UCUM) | Description | Stability | Entity Associations |
+| -------- | --------------- | ----------- | -------------- | --------- | ------ |
+| `{{ group.name }}` | {{ metrics.instrument(group.instrument) | trim }} | `{{ group.unit }}` | {{ group.brief | trim }}{{ notes.add({"note": group.note}) }} | {{ stability.badge(group.stability, group.deprecated, group.brief) | trim }} | {% if group.entity_associations %}{% for e in group.entity_associations %}{% if not loop.first %}; {% endif %}`{{ e | trim }}`{% endfor %} {% endif %}|
+{{ notes.render() }}{% endmacro %}

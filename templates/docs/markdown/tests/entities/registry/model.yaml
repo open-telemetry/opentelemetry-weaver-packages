@@ -1,11 +1,36 @@
 file_format: definition/2
-entities:
-  - type: some.entity
-    brief: this is an entity
+attributes:
+  - key: myapp.service.id
+    type: string
     stability: stable
+    brief: Stable identifier of the service.
+    examples: ["svc_42"]
+  - key: myapp.service.name
+    type: string
+    stability: stable
+    brief: Human-readable service name.
+    examples: ["checkout"]
+  - key: myapp.service.tier
+    type:
+      members:
+        - id: free
+          value: free
+          stability: stable
+          brief: Free tier.
+        - id: pro
+          value: pro
+          stability: stable
+          brief: Pro tier.
+    stability: stable
+    brief: Service tier.
+entities:
+  - type: myapp.service
+    stability: stable
+    brief: A deployed service instance.
+    note: Identified by a stable id that survives restarts.
     identity:
-    - ref: some.key
-      requirement_level: required
+      - ref: myapp.service.id
+        requirement_level: required
     description:
-    - ref: some.description
-      requirement_level: recommended
+      - ref: myapp.service.name
+      - ref: myapp.service.tier

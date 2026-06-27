@@ -1,0 +1,43 @@
+{# v2 span objects expose: type (semantic id like gen_ai.inference.client),
+   kind (client/server/internal), brief, note, stability, attributes,
+   and `name.note` -- a markdown blob describing the span name template
+   (e.g. "**Span name** SHOULD be `{gen_ai.operation.name} {gen_ai.request.model}`."). #}
+{% import 'stability.j2' as stability %}
+{% import 'links.j2' as links %}
+{% import 'entity_macros.j2' as entities %}
+
+{# Span-name rendering is disabled until weaver PR 1401 ships:
+   https://github.com/open-telemetry/weaver/pull/1401
+   Until then `span.name.note` collapses to the span's id instead of the
+   model-defined markdown, so the output would be wrong. Re-enable the
+   `if span.name and span.name.note` block below once weaver is upgraded. #}
+{% macro header(span, entity_registry=none) -%}
+**Status:** {{ stability.badge(span.stability, span.deprecated) }}
+
+{{ span.brief | trim }}
+{%- if span.note %}
+
+{{ span.note | trim }}{% endif %}
+{#- if span.name and span.name.note %}
+
+**Span name** SHOULD be {{ span.name.note | trim }}.{% endif #}
+{%- if "**Span kind" not in (span.note or "") %}
+
+**Span kind** SHOULD be `{{ span.kind | upper }}`.{% endif %}
+{%- if "**Span status" not in (span.note or "") %}
+
+**Span status** SHOULD follow the [Recording Errors]({{ links.recording_errors_url() }}) document.{% endif %}
+{%- if span.entity_associations is sequence %}
+
+**Entity Associations** SHOULD be associated with one of the following entities:
+
+{% for e in span.entity_associations %}
+{%- if entity_registry -%}
+- [`{{ e }}`]({{ entities.registry_url(e, entity_registry) }})
+{%- else -%}
+- `{{ e }}`
+{%- endif -%}
+{% endfor %}
+{% endif %}
+
+{% endmacro %}

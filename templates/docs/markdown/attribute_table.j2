@@ -1,0 +1,21 @@
+{% import 'requirement.j2' as requirement %}
+{% import 'stability.j2' as stability %}
+{% import 'notes.j2' as notes %}
+{% import 'attribute_macros.j2' as attrs %}
+{% import 'enum_macros.j2' as enums %}
+{% import 'sampling_macros.j2' as sampling %}
+{% import 'examples_macros.j2' as examples %}
+{% import 'links.j2' as links %}
+
+{# v2 attribute_table: input is a list of attribute objects with `key`, `brief`,
+   `requirement_level`, `provenance`, etc. directly inlined. Provenance is null
+   for imported attributes; name_with_link reads it to pick the right link. #}
+{% macro generate(attributes, attribute_registry_base_url, upstream_docs_base, title) -%}
+{%- if attributes | length > 0 -%}
+{% if title and title != "Other" and title != "" %}**{{title}}:**{% else %}**Attributes:**{% endif %}
+
+| Key | Stability | [Requirement Level]({{ links.requirement_level_url() }}) | Value Type | Description | Example Values |
+| --- | --- | --- | --- | --- | --- |
+{% for attribute in attributes | attribute_sort %}| {{ attrs.name_with_link(attribute, attribute_registry_base_url, upstream_docs_base) }} | {{ stability.badge(attribute.stability, attribute.deprecated, attribute.brief) | trim }} | {{ requirement.render({"level": attribute.requirement_level, "name": attribute.key}, notes) | trim }} | {{ attrs.type(attribute) }} | {{ attribute.brief | trim }}{{ notes.add({"note": attrs.note(attribute), "name": attribute.key}) }} | {{ examples.format(attribute) }}|
+{% endfor %}{{ notes.render() }}{{ sampling.snippet(attributes, attribute_registry_base_url, upstream_docs_base) }}{{ enums.tables(attributes | selectattr("type", "mapping"), notes) }}
+{%- endif %}{% endmacro %}

@@ -1,0 +1,42 @@
+{# All documentation/reference URLs used by the markdown templates.
+
+   This macro module is the single owner of every link. It only *reads* values
+   from `params` (configured in weaver.yaml) -- no URL is hardcoded or derived
+   here. Two independent categories of links, configured separately:
+
+   * OpenTelemetry general guidance (`params.otel_*_url`): naming, recording
+     errors, requirement levels. A planet-wide singleton; kept in config only so
+     it is easy to update, not because it varies per registry.
+
+   * Upstream / dependency docs (`params.upstream_docs_base`,
+     `params.imported_attribute_path_template`): where the attributes this
+     registry *imports* are documented. A per-registry choice -- not necessarily
+     the same project that owns the guidance above. #}
+
+{# Namespace of an attribute (v2 uses `key`, v1 used `name`). #}
+{%- macro _attr_namespace(attribute) -%}
+{%- if attribute.key is defined %}{{ attribute.key }}{% else %}{{ attribute.name }}{% endif %}
+{%- endmacro -%}
+
+{# --- OpenTelemetry general guidance links --- #}
+{% macro requirement_level_url() -%}{{ params.otel_requirement_level_url }}{%- endmacro %}
+{% macro naming_recommendations_url() -%}{{ params.otel_naming_recommendations_url }}{%- endmacro %}
+{% macro recording_errors_url() -%}{{ params.otel_recording_errors_url }}{%- endmacro %}
+
+{# --- Attribute documentation URL ---
+   Local attributes (provenance set, i.e. defined in this registry) link to this
+   registry's own generated pages under `registry_base_url`. Imported attributes
+   (provenance null) link to their upstream docs at
+   `params.upstream_docs_base` + `params.imported_attribute_path_template`.
+
+   TODO: support multiple dependencies -- route imported attributes to different
+   upstreams (by `provenance.schema_url` once weaver provides it). 
+   Today every import shares a single `upstream_docs_base`. #}
+{% macro attribute_doc_url(attribute, registry_base_url) -%}
+{%- set ns = _attr_namespace(attribute) | trim | split_id | first | kebab_case -%}
+{%- if attribute.provenance -%}
+{{ registry_base_url }}/{{ ns }}.md
+{%- else -%}
+{{ params.upstream_docs_base }}{{ params.imported_attribute_path_template | replace('{namespace}', ns) }}
+{%- endif -%}
+{%- endmacro %}

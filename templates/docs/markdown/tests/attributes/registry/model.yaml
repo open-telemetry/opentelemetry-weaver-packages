@@ -1,17 +1,24 @@
 file_format: definition/2
 attributes:
-- key: some.key
-  type: string
-  brief: A key in my registry
-  stability: stable
-- key: some.enum
-  type:
-    members:
-      - id: value_one
-        value: one
-        brief: First value
-      - id: value_two
-        value: two
-        brief: Second value
-  brief: An enum attribute
-  stability: stable
+  - key: myapp.task.id
+    type: string
+    stability: stable
+    brief: Unique identifier of the task.
+    examples: ["task_0001", "task_0042"]
+  - key: myapp.task.state
+    type:
+      members:
+        - id: queued
+          value: queued
+          stability: stable
+          brief: The task is waiting to run.
+        - id: running
+          value: running
+          stability: stable
+          brief: The task is running.
+        - id: done
+          value: done
+          stability: stable
+          brief: The task finished.
+    stability: stable
+    brief: Current state of the task.

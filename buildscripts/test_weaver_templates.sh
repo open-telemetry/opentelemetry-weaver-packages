@@ -74,21 +74,58 @@ run_template_test() {
   OBSERVED_DIR="${TEMPLATE_PACKAGE_DIR}/observed-output/${TEST_NAME}"
   rm -rf "${OBSERVED_DIR}"
   mkdir -p "${OBSERVED_DIR}"
-  # Note: We force ourselves into test dir, so provenance of files is always consistently relative.
-  pushd "${TEST_DIR}"
-  NO_COLOR=1 ${WEAVER} registry generate \
-    -r registry \
-    --v2 \
-    --quiet \
-    --templates="${TEMPLATES_ROOT_DIR}" \
-    ${TEMPLATE_NAME} \
-    ${OBSERVED_DIR}
-  popd
+  if [ -d "${TEST_DIR}/markdown" ]; then
+    # Snippet test: the package ships a snippet.md.j2 and the test provides a
+    # `markdown/` directory of markdown files containing `<!-- weaver {jq} -->`
+    # markers. We run `registry update-markdown`, which fills those markers in
+    # place, then diff the result against `expected/`.
+    run_snippet_test "${TEST_DIR}" "${TEMPLATE_PACKAGE_DIR}" "${OBSERVED_DIR}"
+  else
+    # Note: We force ourselves into test dir, so provenance of files is always consistently relative.
+    pushd "${TEST_DIR}"
+    NO_COLOR=1 ${WEAVER} registry generate \
+      -r registry \
+      --v2 \
+      --quiet \
+      --templates="${TEMPLATES_ROOT_DIR}" \
+      ${TEMPLATE_NAME} \
+      ${OBSERVED_DIR}
+    popd
+  fi
   # TODO - put errors / diagnostics into a file.
 #   if [ $? -ne 0 ]; then
 #     cat "${OBSERVED_DIR}/stderr"
 #   fi
   check_output "${OBSERVED_DIR}" "${TEST_DIR}/expected" "${TEST_NAME} - Template Output"
+}
+
+# Runs a snippet (embed) test via `registry update-markdown`.
+# `update-markdown` only looks for `{templates}/registry/{target}/snippet.md.j2`,
+# so we stage the package under a temporary `registry/<target>` layout regardless
+# of where the package actually lives (e.g. `templates/docs/markdown`).
+# Args:
+#     1 - Test directory (contains registry/, markdown/, expected/)
+#     2 - Template package directory
+#     3 - Observed output directory (seeded with a copy of markdown/)
+run_snippet_test() {
+  SNIP_TEST_DIR="$1"
+  SNIP_PACKAGE_DIR="$2"
+  SNIP_OBSERVED_DIR="$3"
+  SNIP_TARGET=$(basename "${SNIP_PACKAGE_DIR}")
+  SNIP_TEMPLATES=$(mktemp -d)
+  mkdir -p "${SNIP_TEMPLATES}/registry/${SNIP_TARGET}"
+  cp "${SNIP_PACKAGE_DIR}"/*.j2 "${SNIP_PACKAGE_DIR}"/weaver.yaml "${SNIP_TEMPLATES}/registry/${SNIP_TARGET}/"
+  # update-markdown edits the markdown in place; operate on a copy of markdown/.
+  cp -r "${SNIP_TEST_DIR}/markdown/." "${SNIP_OBSERVED_DIR}/"
+  pushd "${SNIP_TEST_DIR}"
+  NO_COLOR=1 ${WEAVER} registry update-markdown \
+    -r registry \
+    --v2 \
+    --templates="${SNIP_TEMPLATES}" \
+    --target "${SNIP_TARGET}" \
+    "${SNIP_OBSERVED_DIR}"
+  popd
+  rm -rf "${SNIP_TEMPLATES}"
 }
 
 # Runs a set of policy tests for a given package.
