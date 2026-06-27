@@ -61,6 +61,22 @@ a local registry that depends on an arbitrary upstream registry, where the
 generated table links the local attribute to a relative page and the imported
 attribute to the upstream docs.
 
+## Limitations
+
+- **Single upstream only.** Imported attributes all link to one
+  `upstream_docs_base`, so any multi-dependency hierarchy — whether flat
+  (several direct dependencies) or deep (dependencies of dependencies) —
+  produces incorrect links for every import that does not live at that one
+  base. Routing imports to the right upstream (e.g. by `provenance.schema_url`
+  once weaver exposes it) is a TODO.
+- **`generate` covers attributes and entities only.** There is no metric, span,
+  or event *registry* output — those signals are documented only via embedded
+  snippets (`update-markdown` / `snippet.md.j2`), not as generated registry
+  pages.
+- **No deprecated-signal pages.** The registry does not generate a deprecated
+  index or otherwise surface deprecated attributes/entities/signals as
+  standalone documentation.
+
 ## Tests
 
 `tests/<name>/registry/` holds the input registry and `tests/<name>/expected/`
