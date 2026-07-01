@@ -258,7 +258,7 @@ run_policy_test() {
     # Strip coverage report or any other non-JSON output before passing to jq
     # Also filter out Weaver's unstable version warnings
     # TODO - extract coverage report into separate file for display.
-    JQ_FILTER='map(select(.diagnostic.message | contains("is not yet stable") | not))'
+    JQ_FILTER='map(select(.error.violation.type == "PolicyFinding"))'
     sed -n '/^\[/,$p' "${RAW_DIAGNOSTIC_OUTPUT}" | jq -S "${JQ_FILTER}" > "${OBSERVED_DIR}/diagnostic-output.json"
   fi
   check_output "${OBSERVED_DIR}/diagnostic-output.json" "${TEST_DIR}/expected-diagnostic-output.json" "${TEST_NAME} - Diagnostic Output"
