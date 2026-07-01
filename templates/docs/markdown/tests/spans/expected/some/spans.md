@@ -8,7 +8,7 @@ this is a span.
 
 **Kind**: `client`
 
-**Name**: `some.span`
+**Name**: `TBD`
 
 ## `some.span.with.attributes` ![Stable](https://img.shields.io/badge/-stable-lightgreen)
 
@@ -16,7 +16,7 @@ this is a span with attributes.
 
 **Kind**: `client`
 
-**Name**: `some.span.with.attributes`
+**Name**: `TBD`
 
 ### Attributes
 
@@ -32,5 +32,5 @@ This is an additional note about the span.
 
 **Kind**: `client`
 
-**Name**: `some.span.with.note`
+**Name**: `TBD`
 
