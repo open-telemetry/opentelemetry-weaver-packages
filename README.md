@@ -27,9 +27,7 @@ For github groups see the [codeowners](CODEOWNERS) file.
 
 ### Maintainers
 
-- [Jeremy Blythe](https://github.com/jerbly) Evertz
 - [Josh Suereth](https://github.com/jsuereth) Google LLC
-- [Laurent Quérel](https://github.com/lquerel) F5 Networks
 - [Liudmila Molkova](https://github.com/lmolkova), Grafana Labs
 
 For more information about the maintainer role, see the [community repository](https://github.com/open-telemetry/community/blob/main/guides/contributor/membership.md#maintainer).
@@ -37,3 +35,11 @@ For more information about the maintainer role, see the [community repository](h
 ### Approvers
 
 For more information about the approver role, see the [community repository](https://github.com/open-telemetry/community/blob/main/guides/contributor/membership.md#approver).
+
+### Emeritus
+
+- [Jeremy Blythe](https://github.com/jerbly), Maintainer
+- [Laurent Quérel](https://github.com/lquerel), Maintainer
+
+For more information about the emeritus role, see the
+[community repository](https://github.com/open-telemetry/community/blob/main/guides/contributor/membership.md#emeritus-maintainerapprovertriager).
