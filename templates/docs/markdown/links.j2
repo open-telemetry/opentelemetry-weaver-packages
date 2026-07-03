@@ -8,8 +8,8 @@
      errors, requirement levels. A planet-wide singleton; kept in config only so
      it is easy to update, not because it varies per registry.
 
-   * Upstream / dependency docs (`params.upstream_docs_base`,
-     `params.imported_attribute_path_template`): where the attributes this
+   * Upstream / dependency docs (`params.upstream_docs_base_url`,
+     `params.upstream_docs_attribute_path`): where the attributes this
      registry *imports* are documented. A per-registry choice -- not necessarily
      the same project that owns the guidance above. #}
 
@@ -27,16 +27,16 @@
    Local attributes (provenance set, i.e. defined in this registry) link to this
    registry's own generated pages under `registry_base_url`. Imported attributes
    (provenance null) link to their upstream docs at
-   `params.upstream_docs_base` + `params.imported_attribute_path_template`.
+   `params.upstream_docs_base_url` + `params.upstream_docs_attribute_path`.
 
    TODO: support multiple dependencies -- route imported attributes to different
-   upstreams (by `provenance.schema_url` once weaver provides it). 
-   Today every import shares a single `upstream_docs_base`. #}
+   upstreams (by `provenance.schema_url` once weaver provides it).
+   Today every import shares a single `upstream_docs_base_url`. #}
 {% macro attribute_doc_url(attribute, registry_base_url) -%}
 {%- set ns = _attr_namespace(attribute) | trim | split_id | first | kebab_case -%}
 {%- if attribute.provenance -%}
 {{ registry_base_url }}/{{ ns }}.md
 {%- else -%}
-{{ params.upstream_docs_base }}{{ params.imported_attribute_path_template | replace('{namespace}', ns) }}
+{{ params.upstream_docs_base_url }}{{ params.upstream_docs_attribute_path | replace('{namespace}', ns) }}
 {%- endif -%}
 {%- endmacro %}

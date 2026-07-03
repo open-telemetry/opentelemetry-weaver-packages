@@ -10,6 +10,6 @@
 {{ entity.header(e) | trim }}
 
 {%- set attribute_registry_base_url = (params.registry_base_url ~ "attributes") | trim if params.registry_base_url is defined else "/docs/registry/attributes" -%}
-{%- set upstream_docs_base = params.upstream_docs_base | trim if params.upstream_docs_base is defined else none -%}
+{%- set upstream_docs_base = params.upstream_docs_base_url | trim if params.upstream_docs_base_url is defined else none -%}
 {{ entity.all_attribute_table(e, attribute_registry_base_url, upstream_docs_base) }}
 {%- endfor -%}

@@ -10,7 +10,7 @@
 
 {%- set attribute_registry_base_url = (params.registry_base_url ~ "attributes") | trim -%}
 {%- set entity_registry_base_url = (params.registry_base_url ~ "entities") | trim -%}
-{%- set upstream_docs_base = params.upstream_docs_base | trim -%}
+{%- set upstream_docs_base = params.upstream_docs_base_url | trim -%}
 {%- set _kind = kind | default(none) -%}
 {%- set _instrument = instrument | default(none) -%}
 {%- set _name = name | default(none) -%}
