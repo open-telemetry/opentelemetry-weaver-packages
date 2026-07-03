@@ -5,17 +5,21 @@ params:
   # Output toggles
   generate_attribute_registry: true
   generate_entity_registry: true
+  generate_span_registry: true
+  generate_metric_registry: true
+  generate_event_registry: true
 
-  # Attribute & entity selection (forwarded to semconv_grouped_attributes / semconv_signal)
+  # Signal & attribute selection (forwarded to semconv_grouped_attributes / semconv_signal)
   exclude_deprecated: false
   stable_only: false
   exclude_root_namespace: []
 
   # Links (read by links.j2)
-  registry_base_url: /docs/registry/
+  registry_base_url: /docs/registry
   otel_requirement_level_url: https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/
   otel_naming_recommendations_url: https://opentelemetry.io/docs/specs/semconv/general/naming/#recommendations-for-application-developers
   otel_recording_errors_url: https://opentelemetry.io/docs/specs/semconv/general/recording-errors/
+  otel_span_guidelines_url: https://opentelemetry.io/docs/specs/otel/trace/api/#span
   upstream_docs_base_url: https://github.com/open-telemetry/semantic-conventions/blob/main
   upstream_docs_attribute_path: /docs/registry/attributes/{namespace}.md
 
@@ -30,47 +34,66 @@ acronyms:
   - URL
 
 templates:
-  - template: attributes_readme.md.j2
-    when: $generate_attribute_registry
-    filter: &attributes_filter |-
-      semconv_grouped_attributes({
-        v2: true,
-        exclude_deprecated: $exclude_deprecated,
-        stable_only: $stable_only,
-        exclude_root_namespace: $exclude_root_namespace
-      })
-    application_mode: single
-    file_name: attributes/README.md
-
-  - template: attribute_namespace.md.j2
-    when: $generate_attribute_registry
-    filter: *attributes_filter
-    application_mode: each
-    file_name: "attributes/{{ ctx.root_namespace | kebab_case }}.md"
-
+  # Registry index (top-level README) and one README per namespace. Both share the
+  # same combined filter: a per-namespace bundle of every signal type, so the
+  # per-namespace README can list whatever the namespace defines and link to it.
   - template: registry_readme.md.j2
-    when: $generate_attribute_registry or $generate_entity_registry
-    filter: "."
+    when: $generate_attribute_registry or $generate_entity_registry or $generate_span_registry or $generate_metric_registry or $generate_event_registry
+    filter: &combined_filter |-
+      {v2: true, exclude_deprecated: $exclude_deprecated, stable_only: $stable_only, exclude_root_namespace: $exclude_root_namespace} as $opts
+      | {
+        spans:      (semconv_grouped_spans($opts)      | map({key: .root_namespace, value: .spans})    | from_entries),
+        metrics:    (semconv_grouped_metrics($opts)    | map({key: .root_namespace, value: .metrics})  | from_entries),
+        events:     (semconv_grouped_events($opts)     | map({key: .root_namespace, value: .events})   | from_entries),
+        entities:   (semconv_signal("entity"; $opts) | group_by(.root_namespace) | map({key: .[0].root_namespace, value: (. | sort_by(.type))}) | from_entries),
+        attributes: (semconv_grouped_attributes($opts) | map({key: .root_namespace, value: .attributes}) | from_entries)
+      } as $byns
+      | ([$byns.spans, $byns.metrics, $byns.events, $byns.entities, $byns.attributes] | map(keys) | add | unique)
+      | map({
+          root_namespace: .,
+          spans:      ($byns.spans[.]      // []),
+          metrics:    ($byns.metrics[.]    // []),
+          events:     ($byns.events[.]     // []),
+          entities:   ($byns.entities[.]   // []),
+          attributes: ($byns.attributes[.] // [])
+        })
     application_mode: single
     file_name: README.md
 
-  # entity registry
-  - template: entity_readme.md.j2
-    when: $generate_entity_registry
-    filter: &entities_filter |-
-      semconv_signal("entity"; {
-        v2: true,
-        exclude_deprecated: $exclude_deprecated,
-        stable_only: $stable_only,
-        exclude_root_namespace: $exclude_root_namespace
-      })
-      | group_by(.root_namespace)
-      | map({ root_namespace: .[0].root_namespace, entities: . | sort_by(.type) })
-    application_mode: single
-    file_name: "entities/README.md"
+  - template: namespace_readme.md.j2
+    when: $generate_attribute_registry or $generate_entity_registry or $generate_span_registry or $generate_metric_registry or $generate_event_registry
+    filter: *combined_filter
+    application_mode: each
+    file_name: "{{ ctx.root_namespace | kebab_case }}/README.md"
+
+  # Signal pages: one per namespace that defines that signal. The grouped helpers
+  # select the signals, group them by root namespace, and sort them for stable output.
+  - template: span_namespace.md.j2
+    when: $generate_span_registry
+    filter: |-
+      semconv_grouped_spans({v2: true, exclude_deprecated: $exclude_deprecated, stable_only: $stable_only, exclude_root_namespace: $exclude_root_namespace})
+    application_mode: each
+    file_name: "{{ ctx.root_namespace | kebab_case }}/spans.md"
+
+  - template: metric_namespace.md.j2
+    when: $generate_metric_registry
+    filter: |-
+      semconv_grouped_metrics({v2: true, exclude_deprecated: $exclude_deprecated, stable_only: $stable_only, exclude_root_namespace: $exclude_root_namespace})
+    application_mode: each
+    file_name: "{{ ctx.root_namespace | kebab_case }}/metrics.md"
+
+  - template: event_namespace.md.j2
+    when: $generate_event_registry
+    filter: |-
+      semconv_grouped_events({v2: true, exclude_deprecated: $exclude_deprecated, stable_only: $stable_only, exclude_root_namespace: $exclude_root_namespace})
+    application_mode: each
+    file_name: "{{ ctx.root_namespace | kebab_case }}/events.md"
 
   - template: entity_namespace.md.j2
     when: $generate_entity_registry
-    filter: *entities_filter
+    filter: |-
+      semconv_signal("entity"; {v2: true, exclude_deprecated: $exclude_deprecated, stable_only: $stable_only, exclude_root_namespace: $exclude_root_namespace})
+      | group_by(.root_namespace)
+      | map({ root_namespace: .[0].root_namespace, entities: (. | sort_by(.type)) })
     application_mode: each
-    file_name: "entities/{{ ctx.root_namespace | kebab_case }}.md"
+    file_name: "{{ ctx.root_namespace | kebab_case }}/entities.md"

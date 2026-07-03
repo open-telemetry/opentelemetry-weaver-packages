@@ -1,0 +1,68 @@
+file_format: definition/2
+attributes:
+  - key: myapp.session.id
+    type: string
+    stability: development
+    brief: Unique identifier of the application session.
+    examples: ["sess_5j66Up"]
+  - key: myapp.request.method
+    type:
+      members:
+        - id: get
+          value: GET
+          stability: stable
+          brief: GET method.
+        - id: post
+          value: POST
+          stability: stable
+          brief: POST method.
+    stability: stable
+    brief: Application-level request method.
+  - key: auth.user.id
+    type: string
+    stability: stable
+    brief: Identifier of the authenticated user.
+    examples: ["u_1234"]
+spans:
+  - type: myapp.request
+    kind: client
+    name:
+      note: TBD
+    stability: development
+    brief: Span describing an application request to a server.
+    attributes:
+      - ref: myapp.session.id
+        requirement_level: recommended
+      - ref: myapp.request.method
+        requirement_level: required
+metrics:
+  - name: myapp.request.duration
+    instrument: histogram
+    unit: s
+    stability: development
+    brief: Duration of the application request.
+    attributes:
+      - ref: myapp.request.method
+        requirement_level: required
+  - name: auth.attempts
+    instrument: counter
+    unit: "{attempt}"
+    stability: stable
+    brief: Number of authentication attempts.
+    attributes:
+      - ref: auth.user.id
+        requirement_level: recommended
+events:
+  - name: myapp.session.started
+    stability: development
+    brief: Emitted when an application session starts.
+    attributes:
+      - ref: myapp.session.id
+        requirement_level: required
+entities:
+  - type: myapp.service
+    stability: development
+    brief: A deployed application service instance.
+    identity:
+      - ref: myapp.session.id
+        requirement_level: required

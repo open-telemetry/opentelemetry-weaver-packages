@@ -18,9 +18,12 @@
 {%- if span.note %}
 
 {{ span.note | trim }}{% endif %}
-{#- if span.name and span.name.note %}
+{%- if span.name and span.name.note and "**Span name" not in (span.note or "") %}
 
-**Span name** SHOULD be {{ span.name.note | trim }}.{% endif #}
+{{ span.name.note | trim }}{% endif %}
+{%- if "guidelines for span names" not in (span.note or "") and "guidelines for span names" not in (span.name.note or "") %}
+
+Span names MUST follow the overall [guidelines for span names]({{ links.span_guidelines_url() }}).{% endif %}
 {%- if "**Span kind" not in (span.note or "") %}
 
 **Span kind** SHOULD be `{{ span.kind | upper }}`.{% endif %}

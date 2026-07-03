@@ -8,8 +8,8 @@
 {%- import 'span_macros.j2' as sp -%}
 {%- import 'entity_macros.j2' as entity -%}
 
-{%- set attribute_registry_base_url = (params.registry_base_url ~ "attributes") | trim -%}
-{%- set entity_registry_base_url = (params.registry_base_url ~ "entities") | trim -%}
+{%- set attribute_registry_base_url = params.registry_base_url | trim -%}
+{%- set entity_registry_base_url = params.registry_base_url | trim -%}
 {%- set upstream_docs_base = params.upstream_docs_base_url | trim -%}
 {%- set _kind = kind | default(none) -%}
 {%- set _instrument = instrument | default(none) -%}

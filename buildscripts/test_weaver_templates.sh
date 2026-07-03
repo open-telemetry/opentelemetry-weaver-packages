@@ -81,12 +81,18 @@ run_template_test() {
     # place, then diff the result against `expected/`.
     run_snippet_test "${TEST_DIR}" "${TEMPLATE_PACKAGE_DIR}" "${OBSERVED_DIR}"
   else
+    # Optional per-test template params (e.g. registry_base_url) via params.yaml.
+    PARAMS_ARG=""
+    if [ -f "${TEST_DIR}/params.yaml" ]; then
+      PARAMS_ARG="--params ${TEST_DIR}/params.yaml"
+    fi
     # Note: We force ourselves into test dir, so provenance of files is always consistently relative.
     pushd "${TEST_DIR}"
     NO_COLOR=1 ${WEAVER} registry generate \
       -r registry \
       --v2 \
       --quiet \
+      ${PARAMS_ARG} \
       --templates="${TEMPLATES_ROOT_DIR}" \
       ${TEMPLATE_NAME} \
       ${OBSERVED_DIR}
@@ -117,10 +123,16 @@ run_snippet_test() {
   cp "${SNIP_PACKAGE_DIR}"/*.j2 "${SNIP_PACKAGE_DIR}"/weaver.yaml "${SNIP_TEMPLATES}/registry/${SNIP_TARGET}/"
   # update-markdown edits the markdown in place; operate on a copy of markdown/.
   cp -r "${SNIP_TEST_DIR}/markdown/." "${SNIP_OBSERVED_DIR}/"
+  # Optional per-test template params (e.g. registry_base_url) via params.yaml.
+  SNIP_PARAMS_ARG=""
+  if [ -f "${SNIP_TEST_DIR}/params.yaml" ]; then
+    SNIP_PARAMS_ARG="--params ${SNIP_TEST_DIR}/params.yaml"
+  fi
   pushd "${SNIP_TEST_DIR}"
   NO_COLOR=1 ${WEAVER} registry update-markdown \
     -r registry \
     --v2 \
+    ${SNIP_PARAMS_ARG} \
     --templates="${SNIP_TEMPLATES}" \
     --target "${SNIP_TARGET}" \
     "${SNIP_OBSERVED_DIR}"

@@ -1,17 +1,10 @@
 {%- macro escape_multiline_markdown_cell(value) -%}
     {%- if '\n' in value -%}
-        {%- for line in value.split('\n') -%}
-            {%- set ns = namespace(started=False,rendered='') -%}
-            {%- for c in line -%}
-                {%- if not ns.started and c == ' ' -%}
-                    {%- set ns.rendered = ns.rendered ~ '&nbsp;' -%}
-                {%- else -%}
-                    {%- set ns.rendered = ns.rendered ~ c-%}
-                    {%- set ns.started = True -%}
-                {%- endif -%}
-            {%- endfor -%}
-            {{ ns.rendered }}{%- if not loop.last -%}<br>{% endif -%}
-        {%- endfor -%}
+        {#- Multi-line values (e.g. pretty-printed JSON) can't use real newlines
+           or fenced code blocks inside a GFM table cell, so wrap in <pre>, which
+           preserves literal indentation (no &nbsp; needed) and renders monospaced.
+           Escape HTML first, then turn newlines into <br> so it stays one row. -#}
+<pre>{{ value | replace('&', '&amp;') | replace('<', '&lt;') | replace('>', '&gt;') | replace('\n', '<br>') }}</pre>
     {%- else -%}
         `{{- value }}`
     {%- endif -%}

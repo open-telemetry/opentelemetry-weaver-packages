@@ -22,11 +22,25 @@
 {% macro requirement_level_url() -%}{{ params.otel_requirement_level_url }}{%- endmacro %}
 {% macro naming_recommendations_url() -%}{{ params.otel_naming_recommendations_url }}{%- endmacro %}
 {% macro recording_errors_url() -%}{{ params.otel_recording_errors_url }}{%- endmacro %}
+{% macro span_guidelines_url() -%}{{ params.otel_span_guidelines_url }}{%- endmacro %}
+
+{# --- Registry page URL ---
+   Root-anchored absolute link to any page this registry generates, in the
+   namespace-first layout `{registry_base_url}/{namespace}/{page}` (e.g.
+   `/docs/registry/myapp/spans.md`). `registry_base_url` is the registry root
+   with no trailing slash. Root-anchored (not file-relative) so the same link
+   resolves whether it is read from a generated registry page or from a snippet
+   embedded in an arbitrary hand-written doc. #}
+{% macro registry_page_url(namespace, page) -%}
+{{ params.registry_base_url }}/{{ namespace | kebab_case }}/{{ page }}
+{%- endmacro %}
 
 {# --- Attribute documentation URL ---
-   Local attributes (provenance set, i.e. defined in this registry) link to this
-   registry's own generated pages under `registry_base_url`. Imported attributes
-   (provenance null) link to their upstream docs at
+   Local attributes (provenance set, i.e. defined in this registry) link to the
+   attribute's row in its namespace README under `registry_base_url`
+   (`{ns}/README.md#{attribute-key}`); the README's Attributes section anchors
+   each key by its kebab-cased id.
+   Imported attributes (provenance null) link to their upstream docs at
    `params.upstream_docs_base_url` + `params.upstream_docs_attribute_path`.
 
    TODO: support multiple dependencies -- route imported attributes to different
@@ -35,7 +49,7 @@
 {% macro attribute_doc_url(attribute, registry_base_url) -%}
 {%- set ns = _attr_namespace(attribute) | trim | split_id | first | kebab_case -%}
 {%- if attribute.provenance -%}
-{{ registry_base_url }}/{{ ns }}.md
+{{ registry_base_url }}/{{ ns }}/README.md#{{ _attr_namespace(attribute) | trim | kebab_case }}
 {%- else -%}
 {{ params.upstream_docs_base_url }}{{ params.upstream_docs_attribute_path | replace('{namespace}', ns) }}
 {%- endif -%}

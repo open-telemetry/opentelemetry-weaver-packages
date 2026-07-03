@@ -14,4 +14,5 @@ and signals (spans, metrics, events, and entities) on its own pages.
 
 Currently, the following namespaces exist:
 
+- [Auth](/auth/README.md)
 - [Myapp](/myapp/README.md)

@@ -8,9 +8,10 @@
 {% import 'examples_macros.j2' as examples %}
 {% import 'links.j2' as links %}
 
-{#- Create registry URLs. -#}
+{#- Create registry URLs. `registry` is the registry root (e.g. /docs/registry);
+   entities live at `{root}/{namespace}/entities.md`, anchored per entity id. -#}
 {% macro registry_url(id, registry) -%}
-{{registry}}/{{ id | split_id | list | first | kebab_case }}.md#{{ id | kebab_case }}
+{{registry}}/{{ id | split_id | list | first | kebab_case }}/entities.md#{{ id | kebab_case }}
 {%- endmacro %}
 
 {#- Create role tags #}
