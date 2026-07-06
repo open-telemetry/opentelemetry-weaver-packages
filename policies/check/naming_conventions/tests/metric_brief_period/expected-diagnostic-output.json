@@ -1,0 +1,22 @@
+[
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=naming_convention_metric_brief_period, context={\"brief\":\"A test metric without period\"}, message=Non-empty metric brief 'A test metric without period' must end with a period (.)., level=Violation, signal_type=Some(\"metric\"), signal_name=Some(\"test.metric\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "brief": "A test metric without period"
+        },
+        "id": "naming_convention_metric_brief_period",
+        "level": "violation",
+        "message": "Non-empty metric brief 'A test metric without period' must end with a period (.).",
+        "signal_name": "test.metric",
+        "signal_type": "metric",
+        "type": "PolicyFinding"
+      }
+    }
+  }
+]

@@ -22,6 +22,7 @@ This package enforces naming and structural rules for OpenTelemetry semantic con
 - **Enum Member Collisions**: Ensures that enum member ids, values, and generated constant names are unique within an attribute.
 - **Attribute Namespace Collisions**: Ensures that an attribute name is not used as a namespace for other attributes.
 - **Complex Attribute Restrictions**: Ensures that complex types (like `any` or `template[any]`) are only used on events and spans.
+- **Metric Brief Formatting**: Ensures that metric briefs end with a period.
 - **Metric Namespace Collisions**: Ensures that a metric name is not used as a namespace for other metrics.
 - **Name Formatting**: Enforces regex-based naming conventions for attributes, metrics, events, entities, and enum members.
 - **Attribute Namespaces**: Ensures that all non-deprecated attributes are correctly namespaced.
