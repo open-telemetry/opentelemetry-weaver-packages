@@ -1,0 +1,20 @@
+file_format: definition/2
+attributes:
+  - key: my.id
+    brief: An id attribute.
+    type: string
+    stability: stable
+entities:
+  - type: known.entity
+    brief: A known entity.
+    stability: stable
+    identity:
+      - ref: my.id
+metrics:
+  - name: my.metric
+    brief: A metric associating an unknown entity.
+    stability: stable
+    instrument: counter
+    unit: "1"
+    entity_associations:
+      - unknown.entity

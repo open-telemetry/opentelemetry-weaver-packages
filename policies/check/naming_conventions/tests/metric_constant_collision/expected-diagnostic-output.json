@@ -1,0 +1,44 @@
+[
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=naming_convention_metric_constant_collision, context={\"colliding_name\":\"foo.bar.baz\",\"constant_name\":\"foo_bar_baz\"}, message=metric 'foo.bar_baz' has the same constant name 'foo_bar_baz' as 'foo.bar.baz'., level=Violation, signal_type=Some(\"metric\"), signal_name=Some(\"foo.bar_baz\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "colliding_name": "foo.bar.baz",
+          "constant_name": "foo_bar_baz"
+        },
+        "id": "naming_convention_metric_constant_collision",
+        "level": "violation",
+        "message": "metric 'foo.bar_baz' has the same constant name 'foo_bar_baz' as 'foo.bar.baz'.",
+        "signal_name": "foo.bar_baz",
+        "signal_type": "metric",
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=naming_convention_metric_constant_collision, context={\"colliding_name\":\"foo.bar_baz\",\"constant_name\":\"foo_bar_baz\"}, message=metric 'foo.bar.baz' has the same constant name 'foo_bar_baz' as 'foo.bar_baz'., level=Violation, signal_type=Some(\"metric\"), signal_name=Some(\"foo.bar.baz\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "colliding_name": "foo.bar_baz",
+          "constant_name": "foo_bar_baz"
+        },
+        "id": "naming_convention_metric_constant_collision",
+        "level": "violation",
+        "message": "metric 'foo.bar.baz' has the same constant name 'foo_bar_baz' as 'foo.bar_baz'.",
+        "signal_name": "foo.bar.baz",
+        "signal_type": "metric",
+        "type": "PolicyFinding"
+      }
+    }
+  }
+]

@@ -1,7 +1,7 @@
 [
   {
     "diagnostic": {
-      "message": "Policy violation: id=stability_event_experimental_attribute, context={\"attribute_key\":\"experimental.attr\",\"requirement_level\":\"required\"}, message=Stable event 'stable.event' references experimental attribute 'experimental.attr' with requirement level 'required', only 'opt_in' level is allowed, level=Violation, signal_type=Some(\"event\"), signal_name=Some(\"stable.event\"), provenance: current"
+      "message": "Policy violation: id=stability_event_lower_stability_attribute, context={\"attribute_key\":\"experimental.attr\",\"attribute_stability\":\"development\",\"signal_stability\":\"stable\"}, message=event 'stable.event' has stability 'stable' which is higher than the stability 'development' of attribute 'experimental.attr'; lower-stability attributes are only allowed at 'opt_in' requirement level, level=Violation, signal_type=Some(\"event\"), signal_name=Some(\"stable.event\"), provenance: current"
     },
     "error": {
       "provenance": "current",
@@ -9,11 +9,12 @@
       "violation": {
         "context": {
           "attribute_key": "experimental.attr",
-          "requirement_level": "required"
+          "attribute_stability": "development",
+          "signal_stability": "stable"
         },
-        "id": "stability_event_experimental_attribute",
+        "id": "stability_event_lower_stability_attribute",
         "level": "violation",
-        "message": "Stable event 'stable.event' references experimental attribute 'experimental.attr' with requirement level 'required', only 'opt_in' level is allowed",
+        "message": "event 'stable.event' has stability 'stable' which is higher than the stability 'development' of attribute 'experimental.attr'; lower-stability attributes are only allowed at 'opt_in' requirement level",
         "signal_name": "stable.event",
         "signal_type": "event",
         "type": "PolicyFinding"
