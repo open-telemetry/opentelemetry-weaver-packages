@@ -1,0 +1,44 @@
+[
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=naming_convention_enum_member_collision, context={\"attribute_key\":\"test.enum\",\"member_id\":\"member1\"}, message=Member with value 'shared' (id 'member1') is defined more than once on attribute 'test.enum'. Member values must be unique., level=Violation, signal_type=None, signal_name=None, provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_key": "test.enum",
+          "member_id": "member1"
+        },
+        "id": "naming_convention_enum_member_collision",
+        "level": "violation",
+        "message": "Member with value 'shared' (id 'member1') is defined more than once on attribute 'test.enum'. Member values must be unique.",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=naming_convention_enum_member_collision, context={\"attribute_key\":\"test.enum\",\"member_id\":\"member2\"}, message=Member with value 'shared' (id 'member2') is defined more than once on attribute 'test.enum'. Member values must be unique., level=Violation, signal_type=None, signal_name=None, provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_key": "test.enum",
+          "member_id": "member2"
+        },
+        "id": "naming_convention_enum_member_collision",
+        "level": "violation",
+        "message": "Member with value 'shared' (id 'member2') is defined more than once on attribute 'test.enum'. Member values must be unique.",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
+      }
+    }
+  }
+]

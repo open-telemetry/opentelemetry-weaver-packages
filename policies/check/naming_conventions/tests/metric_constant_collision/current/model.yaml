@@ -1,0 +1,12 @@
+file_format: definition/2
+metrics:
+  - name: foo.bar.baz
+    brief: First metric.
+    stability: stable
+    instrument: counter
+    unit: "1"
+  - name: foo.bar_baz
+    brief: Colliding metric.
+    stability: stable
+    instrument: counter
+    unit: "1"

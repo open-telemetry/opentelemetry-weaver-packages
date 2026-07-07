@@ -1,0 +1,15 @@
+file_format: definition/2
+attributes:
+  - key: test.enum
+    brief: Test enum attribute.
+    stability: stable
+    type:
+      members:
+        - id: member_id
+          value: member_id
+          brief: First.
+          stability: stable
+        - id: member.id
+          value: member.id
+          brief: Second.
+          stability: stable

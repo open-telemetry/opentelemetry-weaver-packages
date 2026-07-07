@@ -1,0 +1,15 @@
+file_format: definition/2
+attributes:
+  - key: experimental.attr
+    brief: experimental attribute
+    type: string
+    stability: development
+metrics:
+  - name: rc.metric
+    brief: release candidate metric
+    stability: release_candidate
+    instrument: counter
+    unit: "1"
+    attributes:
+      - ref: experimental.attr
+        requirement_level: required

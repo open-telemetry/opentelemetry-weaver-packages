@@ -1,0 +1,26 @@
+file_format: definition/2
+attributes:
+  - key: experimental.attr
+    brief: experimental attribute
+    type: string
+    stability: development
+  - key: stable.attr
+    brief: stable attribute
+    type: string
+    stability: stable
+metrics:
+  - name: stable.metric
+    brief: stable metric
+    stability: stable
+    instrument: counter
+    unit: "1"
+    annotations:
+      stability:
+        # Exempt this metric from the maturity-ordering check.
+        policy_exceptions:
+          - metric_lower_stability_attribute
+    attributes:
+      - ref: experimental.attr
+        requirement_level: required
+      - ref: stable.attr
+        requirement_level: required

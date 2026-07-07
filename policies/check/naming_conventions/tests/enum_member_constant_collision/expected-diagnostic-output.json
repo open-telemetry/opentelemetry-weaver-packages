@@ -1,0 +1,44 @@
+[
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=naming_convention_enum_member_collision, context={\"attribute_key\":\"test.enum\",\"member_id\":\"member.id\"}, message=Member with constant name 'member_id' (id 'member.id') is defined more than once on attribute 'test.enum'. Member constant names must be unique., level=Violation, signal_type=None, signal_name=None, provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_key": "test.enum",
+          "member_id": "member.id"
+        },
+        "id": "naming_convention_enum_member_collision",
+        "level": "violation",
+        "message": "Member with constant name 'member_id' (id 'member.id') is defined more than once on attribute 'test.enum'. Member constant names must be unique.",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=naming_convention_enum_member_collision, context={\"attribute_key\":\"test.enum\",\"member_id\":\"member_id\"}, message=Member with constant name 'member_id' (id 'member_id') is defined more than once on attribute 'test.enum'. Member constant names must be unique., level=Violation, signal_type=None, signal_name=None, provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_key": "test.enum",
+          "member_id": "member_id"
+        },
+        "id": "naming_convention_enum_member_collision",
+        "level": "violation",
+        "message": "Member with constant name 'member_id' (id 'member_id') is defined more than once on attribute 'test.enum'. Member constant names must be unique.",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
+      }
+    }
+  }
+]

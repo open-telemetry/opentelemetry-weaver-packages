@@ -1,7 +1,7 @@
 [
   {
     "diagnostic": {
-      "message": "Policy violation: id=stability_span_experimental_attribute, context={\"attribute_key\":\"experimental.attr\",\"requirement_level\":\"recommended\"}, message=Stable span 'stable.span' references experimental attribute 'experimental.attr' with requirement level 'recommended', only 'opt_in' level is allowed, level=Violation, signal_type=Some(\"span\"), signal_name=Some(\"stable.span\"), provenance: current"
+      "message": "Policy violation: id=stability_span_lower_stability_attribute, context={\"attribute_key\":\"experimental.attr\",\"attribute_stability\":\"development\",\"signal_stability\":\"stable\"}, message=span 'stable.span' has stability 'stable' which is higher than the stability 'development' of attribute 'experimental.attr'; lower-stability attributes are only allowed at 'opt_in' requirement level, level=Violation, signal_type=Some(\"span\"), signal_name=Some(\"stable.span\"), provenance: current"
     },
     "error": {
       "provenance": "current",
@@ -9,11 +9,12 @@
       "violation": {
         "context": {
           "attribute_key": "experimental.attr",
-          "requirement_level": "recommended"
+          "attribute_stability": "development",
+          "signal_stability": "stable"
         },
-        "id": "stability_span_experimental_attribute",
+        "id": "stability_span_lower_stability_attribute",
         "level": "violation",
-        "message": "Stable span 'stable.span' references experimental attribute 'experimental.attr' with requirement level 'recommended', only 'opt_in' level is allowed",
+        "message": "span 'stable.span' has stability 'stable' which is higher than the stability 'development' of attribute 'experimental.attr'; lower-stability attributes are only allowed at 'opt_in' requirement level",
         "signal_name": "stable.span",
         "signal_type": "span",
         "type": "PolicyFinding"

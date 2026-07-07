@@ -1,0 +1,22 @@
+[
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=entity_association_unknown_entity, context={\"entity\":\"unknown.entity\"}, message=Unknown entity 'unknown.entity' associated with metric 'my.metric', level=Violation, signal_type=Some(\"metric\"), signal_name=Some(\"my.metric\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "entity": "unknown.entity"
+        },
+        "id": "entity_association_unknown_entity",
+        "level": "violation",
+        "message": "Unknown entity 'unknown.entity' associated with metric 'my.metric'",
+        "signal_name": "my.metric",
+        "signal_type": "metric",
+        "type": "PolicyFinding"
+      }
+    }
+  }
+]

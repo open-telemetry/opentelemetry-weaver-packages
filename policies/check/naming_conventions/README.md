@@ -18,6 +18,8 @@ $ weaver registry check
 This package enforces naming and structural rules for OpenTelemetry semantic conventions. This includes:
 
 - **Attribute Constant Collisions**: Ensures that attribute keys, when converted to constant names (e.g., `.` to `_`), do not collide.
+- **Signal Constant Collisions**: Ensures that metric, event, and entity names, when converted to constant names, do not collide within their kind.
+- **Enum Member Collisions**: Ensures that enum member ids, values, and generated constant names are unique within an attribute.
 - **Attribute Namespace Collisions**: Ensures that an attribute name is not used as a namespace for other attributes.
 - **Complex Attribute Restrictions**: Ensures that complex types (like `any` or `template[any]`) are only used on events and spans.
 - **Metric Brief Formatting**: Ensures that metric briefs end with a period.
