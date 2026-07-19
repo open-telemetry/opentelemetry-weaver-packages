@@ -9,8 +9,9 @@ weight: -2
 
 This is an automatically generated registry of available semantic conventions.
 
-Conventions are organized by namespace. Each namespace documents its attributes
-and signals (spans, metrics, events, and entities) on its own pages.
+Conventions are organized by namespace. Each namespace documents its spans, metrics,
+events, and entities on its own pages. List of all signals and attributes available
+in a namespace are also available on the namespace page.
 
 Currently, the following namespaces exist:
 

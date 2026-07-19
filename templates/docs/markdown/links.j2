@@ -35,20 +35,30 @@
 {{ params.registry_base_url }}/{{ namespace | kebab_case }}/{{ page }}
 {%- endmacro %}
 
+{# --- Signal heading anchor ---
+   Signal pages render each span/metric/event/entity as a plain heading whose
+   text is the code-formatted id (`## `auth.attempts``). The renderer
+   auto-generates the heading id by lowercasing and dropping dots
+   (`auth.attempts` -> `authattempts`), so links target that same slug -- no
+   explicit `<a id>` is written. (Attributes live in a table, which has no
+   auto-anchor, so those keep an explicit kebab-cased `<a id>` instead.) #}
+{% macro signal_anchor(id) -%}{{ id | lower | replace(".", "") }}{%- endmacro %}
+
 {# --- Attribute documentation URL ---
-   Local attributes (provenance set, i.e. defined in this registry) link to the
-   attribute's row in its namespace README under `registry_base_url`
-   (`{ns}/README.md#{attribute-key}`); the README's Attributes section anchors
-   each key by its kebab-cased id.
-   Imported attributes (provenance null) link to their upstream docs at
-   `params.upstream_docs_base_url` + `params.upstream_docs_attribute_path`.
+   Local attributes -- defined in this registry -- carry `provenance.path` (the
+   model file they live in) and link to the attribute's row in its namespace
+   README under `registry_base_url` (`{ns}/README.md#{attribute-key}`); the
+   README's Attributes section anchors each key by its kebab-cased id.
+   Imported attributes come from a dependency and have no `provenance.path`
+   (provenance is either null or `{source: <schema_url>}`); they link to their
+   upstream docs at `params.upstream_docs_base_url` + `params.upstream_docs_attribute_path`.
 
    TODO: support multiple dependencies -- route imported attributes to different
-   upstreams (by `provenance.schema_url` once weaver provides it).
-   Today every import shares a single `upstream_docs_base_url`. #}
+   upstreams (by `provenance.source` schema_url). Today every import shares a
+   single `upstream_docs_base_url`. #}
 {% macro attribute_doc_url(attribute, registry_base_url) -%}
 {%- set ns = _attr_namespace(attribute) | trim | split_id | first | kebab_case -%}
-{%- if attribute.provenance -%}
+{%- if attribute.provenance and attribute.provenance.path -%}
 {{ registry_base_url }}/{{ ns }}/README.md#{{ _attr_namespace(attribute) | trim | kebab_case }}
 {%- else -%}
 {{ params.upstream_docs_base_url }}{{ params.upstream_docs_attribute_path | replace('{namespace}', ns) }}

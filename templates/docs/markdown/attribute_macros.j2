@@ -24,11 +24,12 @@
 {{ group_id | split_id | join(" ") | title_case | acronym }} Attributes
 {%- endmacro %}
 
-{# v2 link rendering: attribute.provenance is set for locally-defined attributes
-   (their YAML file lives under ./model/) and is null for attributes imported
-   from a dependency. The local-vs-upstream URL construction is owned by
-   links.j2, driven entirely by weaver.yaml params. `upstream_docs_base` is kept
-   in the signature for call-site compatibility but is no longer read here. #}
+{# v2 link rendering: locally-defined attributes carry `provenance.path` (their
+   YAML file under ./model/); attributes imported from a dependency have no
+   `provenance.path` (provenance is null or `{source: <schema_url>}`). The
+   local-vs-upstream URL construction is owned by links.j2, driven entirely by
+   weaver.yaml params. `upstream_docs_base` is kept in the signature for
+   call-site compatibility but is no longer read here. #}
 {% macro name_with_link(attribute, attribute_registry_base_url, upstream_docs_base) -%}
 [`{{ name(attribute) | trim }}`]({{ links.attribute_doc_url(attribute, attribute_registry_base_url) | trim }})
 {%- endmacro %}

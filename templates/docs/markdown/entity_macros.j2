@@ -11,7 +11,7 @@
 {#- Create registry URLs. `registry` is the registry root (e.g. /docs/registry);
    entities live at `{root}/{namespace}/entities.md`, anchored per entity id. -#}
 {% macro registry_url(id, registry) -%}
-{{registry}}/{{ id | split_id | list | first | kebab_case }}/entities.md#{{ id | kebab_case }}
+{{registry}}/{{ id | split_id | list | first | kebab_case }}/entities.md#{{ links.signal_anchor(id) }}
 {%- endmacro %}
 
 {#- Create role tags #}

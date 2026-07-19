@@ -3,14 +3,18 @@
 
 # Myapp
 
+## Table of contents
+
+- [Attributes](#attributes)
+
 ## Attributes
 
 Attributes defined in the `myapp` namespace. Application developers are encouraged to reuse existing attributes; see these [naming recommendations](https://opentelemetry.io/docs/specs/semconv/general/naming/#recommendations-for-application-developers) regarding attribute selection and naming for custom use cases.
 
 | Key | Stability | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- |
-| <a id="myapp-task-id" href="#myapp-task-id">`myapp.task.id`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | string | Unique identifier of the task. | `task_0001`; `task_0042` |
-| <a id="myapp-task-state" href="#myapp-task-state">`myapp.task.state`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | string | Current state of the task. | `queued`; `running`; `done` |
+| <a id="myapp-task-id">`myapp.task.id`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | string | Unique identifier of the task. | `task_0001`; `task_0042` |
+| <a id="myapp-task-state">`myapp.task.state`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | string | Current state of the task. | `queued`; `running`; `done` |
 
 
 ---

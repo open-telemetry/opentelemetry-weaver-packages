@@ -3,11 +3,16 @@
 
 # Auth
 
-## [Metrics](/auth/metrics.md)
+## Table of contents
+
+- [Metrics](#metrics)
+- [Attributes](#attributes)
+
+## Metrics
 
 | Name | Stability | Description |
 | --- | --- | --- |
-| [`auth.attempts`](/auth/metrics.md#auth-attempts) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | Number of authentication attempts. |
+| [`auth.attempts`](/auth/metrics.md#authattempts) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | Number of authentication attempts. |
 
 ## Attributes
 
@@ -15,5 +20,5 @@ Attributes defined in the `auth` namespace. Application developers are encourage
 
 | Key | Stability | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- |
-| <a id="auth-user-id" href="#auth-user-id">`auth.user.id`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | string | Identifier of the authenticated user. | `u_1234` |
+| <a id="auth-user-id">`auth.user.id`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | string | Identifier of the authenticated user. | `u_1234` |
 

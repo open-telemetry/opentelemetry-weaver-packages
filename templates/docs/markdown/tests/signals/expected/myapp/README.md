@@ -3,29 +3,37 @@
 
 # Myapp
 
-## [Spans](/myapp/spans.md)
+## Table of contents
+
+- [Entities](#entities)
+- [Events](#events)
+- [Metrics](#metrics)
+- [Spans](#spans)
+- [Attributes](#attributes)
+
+## Entities
 
 | Type | Stability | Description |
 | --- | --- | --- |
-| [`myapp.request`](/myapp/spans.md#myapp-request) | ![Development](https://img.shields.io/badge/-development-blue) | Span describing an application request to a server. |
+| [`myapp.service`](/myapp/entities.md#myappservice) | ![Development](https://img.shields.io/badge/-development-blue) | A deployed application service instance. |
 
-## [Metrics](/myapp/metrics.md)
-
-| Name | Stability | Description |
-| --- | --- | --- |
-| [`myapp.request.duration`](/myapp/metrics.md#myapp-request-duration) | ![Development](https://img.shields.io/badge/-development-blue) | Duration of the application request. |
-
-## [Events](/myapp/events.md)
+## Events
 
 | Name | Stability | Description |
 | --- | --- | --- |
-| [`myapp.session.started`](/myapp/events.md#myapp-session-started) | ![Development](https://img.shields.io/badge/-development-blue) | Emitted when an application session starts. |
+| [`myapp.session.started`](/myapp/events.md#myappsessionstarted) | ![Development](https://img.shields.io/badge/-development-blue) | Emitted when an application session starts. |
 
-## [Entities](/myapp/entities.md)
+## Metrics
+
+| Name | Stability | Description |
+| --- | --- | --- |
+| [`myapp.request.duration`](/myapp/metrics.md#myapprequestduration) | ![Development](https://img.shields.io/badge/-development-blue) | Duration of the application request. |
+
+## Spans
 
 | Type | Stability | Description |
 | --- | --- | --- |
-| [`myapp.service`](/myapp/entities.md#myapp-service) | ![Development](https://img.shields.io/badge/-development-blue) | A deployed application service instance. |
+| [`myapp.request`](/myapp/spans.md#myapprequest) | ![Development](https://img.shields.io/badge/-development-blue) | Span describing an application request to a server. |
 
 ## Attributes
 
@@ -33,8 +41,8 @@ Attributes defined in the `myapp` namespace. Application developers are encourag
 
 | Key | Stability | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- |
-| <a id="myapp-request-method" href="#myapp-request-method">`myapp.request.method`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | string | Application-level request method. | `GET`; `POST` |
-| <a id="myapp-session-id" href="#myapp-session-id">`myapp.session.id`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | Unique identifier of the application session. | `sess_5j66Up` |
+| <a id="myapp-request-method">`myapp.request.method`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | string | Application-level request method. | `GET`; `POST` |
+| <a id="myapp-session-id">`myapp.session.id`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | Unique identifier of the application session. | `sess_5j66Up` |
 
 
 ---

@@ -1,5 +1,6 @@
 {%- import 'event_macros.j2' as ev -%}
 {%- import 'attribute_table.j2' as at -%}
+{%- import 'links.j2' as links -%}
 {%- set attribute_registry_base_url = params.registry_base_url | trim -%}
 {%- set entity_registry_base_url = params.registry_base_url | trim -%}
 {%- set upstream_docs_base = params.upstream_docs_base_url | trim if params.upstream_docs_base_url is defined else none -%}
@@ -8,10 +9,10 @@
 
 # {{ ctx.root_namespace | title_case | acronym }} events
 {% if ctx.events %}{% for event in ctx.events | sort(attribute="name") %}
-- [`{{ event.name }}`](#{{ event.name | kebab_case }})
+- [`{{ event.name }}`](#{{ links.signal_anchor(event.name) }})
 {%- endfor %}
-{% for event in ctx.events | sort(attribute="name") %}{% set anchor = event.name | kebab_case %}
-## <a id="{{ anchor }}" href="#{{ anchor }}">`{{ event.name }}`</a>
+{% for event in ctx.events | sort(attribute="name") %}
+## `{{ event.name }}`
 
 {{ ev.header(event, entity_registry_base_url) | trim }}
 

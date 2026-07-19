@@ -1,5 +1,6 @@
 {%- import 'span_macros.j2' as sp -%}
 {%- import 'attribute_table.j2' as at -%}
+{%- import 'links.j2' as links -%}
 {%- set attribute_registry_base_url = params.registry_base_url | trim -%}
 {%- set entity_registry_base_url = params.registry_base_url | trim -%}
 {%- set upstream_docs_base = params.upstream_docs_base_url | trim if params.upstream_docs_base_url is defined else none -%}
@@ -8,10 +9,10 @@
 
 # {{ ctx.root_namespace | title_case | acronym }} spans
 {% if ctx.spans %}{% for span in ctx.spans | sort(attribute="type") %}
-- [`{{ span.type }}`](#{{ span.type | kebab_case }})
+- [`{{ span.type }}`](#{{ links.signal_anchor(span.type) }})
 {%- endfor %}
-{% for span in ctx.spans | sort(attribute="type") %}{% set anchor = span.type | kebab_case %}
-## <a id="{{ anchor }}" href="#{{ anchor }}">`{{ span.type }}`</a>
+{% for span in ctx.spans | sort(attribute="type") %}
+## `{{ span.type }}`
 
 {{ sp.header(span, entity_registry_base_url) | trim }}
 

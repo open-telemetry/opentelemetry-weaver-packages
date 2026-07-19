@@ -3,11 +3,16 @@
 
 # Myapp
 
-## [Entities](/myapp/entities.md)
+## Table of contents
+
+- [Entities](#entities)
+- [Attributes](#attributes)
+
+## Entities
 
 | Type | Stability | Description |
 | --- | --- | --- |
-| [`myapp.service`](/myapp/entities.md#myapp-service) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | A deployed service instance. |
+| [`myapp.service`](/myapp/entities.md#myappservice) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | A deployed service instance. |
 
 ## Attributes
 
@@ -15,9 +20,9 @@ Attributes defined in the `myapp` namespace. Application developers are encourag
 
 | Key | Stability | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- |
-| <a id="myapp-service-id" href="#myapp-service-id">`myapp.service.id`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | string | Stable identifier of the service. | `svc_42` |
-| <a id="myapp-service-name" href="#myapp-service-name">`myapp.service.name`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | string | Human-readable service name. | `checkout` |
-| <a id="myapp-service-tier" href="#myapp-service-tier">`myapp.service.tier`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | string | Service tier. | `free`; `pro` |
+| <a id="myapp-service-id">`myapp.service.id`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | string | Stable identifier of the service. | `svc_42` |
+| <a id="myapp-service-name">`myapp.service.name`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | string | Human-readable service name. | `checkout` |
+| <a id="myapp-service-tier">`myapp.service.tier`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | string | Service tier. | `free`; `pro` |
 
 
 ---
