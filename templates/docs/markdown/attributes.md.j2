@@ -10,7 +10,7 @@ This document describes the `{{ ctx.root_namespace }}` attributes.
 
 {% if attribute.note %}{{ attribute.note | trim }}{% endif %}
 
-{% if attribute.examples %}**Examples**: `{{ attribute.examples | join("`, `") }}`{% endif %}
+{% if attribute.examples is defined %}{% if attribute.examples is sequence %}**Examples**: `{{ attribute.examples | join("`, `") }}`{% else %}**Examples**: `{{ attribute.examples }}`{% endif %}{% endif %}
 
 **Type**: {% if attribute is enum %}enum{% else %}`{{ attribute.type }}`{% endif %}
 
