@@ -15,3 +15,35 @@ attributes:
         brief: Second value
   brief: An enum attribute
   stability: stable
+- key: some.scalar_int_example
+  type: int
+  brief: An attribute with a single scalar int example
+  stability: stable
+  examples: 42
+- key: some.scalar_zero_example
+  type: int
+  brief: An attribute with a single falsy scalar example
+  stability: stable
+  examples: 0
+- key: some.scalar_string_example
+  type: string
+  brief: An attribute with a single scalar string example
+  stability: stable
+  examples: "solo"
+- key: some.scalar_bool_example
+  type: boolean
+  brief: An attribute with a single scalar boolean example
+  stability: stable
+  examples: false
+- key: some.array_examples
+  type: string
+  brief: An attribute with an array of examples
+  stability: stable
+  examples: ["one", "two"]
+- key: some.array_of_arrays_examples
+  type: string[]
+  brief: An array-typed attribute with array-of-arrays examples
+  stability: stable
+  examples:
+    - ["a", "b"]
+    - ["c"]

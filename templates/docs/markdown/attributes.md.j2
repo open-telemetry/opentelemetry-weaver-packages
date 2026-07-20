@@ -8,14 +8,24 @@ This document describes the `{{ ctx.root_namespace }}` attributes.
 
 {{ attribute.brief | trim }}
 
-{% if attribute.note %}{{ attribute.note | trim }}{% endif %}
+{% if attribute.note %}{{ attribute.note | trim }}
 
-{% if attribute.examples %}**Examples**: `{{ attribute.examples | join("`, `") }}`{% endif %}
+{% endif %}
+{% if attribute.examples is defined %}
+{% if attribute.examples is sequence %}
+**Examples**: `{{ attribute.examples | join("`, `") }}`
+{% else %}
+**Examples**: `{{ attribute.examples }}`
+{% endif %}
 
-**Type**: {% if attribute is enum %}enum{% else %}`{{ attribute.type }}`{% endif %}
+{% endif %}
+{% if attribute is enum %}
+**Type**: enum
+{% else %}
+**Type**: `{{ attribute.type }}`
+{% endif %}
 
 {% if attribute is enum and attribute.type.members %}
-
 | Value | Description |
 |-------|-------------|
 {% for member in attribute.type.members %}| `{{ member.value }}` | {{ member.brief | default() | trim }} |

@@ -6,13 +6,11 @@ This document describes the `some` attributes.
 
 A descriptive attribute
 
-
-
 **Type**: `string`
+
 ## `some.key` ![Stable](https://img.shields.io/badge/-stable-lightgreen)
 
 A key in my registry
 
-
-
 **Type**: `string`
+

@@ -6,6 +6,5 @@ This document describes the `some` attributes.
 
 A key in my registry
 
-
-
 **Type**: `string`
+
