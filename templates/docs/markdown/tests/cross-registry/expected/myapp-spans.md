@@ -7,15 +7,17 @@
 
 **Status:** ![Development](https://img.shields.io/badge/-development-blue)
 
-Span describing an application request to a server.
+**Span name:** MUST follow the overall [guidelines for span names](https://opentelemetry.io/docs/specs/otel/trace/api/#span).
 
 TBD
 
-Span names MUST follow the overall [guidelines for span names](https://opentelemetry.io/docs/specs/otel/trace/api/#span).
+**Requirement Level:** `Recommended`
 
-**Span kind** SHOULD be `CLIENT`.
+Span describing an application request to a server.
 
-**Span status** SHOULD follow the [Recording Errors](https://opentelemetry.io/docs/specs/semconv/general/recording-errors/) document.
+**Span kind:** SHOULD be `CLIENT`.
+
+**Span status:** SHOULD follow the [Recording Errors](https://opentelemetry.io/docs/specs/semconv/general/recording-errors/) document.
 
 **Attributes:**
 

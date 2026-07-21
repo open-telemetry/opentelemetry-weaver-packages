@@ -9,23 +9,23 @@
 
 **Status:** ![Stable](https://img.shields.io/badge/-stable-lightgreen)
 
-**type:** `myapp.service`
+**Type:** `myapp.service`
 
-**Description:** A deployed service instance.
+**Requirement Level:** `Recommended`
+
+A deployed service instance.
 
 Identified by a stable id that survives restarts.
-
-
 
 **Attributes:**
 
 | Role | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- | --- |
 | Identity | [`myapp.service.id`](/myapp/README.md#myapp-service-id) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Stable identifier of the service. | `svc_42` |
-| Description | [`myapp.service.name`](/myapp/README.md#myapp-service-name) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Recommended` | string | Human-readable service name. | `checkout` |
+| Description | [`myapp.service.name`](/myapp/README.md#myapp-service-name) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Recommended` | string | Human-readable service name. [1] | `checkout` |
 | Description | [`myapp.service.tier`](/myapp/README.md#myapp-service-tier) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Recommended` | string | Service tier. | `free`; `pro` |
 
-
+**[1] `myapp.service.name`:** Defaults to the executable name when the service does not set one explicitly.
 
 ---
 

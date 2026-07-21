@@ -9,7 +9,9 @@
 
 **Status:** ![Development](https://img.shields.io/badge/-development-blue)
 
-The event name MUST be `myapp.session.started`.
+**Event name:** MUST be `myapp.session.started`.
+
+**Requirement Level:** `Opt-In`
 
 Emitted when an application session starts.
 

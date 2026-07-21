@@ -9,17 +9,14 @@
 
 **Status:** ![Development](https://img.shields.io/badge/-development-blue)
 
-**type:** `myapp.service`
+**Type:** `myapp.service`
 
-**Description:** A deployed application service instance.
+**Requirement Level:** `Recommended`
 
-
+A deployed application service instance.
 
 **Attributes:**
 
 | Role | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- | --- |
 | Identity | [`myapp.session.id`](/myapp/README.md#myapp-session-id) | ![Development](https://img.shields.io/badge/-development-blue) | `Required` | string | Unique identifier of the application session. | `sess_5j66Up` |
-
-
-

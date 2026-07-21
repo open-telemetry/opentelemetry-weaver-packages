@@ -7,3 +7,12 @@
 {% else %}{{ attr.level }}
 {%- endif %}
 {% endmacro %}
+
+{# Signal-level requirement (span/metric/event/entity). Only `recommended`
+   (the default when the model omits it) and `opt_in` are valid. #}
+{% macro signal_level(level) -%}
+{%- if level == "opt_in" %}`Opt-In`
+{%- elif level and level != "recommended" %}`{{ level }}`
+{%- else %}`Recommended`
+{%- endif %}
+{%- endmacro %}

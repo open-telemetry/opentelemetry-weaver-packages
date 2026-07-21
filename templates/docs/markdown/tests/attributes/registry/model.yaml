@@ -4,6 +4,7 @@ attributes:
     type: string
     stability: stable
     brief: Unique identifier of the task.
+    note: The identifier is assigned by the scheduler and stays stable across retries.
     examples: ["task_0001", "task_0042"]
   - key: myapp.task.state
     type:

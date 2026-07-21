@@ -26,9 +26,11 @@
 {% macro header(entity) -%}
 **Status:** {{ stability.badge(entity.stability, entity.deprecated, entity.brief) | trim }}
 
-**type:** `{{ entity.type }}`
+**Type:** `{{ entity.type }}`
 
-**Description:** {{ entity.brief | trim }}
+**Requirement Level:** {{ requirement.signal_level(entity.requirement_level) }}
+
+{{ entity.brief | trim }}
 {%- if entity.note %}
 
 {{ entity.note | trim }}
@@ -46,16 +48,19 @@
 {%- endmacro %}
 
 {% macro all_attribute_table(e, attribute_registry_base_url="/docs/registry/attributes", upstream_docs_base=none) -%}
-{% set id_attrs = e.identity | default([]) %}{% set desc_attrs = e.description | default([]) %}
-
+{%- set id_attrs = e.identity | default([]) %}{% set desc_attrs = e.description | default([]) -%}
 **Attributes:**
 
 | Role | Key | Stability | [Requirement Level]({{ links.requirement_level_url() }}) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- | --- |{%- if id_attrs | length > 0 %}
 {{ attribute_table(id_attrs, attribute_registry_base_url, upstream_docs_base, notes, "identity") | trim }}{% endif %}{%- if desc_attrs | length > 0 %}
 {{ attribute_table(desc_attrs, attribute_registry_base_url, upstream_docs_base, notes, "description") | trim }}{% endif %}
+{%- set notes_out = notes.render() | trim %}{% if notes_out %}
 
-{{ notes.render() | trim }}
+{{ notes_out }}
+{%- endif %}
+{%- set enums_out = enums.tables((id_attrs + desc_attrs) | selectattr("type", "mapping"), notes) | trim %}{% if enums_out %}
 
-{{ enums.tables((id_attrs + desc_attrs) | selectattr("type", "mapping"), notes) | trim }}
+{{ enums_out }}
+{%- endif %}
 {%- endmacro %}

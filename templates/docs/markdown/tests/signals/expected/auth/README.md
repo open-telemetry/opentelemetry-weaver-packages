@@ -21,4 +21,3 @@ Attributes defined in the `auth` namespace. Application developers are encourage
 | Key | Stability | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- |
 | <a id="auth-user-id">`auth.user.id`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | string | Identifier of the authenticated user. | `u_1234` |
-

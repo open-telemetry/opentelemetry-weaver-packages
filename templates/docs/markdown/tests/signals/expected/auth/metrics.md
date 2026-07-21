@@ -11,6 +11,8 @@
 | -------- | --------------- | ----------- | -------------- | --------- | ------ |
 | `auth.attempts` | Counter | `{attempt}` | Number of authentication attempts. | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | |
 
+**Requirement Level:** `Opt-In`
+
 **Attributes:**
 
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |

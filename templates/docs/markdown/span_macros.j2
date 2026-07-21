@@ -5,6 +5,7 @@
 {% import 'stability.j2' as stability %}
 {% import 'links.j2' as links %}
 {% import 'entity_macros.j2' as entities %}
+{% import 'requirement.j2' as requirement %}
 
 {# `span.name.note` is a full markdown blob authored in the model (e.g.
    "**Span name** SHOULD be `{gen_ai.operation.name} {gen_ai.request.model}`.")
@@ -13,22 +14,25 @@
 {% macro header(span, entity_registry=none) -%}
 **Status:** {{ stability.badge(span.stability, span.deprecated) }}
 
-{{ span.brief | trim }}
-{%- if span.note %}
+**Span name:** MUST follow the overall [guidelines for span names]({{ links.span_guidelines_url() }}).
 
-{{ span.note | trim }}{% endif %}
 {%- if span.name and span.name.note %}
 
 {{ span.name.note | trim }}{% endif %}
 
-Span names MUST follow the overall [guidelines for span names]({{ links.span_guidelines_url() }}).
+**Requirement Level:** {{ requirement.signal_level(span.requirement_level) }}
 
-**Span kind** SHOULD be `{{ span.kind | upper }}`.
+{{ span.brief | trim }}
+{%- if span.note %}
 
-**Span status** SHOULD follow the [Recording Errors]({{ links.recording_errors_url() }}) document.
+{{ span.note | trim }}{% endif %}
+
+**Span kind:** SHOULD be `{{ span.kind | upper }}`.
+
+**Span status:** SHOULD follow the [Recording Errors]({{ links.recording_errors_url() }}) document.
 {%- if span.entity_associations is sequence %}
 
-**Entity Associations** SHOULD be associated with one of the following entities:
+**Entity Associations:** SHOULD be associated with one of the following entities:
 
 {% for e in span.entity_associations %}
 {%- if entity_registry -%}

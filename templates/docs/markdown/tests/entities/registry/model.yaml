@@ -9,6 +9,7 @@ attributes:
     type: string
     stability: stable
     brief: Human-readable service name.
+    note: Defaults to the executable name when the service does not set one explicitly.
     examples: ["checkout"]
   - key: myapp.service.tier
     type:

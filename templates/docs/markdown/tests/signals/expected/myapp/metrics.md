@@ -11,6 +11,8 @@
 | -------- | --------------- | ----------- | -------------- | --------- | ------ |
 | `myapp.request.duration` | Histogram | `s` | Duration of the application request. | ![Development](https://img.shields.io/badge/-development-blue) | |
 
+**Requirement Level:** `Recommended`
+
 **Attributes:**
 
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |

@@ -48,6 +48,7 @@ metrics:
     instrument: counter
     unit: "{attempt}"
     stability: stable
+    requirement_level: opt_in
     brief: Number of authentication attempts.
     attributes:
       - ref: auth.user.id
@@ -55,6 +56,7 @@ metrics:
 events:
   - name: myapp.session.started
     stability: development
+    requirement_level: opt_in
     brief: Emitted when an application session starts.
     attributes:
       - ref: myapp.session.id
