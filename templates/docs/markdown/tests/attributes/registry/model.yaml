@@ -22,3 +22,39 @@ attributes:
           brief: The task finished.
     stability: stable
     brief: Current state of the task.
+  - key: myapp.task.retries
+    type: int
+    stability: stable
+    brief: Number of times the task was retried.
+    examples: 42
+  - key: myapp.task.priority
+    type: int
+    stability: stable
+    brief: Priority of the task.
+    examples: 0
+  - key: myapp.task.owner
+    type: string
+    stability: stable
+    brief: Owner of the task.
+    examples: solo
+  - key: myapp.task.cancelled
+    type: boolean
+    stability: stable
+    brief: Whether the task was cancelled.
+    examples: false
+  - key: myapp.task.tags
+    type: string[]
+    stability: stable
+    brief: Tags attached to the task.
+    examples:
+      - ["a", "b"]
+      - ["c"]
+  - key: myapp.task.config
+    type: string
+    stability: stable
+    brief: Serialized task configuration.
+    examples:
+      - |-
+        {
+          "retries": 3
+        }
