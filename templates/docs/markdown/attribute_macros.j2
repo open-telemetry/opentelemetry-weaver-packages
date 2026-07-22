@@ -2,11 +2,6 @@
 {% import 'links.j2' as links %}
 {% import 'stability.j2' as stability %}
 
-{# v2 attribute_catalog entries use `key`. v1 used `name`. We accept both for compatibility with snippet contexts that pass v1-shaped attribute objects. #}
-{% macro name(attribute) -%}
-{%- if attribute.key is defined %}{{ attribute.key }}{% else %}{{ attribute.name }}{% endif %}
-{%- endmacro %}
-
 {% macro type(attribute) %}{%- if attribute.type is mapping %}
 {%- if attribute.type.members[0].value is string %}string{%- endif %}
 {%- if attribute.type.members[0].value is int %}int{%- endif %}
@@ -21,25 +16,14 @@
 {%- elif attribute.type == "template[string[]]" %}string[]
 {%- else %}{{ attribute.type | trim }}{%- endif %}{% endmacro %}
 
-{% macro display_name(group_id) -%}
-{{ group_id | split_id | join(" ") | title_case | acronym }} Attributes
-{%- endmacro %}
-
 {# v2 link rendering: locally-defined attributes carry `provenance.path` (their
    YAML file under ./model/); attributes imported from a dependency have no
    `provenance.path` (provenance is null or `{source: <schema_url>}`). The
    local-vs-upstream URL construction is owned by links.j2, driven entirely by
-   weaver.yaml params. `upstream_docs_base` is kept in the signature for
-   call-site compatibility but is no longer read here. #}
-{% macro name_with_link(attribute, attribute_registry_base_url, upstream_docs_base) -%}
-[`{{ name(attribute) | trim }}`]({{ links.attribute_doc_url(attribute, attribute_registry_base_url) | trim }})
+   weaver.yaml params. #}
+{% macro name_with_link(attribute) -%}
+[`{{ attribute.key }}`]({{ links.attribute_doc_url(attribute) | trim }})
 {%- endmacro %}
-
-{% macro heading_link_fragments(title) %}{{ title | trim | lower | replace(" ", "-") | replace("(", "") | replace(")", "") | replace("/", "") | replace("\\", "") | replace(".", "") | replace("!", "") | replace("?", "") | replace("~", "") | replace("#", "")}}{% endmacro %}
-
-{% macro humanize(text) %}{{- text.replace('_', ' ') -}}{% endmacro %}
-
-{% macro sentence_case(text) %}{{- text[:1].upper() + text[1:].lower() -}}{% endmacro %}
 
 {% macro schema_note(attribute) -%}
 {%- set schema_path = '' -%}
@@ -65,6 +49,6 @@ When the attribute is recorded on events, it MUST be recorded in structured form
    what replaced them is what the reader needs. #}
 {% macro description(attribute, notes) -%}
 {%- if attribute.deprecated %}{{ stability.description(attribute) }}
-{%- else %}{{ attribute.brief | trim }}{{ notes.add({"note": note(attribute), "name": name(attribute)}) }}
+{%- else %}{{ attribute.brief | trim }}{{ notes.add({"note": note(attribute), "name": attribute.key}) }}
 {%- endif -%}
 {%- endmacro %}

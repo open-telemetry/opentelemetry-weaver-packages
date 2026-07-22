@@ -25,7 +25,7 @@ log_warn() {
   echo "$1"
 }
 
-# Tests the output of a test agianst expected value.
+# Tests the output of a test against expected value.
 # With UPDATE_EXPECTED=1 the observed output replaces the expected one instead
 # of being diffed against it (see `make update-test-output`).
 # Args:

@@ -13,11 +13,6 @@
      registry *imports* are documented. A per-registry choice -- not necessarily
      the same project that owns the guidance above. #}
 
-{# Namespace of an attribute (v2 uses `key`, v1 used `name`). #}
-{%- macro _attr_namespace(attribute) -%}
-{%- if attribute.key is defined %}{{ attribute.key }}{% else %}{{ attribute.name }}{% endif %}
-{%- endmacro -%}
-
 {# --- OpenTelemetry general guidance links --- #}
 {% macro requirement_level_url() -%}{{ params.otel_requirement_level_url }}{%- endmacro %}
 {% macro naming_recommendations_url() -%}{{ params.otel_naming_recommendations_url }}{%- endmacro %}
@@ -56,10 +51,10 @@
    TODO: support multiple dependencies -- route imported attributes to different
    upstreams (by `provenance.source` schema_url). Today every import shares a
    single `upstream_docs_base_url`. #}
-{% macro attribute_doc_url(attribute, registry_base_url) -%}
-{%- set ns = _attr_namespace(attribute) | trim | split_id | first | kebab_case -%}
+{% macro attribute_doc_url(attribute) -%}
+{%- set ns = attribute.key | split_id | first | kebab_case -%}
 {%- if attribute.provenance and attribute.provenance.path -%}
-{{ registry_base_url }}/{{ ns }}/README.md#{{ _attr_namespace(attribute) | trim | kebab_case }}
+{{ params.registry_base_url }}/{{ ns }}/README.md#{{ attribute.key | kebab_case }}
 {%- else -%}
 {{ params.upstream_docs_base_url }}{{ params.upstream_docs_attribute_path | replace('{namespace}', ns) }}
 {%- endif -%}
