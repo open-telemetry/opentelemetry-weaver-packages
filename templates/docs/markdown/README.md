@@ -1,146 +1,137 @@
 # Markdown Documentation Generation
 
-Generates Markdown documentation for a semantic convention registry. Two entry
-points share the same macros:
-
-- **`weaver registry generate`** - renders a **namespace-first** registry: a
-  top-level index (`README.md`) listing every namespace, and per namespace a
-  `<namespace>/README.md` plus one page per signal type it defines -
-  `<namespace>/attributes.md`, `<namespace>/spans.md`,
-  `<namespace>/metrics.md`, `<namespace>/events.md`,
-  `<namespace>/entities.md`. A signal page is emitted only when the namespace
-  actually defines that signal, so there are no empty files.
-- **`weaver registry update-markdown`** - refreshes `<!-- weaver {jq} -->`
-  blocks embedded in hand-written docs using `snippet.md.j2` (span, metric,
-  event, entity and attribute tables).
-
-Each definition on a generated signal page is rendered with the same macros as
-the embedded snippets, so a span, metric, or event looks identical whether it is
-generated as a registry page or embedded via `update-markdown`.
+Generates Markdown documentation for a semantic convention registry.
 
 Stability: Development
 Owners: TBD
 
+> **Requires the next weaver release (presumably 0.25.0).**
+
 ## Usage
 
-Generate the registry (attribute, entity, and signal pages):
+Point weaver at this package - no need to copy it into your repo. Pin a tag or
+commit instead of `main` if you want reproducible output.
+
+Generate a full registry of Markdown pages:
 
 ```bash
-weaver registry generate -r <registry> --v2 --templates <templates-root> docs/markdown <output>
+weaver registry generate -r ./model --v2 \
+  -t 'https://github.com/open-telemetry/opentelemetry-weaver-packages.git@main[templates/docs]' \
+  markdown ./docs/registry
 ```
 
-Refresh embedded snippet tables (note: `update-markdown` looks for the snippet
-template under `<templates-root>/registry/<target>/snippet.md.j2`):
+You get a top-level `README.md` listing all namespaces, and per namespace:
+
+- `<namespace>/README.md` - what the namespace defines, plus its attributes.
+- `<namespace>/spans.md`, `metrics.md`, `events.md`, `entities.md` - one page per
+  signal type the namespace defines. Nothing is written for signal types it
+  doesn't define.
+
+You can generate only some signal types, or skip the registry entirely - see
+[Output toggles](#output-toggles).
+
+To embed a single table in a hand-written doc instead, put a
+`<!-- weaver {jq} -->` marker where you want it and run:
 
 ```bash
-weaver registry update-markdown -r <registry> --v2 --templates <templates-root> --target markdown <markdown-dir>
+weaver registry update-markdown -r ./model --v2 \
+  -t 'https://github.com/open-telemetry/opentelemetry-weaver-packages.git@main[templates/docs]' \
+  --target markdown ./docs
 ```
+
+This rewrites the content under each marker in place.
+
+A definition looks the same either way, so a span on a generated page matches
+the same span embedded in your doc.
 
 ## Configuration
 
-All behavior that varies per registry is an explicit param in
-[`weaver.yaml`](weaver.yaml) - nothing is hardcoded in the `.j2` files. The
-values here are the package defaults; when you reuse this package you don't edit
-its `weaver.yaml`. Override params per registry on the command line with
-`--param key=value` (values are parsed as YAML, so `--param stable_only=true` and
-`--param 'exclude_root_namespace=["foo"]'` both work). Acronyms and text maps are
-set differently - in your project's `.weaver.toml`; see below.
+Set params on the command line with `--param key=value`. Values are parsed as
+YAML, so `--param stable_only=true` and `--param 'exclude_root_namespace=["foo"]'`
+both work. The tables below list the defaults.
+
+[Namespace titles](#namespace-titles) are the exception - they are configured in
+your project's `.weaver.toml`.
 
 ### Output toggles
 
-Gate which signal types are generated (via each template's `when:` clause). All
-default to `true`. The registry index (`README.md`) and per-namespace
-`README.md` are emitted when **any** toggle is on, and each namespace README
-only links to the sections whose toggle is on and that have definitions, so
-setting all toggles to `false` generates nothing.
+Pick which signal types the generated registry covers. Turn them all off and
+nothing is generated.
 
 | Param | Default | Effect |
 | --- | --- | --- |
-| `generate_attribute_registry` | `true` | Emit the attribute pages (`<namespace>/attributes.md`). |
-| `generate_entity_registry` | `true` | Emit the entity pages (`<namespace>/entities.md`). |
-| `generate_span_registry` | `true` | Emit the span pages (`<namespace>/spans.md`). |
-| `generate_metric_registry` | `true` | Emit the metric pages (`<namespace>/metrics.md`). |
-| `generate_event_registry` | `true` | Emit the event pages (`<namespace>/events.md`). |
+| `generate_attribute_registry` | `true` | List attributes on the namespace README. |
+| `generate_entity_registry` | `true` | Generate `<namespace>/entities.md`. |
+| `generate_span_registry` | `true` | Generate `<namespace>/spans.md`. |
+| `generate_metric_registry` | `true` | Generate `<namespace>/metrics.md`. |
+| `generate_event_registry` | `true` | Generate `<namespace>/events.md`. |
+
+These only affect the generated registry, not `update-markdown`. A snippet is
+always rendered where you put its marker.
 
 ### Signal & attribute selection
 
-Forwarded to the `semconv_grouped_attributes` (attributes) and `semconv_signal`
-(spans, metrics, events, entities) JQ functions that decide what lands in the
-docs. The v2 schema is always on; by default nothing is excluded.
+Pick which definitions are documented. Applies to both generated pages and
+snippets.
 
 | Param | Default | Effect |
 | --- | --- | --- |
-| `exclude_deprecated` | `false` | Drop deprecated attributes/entities and enum members. |
-| `stable_only` | `false` | Keep only stable attributes/entities and stable enum members. |
-| `exclude_root_namespace` | `[]` | Root namespaces to drop, e.g. `["foo", "bar"]`. |
+| `exclude_deprecated` | `true` | Drop deprecated attributes, signals and enum members. Set to `false` to document them - they move to a `Deprecated` section at the end of the page instead of appearing inline. |
+| `stable_only` | `false` | Keep only stable attributes, signals and enum members. |
+| `exclude_root_namespace` | `[]` | Namespaces to drop, e.g. `["foo", "bar"]`. |
 
 ### Links
 
-Every link the templates emit is an explicit param, read by
-[`links.j2`](links.j2). Three independent groups:
+Every link in the generated docs comes from a param.
 
 | Param | Purpose |
 | --- | --- |
-| `registry_base_url` | Root of this registry's own published pages (no trailing slash). Internal links are built root-anchored as `<registry_base_url>/<namespace>/<page>.md`, so they resolve both on a generated page and inside a snippet embedded in an arbitrary doc. |
-| `otel_requirement_level_url`, `otel_naming_recommendations_url`, `otel_recording_errors_url` | OpenTelemetry general guidance - planet-wide singletons, not tied to any dependency. |
-| `upstream_docs_base_url`, `upstream_docs_attribute_path` | Where *imported* attributes are documented. The imported-attribute link is `upstream_docs_base_url` + `upstream_docs_attribute_path` with `{namespace}` substituted. |
+| `registry_base_url` | Where this registry is published (no trailing slash). Links between generated pages are absolute, `<registry_base_url>/<namespace>/<page>.md`, so they also work from a snippet embedded anywhere. |
+| `otel_requirement_level_url`, `otel_naming_recommendations_url`, `otel_recording_errors_url` | OpenTelemetry general guidance. The same for everyone; params only so they are easy to update. |
+| `upstream_docs_base_url`, `upstream_docs_attribute_path` | Where attributes you *import* from another registry are documented. The link is the two joined, with `{namespace}` substituted. |
 
-### Acronyms and text maps
+Each attribute links to its own documentation: attributes defined in this
+registry link to its own pages, imported ones link upstream.
+[`tests/cross-registry`](tests/cross-registry) shows both.
 
-The package ships a default `acronyms` list in its
-[`weaver.yaml`](weaver.yaml), used by the `acronym` filter to keep known
-initialisms fully upper-cased when a heading is title-cased (so the `http`
-namespace renders as `HTTP`, not `Http`).
+### Namespace titles
 
-To add your own acronyms (or text maps) when reusing this package, **don't edit
-`weaver.yaml`** - put them in a `[template]` section of your project's
-`.weaver.toml` (weaver discovers it by walking up from your registry). Those
-settings apply on top of every template package the project uses:
+A namespace page is titled after its namespace id, made readable in one of two
+ways:
+
+1. If the id is in the `namespace_mapping` text map, the title comes from there.
+   Use this when the title is more than the id in different casing, e.g.
+   `cicd` → `CI/CD`.
+2. Otherwise the id is capitalized (`myapp` → `Myapp`), or upper-cased if it is
+   listed as an acronym (`http` → `HTTP`).
+
+Both lists go in the `[template]` section of your `.weaver.toml` (weaver finds it
+by walking up from your registry), not in `--param`, and apply to every template
+package your project uses:
 
 ```toml
 [template]
 acronyms = ["API", "HTTP", "SDK", "MyProduct"]
-# text_maps = { namespace_mapping = { cicd = "CI/CD" } }
+text_maps = { namespace_mapping = { cicd = "CI/CD" } }
 ```
-
-Your acronyms are unioned with the package's, and on a case-insensitive
-collision your value wins. `text_maps` (named `term → replacement` maps used by
-weaver's text-mapping filter) are wired the same way. Today the `[template]`
-section supports only `acronyms` and `text_maps`.
-
-### Cross-registry links
-
-Each attribute the templates render is linked to its documentation. The target is
-chosen from the attribute's `provenance`:
-
-- **Local** attributes (defined in this registry) link to this registry's own
-  pages under `registry_base_url` (`<registry_base_url>/<namespace>/attributes.md`).
-- **Imported** attributes (pulled from a dependency) link to their upstream
-  docs at `upstream_docs_base_url` + `upstream_docs_attribute_path`. Routing
-  imports to multiple upstreams is a TODO (today every import shares a single
-  `upstream_docs_base_url`).
-
-The [`tests/cross-registry`](tests/cross-registry) example shows this end to end:
-a local registry that depends on an arbitrary upstream registry, where the
-generated table links the local attribute to a root-anchored page in this
-registry and the imported attribute to the upstream docs.
 
 ## Limitations
 
-- **Single upstream only.** Imported attributes all link to one
-  `upstream_docs_base_url`, so any multi-dependency hierarchy - whether flat
-  (several direct dependencies) or deep (dependencies of dependencies) -
-  produces incorrect links for every import that does not live at that one
-  base. Routing imports to the right upstream (e.g. by `provenance.schema_url`
-  once weaver exposes it) is a TODO.
-- **No deprecated-signal pages.** The registry does not generate a deprecated
-  index or otherwise surface deprecated attributes/entities/signals as
-  standalone documentation.
+- **Single upstream only.** Every imported attribute links under
+  `upstream_docs_base_url`, so if you depend on more than one registry, links to
+  the others are wrong. Routing each import to its own upstream is a TODO.
 
 ## Tests
 
-`tests/<name>/registry/` holds the input registry and `tests/<name>/expected/`
-the golden output. A test that also has a `tests/<name>/markdown/` directory is
-run as a snippet test through `update-markdown` (the files in `markdown/` carry
-`<!-- weaver … -->` markers); otherwise it is run through `generate`. Run them
-with `buildscripts/test_weaver_templates.sh` or `make test-templates`.
+Each test lives in `tests/<name>/`:
+
+| File | Purpose |
+| --- | --- |
+| `registry/` | The input registry. |
+| `expected/` | The output to match. |
+| `params.yaml` | Params for this test (optional). |
+| `weaver-config.yaml` | What a registry would put in `.weaver.toml` - `acronyms`, `text_maps` (optional). |
+| `markdown/` | Makes this a snippet test (optional): these files carry `<!-- weaver … -->` markers and are run through `update-markdown` instead of `generate`. |
+
+Run them with `make test-templates`, or `make update-test-output` to rewrite
+`expected/` from the current output.

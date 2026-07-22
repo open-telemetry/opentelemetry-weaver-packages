@@ -26,6 +26,8 @@ log_warn() {
 }
 
 # Tests the output of a test agianst expected value.
+# With UPDATE_EXPECTED=1 the observed output replaces the expected one instead
+# of being diffed against it (see `make update-test-output`).
 # Args:
 #     1 - Observed Output directory
 #     2 - Expected Output directory
@@ -34,6 +36,12 @@ check_output() {
   OBSERVED_FILE="$1"
   EXPECTED_FILE="$2"
   TEST_NAME="$3"
+  if [[ -n "$UPDATE_EXPECTED" ]]; then
+    rm -rf "$EXPECTED_FILE"
+    cp -R "$OBSERVED_FILE" "$EXPECTED_FILE"
+    echo "  ♻️  UPDATED: $TEST_NAME expected output."
+    return 0
+  fi
   # Skip checking if we don't have an expected file.
   if [[ -f "$EXPECTED_FILE" ]]; then
     diff "$OBSERVED_FILE" "$EXPECTED_FILE" > /dev/null
@@ -86,6 +94,17 @@ run_template_test() {
     if [ -f "${TEST_DIR}/params.yaml" ]; then
       PARAMS_ARG="--params ${TEST_DIR}/params.yaml"
     fi
+    # Optional per-test template config (`acronyms`, `text_maps`, ...) that is
+    # not expressible as a param. Users set these in their project's
+    # `.weaver.toml`; that merge is not in the released weaver yet, so a test
+    # runs against a throwaway copy of the templates root with its
+    # `weaver-config.yaml` appended to the package's own weaver.yaml.
+    RUN_TEMPLATES_ROOT="${TEMPLATES_ROOT_DIR}"
+    if [ -f "${TEST_DIR}/weaver-config.yaml" ]; then
+      RUN_TEMPLATES_ROOT=$(mktemp -d)/templates
+      cp -r "${TEMPLATES_ROOT_DIR}" "${RUN_TEMPLATES_ROOT}"
+      cat "${TEST_DIR}/weaver-config.yaml" >> "${RUN_TEMPLATES_ROOT}/${TEMPLATE_NAME}/weaver.yaml"
+    fi
     # Note: We force ourselves into test dir, so provenance of files is always consistently relative.
     pushd "${TEST_DIR}"
     NO_COLOR=1 ${WEAVER} registry generate \
@@ -93,7 +112,7 @@ run_template_test() {
       --v2 \
       --quiet \
       ${PARAMS_ARG} \
-      --templates="${TEMPLATES_ROOT_DIR}" \
+      --templates="${RUN_TEMPLATES_ROOT}" \
       ${TEMPLATE_NAME} \
       ${OBSERVED_DIR}
     popd

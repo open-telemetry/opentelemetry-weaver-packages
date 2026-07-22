@@ -1,0 +1,7 @@
+# Appended to the package's weaver.yaml by the test harness. This is what a real
+# registry puts in the `[template]` section of its `.weaver.toml`.
+acronyms:
+  - HTTP
+text_maps:
+  namespace_mapping:
+    cicd: CI/CD

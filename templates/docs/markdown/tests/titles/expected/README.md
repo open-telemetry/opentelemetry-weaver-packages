@@ -1,5 +1,3 @@
-{%- import 'links.j2' as links -%}
-{%- import 'titles.j2' as titles -%}
 <!--- Hugo front matter used to generate the website version of this page:
 weight: -2
 --->
@@ -17,6 +15,6 @@ in a namespace are also available on the namespace page.
 
 Currently, the following namespaces exist:
 
-{% for bundle in ctx | sort(attribute="root_namespace") -%}
-- [{{ titles.namespace(bundle.root_namespace) }}]({{ links.registry_page_url(bundle.root_namespace, "README.md") | trim }})
-{% endfor -%}
+- [CI/CD](/cicd/README.md)
+- [HTTP](/http/README.md)
+- [Myapp](/myapp/README.md)

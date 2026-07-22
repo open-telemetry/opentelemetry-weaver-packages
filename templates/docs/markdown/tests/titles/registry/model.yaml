@@ -1,0 +1,21 @@
+# Three namespaces, one per way a heading title is derived:
+#   cicd  -> from the `namespace_mapping` text map ("CI/CD")
+#   http  -> from the acronyms list ("HTTP")
+#   myapp -> plain title casing ("Myapp")
+file_format: definition/2
+attributes:
+  - key: cicd.pipeline.name
+    type: string
+    stability: stable
+    brief: Name of the pipeline.
+    examples: ["build-and-test"]
+  - key: http.request.method
+    type: string
+    stability: stable
+    brief: HTTP request method.
+    examples: ["GET"]
+  - key: myapp.task.id
+    type: string
+    stability: stable
+    brief: Unique identifier of the task.
+    examples: ["task_0001"]
