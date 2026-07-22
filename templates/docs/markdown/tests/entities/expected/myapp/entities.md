@@ -4,18 +4,21 @@
 # Myapp entities
 
 - [`myapp.service`](#myappservice)
+- [Deprecated](#deprecated)
+  - [`myapp.legacy.service`](#myapplegacyservice)
+  - [`myapp.worker`](#myappworker)
 
 ## `myapp.service`
 
 **Status:** ![Stable](https://img.shields.io/badge/-stable-lightgreen)
 
-**Type:** `myapp.service`
-
-**Requirement Level:** `Recommended`
-
 A deployed service instance.
 
 Identified by a stable id that survives restarts.
+
+**Type:** `myapp.service`
+
+**Requirement Level:** `Recommended`
 
 **Attributes:**
 
@@ -35,3 +38,37 @@ Identified by a stable id that survives restarts.
 | --- | --- | --- |
 | `free` | Free tier. | ![Stable](https://img.shields.io/badge/-stable-lightgreen) |
 | `pro` | Pro tier. | ![Stable](https://img.shields.io/badge/-stable-lightgreen) |
+
+## Deprecated
+
+### `myapp.legacy.service`
+
+**Status:** ![Deprecated](https://img.shields.io/badge/-deprecated-red) ![Stable](https://img.shields.io/badge/-stable-lightgreen)<br>**Renamed:** Renamed to `myapp.service`.
+
+A deployed legacy service instance.
+
+**Type:** `myapp.legacy.service`
+
+**Requirement Level:** `Recommended`
+
+**Attributes:**
+
+| Role | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
+| --- | --- | --- | --- | --- | --- | --- |
+| Identity | [`myapp.service.identifier`](/myapp/README.md#myapp-service-identifier) | ![Deprecated](https://img.shields.io/badge/-deprecated-red) ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Stable identifier of the service.<br>**Renamed:** Renamed to `myapp.service.id`. | `svc_42` |
+
+### `myapp.worker`
+
+**Status:** ![Deprecated](https://img.shields.io/badge/-deprecated-red) ![Stable](https://img.shields.io/badge/-stable-lightgreen)<br>**Obsoleted:** Workers are no longer modeled as a separate entity.
+
+A background worker process.
+
+**Type:** `myapp.worker`
+
+**Requirement Level:** `Recommended`
+
+**Attributes:**
+
+| Role | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
+| --- | --- | --- | --- | --- | --- | --- |
+| Identity | [`myapp.service.identifier`](/myapp/README.md#myapp-service-identifier) | ![Deprecated](https://img.shields.io/badge/-deprecated-red) ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Stable identifier of the service.<br>**Renamed:** Renamed to `myapp.service.id`. | `svc_42` |

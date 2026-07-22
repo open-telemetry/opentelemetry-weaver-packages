@@ -3,8 +3,6 @@
 
 # Auth
 
-## Table of contents
-
 - [Metrics](#metrics)
 - [Attributes](#attributes)
 

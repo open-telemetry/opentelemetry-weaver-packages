@@ -23,6 +23,15 @@ attributes:
     stability: stable
     brief: Identifier of the authenticated user.
     examples: ["u_1234"]
+  - key: myapp.session.identifier
+    type: string
+    stability: development
+    deprecated:
+      reason: renamed
+      renamed_to: myapp.session.id
+      note: Renamed to `myapp.session.id`.
+    brief: Unique identifier of the application session.
+    examples: ["sess_5j66Up"]
 spans:
   - type: myapp.request
     kind: client
@@ -35,6 +44,18 @@ spans:
         requirement_level: recommended
       - ref: myapp.request.method
         requirement_level: required
+  - type: myapp.legacy.request
+    kind: client
+    name:
+      note: TBD
+    stability: development
+    deprecated:
+      reason: obsoleted
+      note: Use `myapp.request` instead.
+    brief: Span describing a legacy application request.
+    attributes:
+      - ref: myapp.session.identifier
+        requirement_level: recommended
 metrics:
   - name: myapp.request.duration
     instrument: histogram
@@ -53,6 +74,19 @@ metrics:
     attributes:
       - ref: auth.user.id
         requirement_level: recommended
+  - name: myapp.legacy.request.duration
+    instrument: histogram
+    unit: s
+    stability: development
+    requirement_level: recommended
+    deprecated:
+      reason: renamed
+      renamed_to: myapp.request.duration
+      note: Renamed to `myapp.request.duration`.
+    brief: Duration of the legacy application request.
+    attributes:
+      - ref: myapp.session.identifier
+        requirement_level: recommended
 events:
   - name: myapp.session.started
     stability: development
@@ -61,10 +95,31 @@ events:
     attributes:
       - ref: myapp.session.id
         requirement_level: required
+  - name: myapp.session.ended
+    stability: development
+    requirement_level: opt_in
+    deprecated:
+      reason: obsoleted
+      note: Sessions no longer emit an explicit end event.
+    brief: Emitted when an application session ends.
+    attributes:
+      - ref: myapp.session.identifier
+        requirement_level: required
 entities:
   - type: myapp.service
     stability: development
     brief: A deployed application service instance.
     identity:
       - ref: myapp.session.id
+        requirement_level: required
+  - type: myapp.legacy.service
+    stability: development
+    requirement_level: recommended
+    deprecated:
+      reason: renamed
+      renamed_to: myapp.service
+      note: Renamed to `myapp.service`.
+    brief: A deployed legacy application service instance.
+    identity:
+      - ref: myapp.session.identifier
         requirement_level: required

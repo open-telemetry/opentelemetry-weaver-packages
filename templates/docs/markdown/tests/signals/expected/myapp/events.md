@@ -11,9 +11,9 @@
 
 **Event name:** MUST be `myapp.session.started`.
 
-**Requirement Level:** `Opt-In`
-
 Emitted when an application session starts.
+
+**Requirement Level:** `Opt-In`
 
 **Attributes:**
 

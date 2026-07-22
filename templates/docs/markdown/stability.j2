@@ -1,6 +1,16 @@
-{% macro badge(stability, deprecated, note) -%}
-{%- if deprecated %}![Deprecated](https://img.shields.io/badge/-deprecated-red)<br>{{ deprecated_note(deprecated, note) }}
-{%- elif stability == "mixed" %}![Mixed](https://img.shields.io/badge/-mixed-yellow)
+{# `include_note=false` drops the deprecation text after the badges; callers that
+   do so are expected to surface it elsewhere (e.g. attribute tables put it in
+   the description column). #}
+{% macro badge(stability, deprecated, note, include_note=true) -%}
+{%- if deprecated %}![Deprecated](https://img.shields.io/badge/-deprecated-red) {% endif %}
+{{- level_badge(stability) }}
+{%- if deprecated and include_note %}<br>{{ deprecated_note(deprecated, note) }}{% endif %}
+{%- endmacro %}
+
+{# Stability and deprecation are independent: an attribute can be stable *and*
+   deprecated, so both badges are rendered. #}
+{% macro level_badge(stability) -%}
+{%- if stability == "mixed" %}![Mixed](https://img.shields.io/badge/-mixed-yellow)
 {%- elif stability == "stable" %}![Stable](https://img.shields.io/badge/-stable-lightgreen)
 {%- elif stability == "release_candidate" %}![Release Candidate](https://img.shields.io/badge/-rc-mediumorchid)
 {%- elif stability == "deprecated" %}![Deprecated](https://img.shields.io/badge/-deprecated-red)
@@ -12,4 +22,19 @@
 {%- endif %}
 {%- endmacro %}
 
-{% macro deprecated_note(deprecated, note) %}{{ (deprecated.note if deprecated.note is defined else note) | trim }}{%- endmacro %}
+{# The deprecation reason leads the note: `Renamed: use `foo` instead.` Either
+   part may be missing. `note` is the fallback when the model has no
+   `deprecated.note` (v1-shaped objects put it on the signal itself). #}
+{% macro deprecated_note(deprecated, note) -%}
+{%- set reason = deprecated.reason | default('', true) | replace("_", " ") | trim | capitalize -%}
+{%- set text = (deprecated.note if deprecated.note is defined else note) | default('', true) | trim -%}
+{%- if reason %}**{{ reason }}:** {% endif %}{{ text }}
+{%- endmacro %}
+
+{# Description cell for a signal listed in an overview table: the brief, plus what
+   to do instead when the signal is deprecated. The badges next to it carry no note. #}
+{% macro description(signal) -%}
+{%- set deprecated = signal.deprecated | default(none, true) -%}
+{%- set deprecated_text = deprecated_note(deprecated, none) | trim if deprecated else '' -%}
+{{ signal.brief | trim }}{% if deprecated_text %}<br>{{ deprecated_text }}{% endif %}
+{%- endmacro %}

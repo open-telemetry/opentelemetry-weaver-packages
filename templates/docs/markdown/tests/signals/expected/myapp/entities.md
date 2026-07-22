@@ -9,11 +9,11 @@
 
 **Status:** ![Development](https://img.shields.io/badge/-development-blue)
 
+A deployed application service instance.
+
 **Type:** `myapp.service`
 
 **Requirement Level:** `Recommended`
-
-A deployed application service instance.
 
 **Attributes:**
 

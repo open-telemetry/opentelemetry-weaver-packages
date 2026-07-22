@@ -14,18 +14,18 @@
 {% macro header(span, entity_registry=none) -%}
 **Status:** {{ stability.badge(span.stability, span.deprecated) }}
 
-**Span name:** MUST follow the overall [guidelines for span names]({{ links.span_guidelines_url() }}).
-
-{%- if span.name and span.name.note %}
-
-{{ span.name.note | trim }}{% endif %}
-
-**Requirement Level:** {{ requirement.signal_level(span.requirement_level) }}
-
 {{ span.brief | trim }}
 {%- if span.note %}
 
 {{ span.note | trim }}{% endif %}
+
+{# `span.name.note` continues the same paragraph, so it is joined with a single
+   newline rather than a blank line. -#}
+**Span name:** MUST follow the overall [guidelines for span names]({{ links.span_guidelines_url() }}).
+{%- if span.name and span.name.note %}
+{{ span.name.note | trim }}{% endif %}
+
+**Requirement Level:** {{ requirement.signal_level(span.requirement_level) }}
 
 **Span kind:** SHOULD be `{{ span.kind | upper }}`.
 

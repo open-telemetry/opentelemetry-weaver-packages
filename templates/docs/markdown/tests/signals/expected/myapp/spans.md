@@ -9,13 +9,12 @@
 
 **Status:** ![Development](https://img.shields.io/badge/-development-blue)
 
-**Span name:** MUST follow the overall [guidelines for span names](https://opentelemetry.io/docs/specs/otel/trace/api/#span).
+Span describing an application request to a server.
 
+**Span name:** MUST follow the overall [guidelines for span names](https://opentelemetry.io/docs/specs/otel/trace/api/#span).
 TBD
 
 **Requirement Level:** `Recommended`
-
-Span describing an application request to a server.
 
 **Span kind:** SHOULD be `CLIENT`.
 

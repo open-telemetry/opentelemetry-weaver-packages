@@ -1,5 +1,6 @@
 {% import 'examples_macros.j2' as examples %}
 {% import 'links.j2' as links %}
+{% import 'stability.j2' as stability %}
 
 {# v2 attribute_catalog entries use `key`. v1 used `name`. We accept both for compatibility with snippet contexts that pass v1-shaped attribute objects. #}
 {% macro name(attribute) -%}
@@ -56,13 +57,14 @@ When the attribute is recorded on events, it MUST be recorded in structured form
 {% macro note(attribute) -%}
 {%- set base_note = attribute.note | default('', true) | trim -%}
 {%- set generated_schema_note = schema_note(attribute) | trim -%}
-{%- if base_note and generated_schema_note -%}
-{{ base_note }}
+{{ [base_note, generated_schema_note] | reject("eq", "") | join("\n\n") }}
+{%- endmacro %}
 
-{{ generated_schema_note }}
-{%- elif base_note -%}
-{{ base_note }}
-{%- elif generated_schema_note -%}
-{{ generated_schema_note }}
+{# Description cell of an attribute table. Deprecated attributes carry their
+   deprecation note here (the badge column has none) and skip the footnote --
+   what replaced them is what the reader needs. #}
+{% macro description(attribute, notes) -%}
+{%- if attribute.deprecated %}{{ stability.description(attribute) }}
+{%- else %}{{ attribute.brief | trim }}{{ notes.add({"note": note(attribute), "name": name(attribute)}) }}
 {%- endif -%}
 {%- endmacro %}

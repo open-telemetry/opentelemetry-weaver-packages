@@ -3,10 +3,11 @@
 
 # Myapp
 
-## Table of contents
-
 - [Entities](#entities)
 - [Attributes](#attributes)
+- [Deprecated](#deprecated)
+  - [Entities](#entities-1)
+  - [Attributes](#attributes-1)
 
 ## Entities
 
@@ -34,3 +35,18 @@ Attributes defined in the `myapp` namespace. Application developers are encourag
 | --- | --- | --- |
 | `free` | Free tier. | ![Stable](https://img.shields.io/badge/-stable-lightgreen) |
 | `pro` | Pro tier. | ![Stable](https://img.shields.io/badge/-stable-lightgreen) |
+
+## Deprecated
+
+### Entities
+
+| Type | Stability | Description |
+| --- | --- | --- |
+| [`myapp.legacy.service`](/myapp/entities.md#myapplegacyservice) | ![Deprecated](https://img.shields.io/badge/-deprecated-red) ![Stable](https://img.shields.io/badge/-stable-lightgreen) | A deployed legacy service instance.<br>**Renamed:** Renamed to `myapp.service`. |
+| [`myapp.worker`](/myapp/entities.md#myappworker) | ![Deprecated](https://img.shields.io/badge/-deprecated-red) ![Stable](https://img.shields.io/badge/-stable-lightgreen) | A background worker process.<br>**Obsoleted:** Workers are no longer modeled as a separate entity. |
+
+### Attributes
+
+| Key | Stability | Value Type | Description | Example Values |
+| --- | --- | --- | --- | --- |
+| <a id="myapp-service-identifier">`myapp.service.identifier`</a> | ![Deprecated](https://img.shields.io/badge/-deprecated-red) ![Stable](https://img.shields.io/badge/-stable-lightgreen) | string | Stable identifier of the service.<br>**Renamed:** Renamed to `myapp.service.id`. | `svc_42` |

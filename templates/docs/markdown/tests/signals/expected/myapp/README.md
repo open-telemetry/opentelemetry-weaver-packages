@@ -3,8 +3,6 @@
 
 # Myapp
 
-## Table of contents
-
 - [Entities](#entities)
 - [Events](#events)
 - [Metrics](#metrics)

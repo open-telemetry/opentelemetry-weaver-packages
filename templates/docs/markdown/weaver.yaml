@@ -10,7 +10,7 @@ params:
   generate_event_registry: true
 
   # Signal & attribute selection (forwarded to semconv_grouped_attributes / semconv_signal)
-  exclude_deprecated: false
+  exclude_deprecated: true
   stable_only: false
   exclude_root_namespace: []
 
@@ -24,14 +24,7 @@ params:
   upstream_docs_attribute_path: /docs/registry/attributes/{namespace}.md
 
 # Acronyms interpreted by the `acronym` filter when title-casing namespaces.
-acronyms:
-  - AI
-  - API
-  - CLI
-  - HTTP
-  - JSON
-  - SDK
-  - URL
+# acronyms: please specify in weaver.toml
 
 templates:
   # Registry index (top-level README) and one README per namespace. Both share the

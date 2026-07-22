@@ -7,12 +7,12 @@
 
 **Event name:** MUST be `{{ event.name }}`.
 
-**Requirement Level:** {{ requirement.signal_level(event.requirement_level) }}
-
 {{ event.brief | trim }}
 {%- if event.note %}
 
 {{ event.note | trim }}{% endif %}
+
+**Requirement Level:** {{ requirement.signal_level(event.requirement_level) }}
 {%- if event.entity_associations is sequence %}
 
 **Entity Associations:** SHOULD be associated with one of the following entities:

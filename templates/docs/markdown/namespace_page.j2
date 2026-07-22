@@ -1,0 +1,26 @@
+{%- import 'links.j2' as links -%}
+{#- Shared layout for the per-signal namespace pages (spans.md, metrics.md,
+   events.md, entities.md): a table of contents, one section per signal, and the
+   deprecated ones grouped under a trailing "Deprecated" heading.
+
+   `id_attr` is the field holding the signal id (`type` for spans and entities,
+   `name` for metrics and events) and `section` is a macro `(signal, heading)`
+   rendering one signal -- the only part that differs between signal types. -#}
+{% macro render(signals, id_attr, section) -%}
+{%- set current = signals | rejectattr("deprecated") | list -%}
+{%- set deprecated = signals | selectattr("deprecated") | list -%}
+{% for signal in current | sort(attribute=id_attr) %}
+- [`{{ signal[id_attr] }}`](#{{ links.signal_anchor(signal[id_attr]) }})
+{%- endfor %}
+{%- if deprecated %}
+- [Deprecated](#deprecated)
+{%- for signal in deprecated | sort(attribute=id_attr) %}
+  - [`{{ signal[id_attr] }}`](#{{ links.signal_anchor(signal[id_attr]) }})
+{%- endfor %}
+{%- endif %}
+{% for signal in current | sort(attribute=id_attr) %}{{ section(signal, "##") }}{% endfor -%}
+{%- if deprecated %}
+## Deprecated
+{% for signal in deprecated | sort(attribute=id_attr) %}{{ section(signal, "###") }}{% endfor -%}
+{%- endif -%}
+{%- endmacro %}
