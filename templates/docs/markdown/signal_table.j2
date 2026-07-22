@@ -1,0 +1,13 @@
+{%- import 'links.j2' as links -%}
+{%- import 'stability.j2' as stability -%}
+{#- Overview table of signals, one row per signal linking to its section.
+
+   `id_attr` is the field holding the signal id (`type` for spans and entities,
+   `name` for metrics and events) and doubles as the column header. `page_url` is
+   empty when the table sits on the same page as the sections it links to. -#}
+{% macro render(signals, id_attr, page_url="") %}
+| {{ id_attr | capitalize }} | Stability | Description |
+| --- | --- | --- |
+{% for signal in signals | sort(attribute=id_attr) %}| [`{{ signal[id_attr] }}`]({{ page_url }}#{{ links.signal_anchor(signal[id_attr]) }}) | {{ stability.badge(signal.stability, signal.deprecated, include_note=false) | trim }} | {{ stability.description(signal) }} |
+{% endfor %}
+{%- endmacro %}

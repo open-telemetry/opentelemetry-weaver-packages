@@ -3,7 +3,9 @@
 
 # Myapp entities
 
-- [`myapp.service`](#myappservice)
+| Type | Stability | Description |
+| --- | --- | --- |
+| [`myapp.service`](#myappservice) | ![Development](https://img.shields.io/badge/-development-blue) | A deployed application service instance. |
 
 ## `myapp.service`
 

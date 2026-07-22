@@ -3,7 +3,9 @@
 
 # Myapp events
 
-- [`myapp.session.started`](#myappsessionstarted)
+| Name | Stability | Description |
+| --- | --- | --- |
+| [`myapp.session.started`](#myappsessionstarted) | ![Development](https://img.shields.io/badge/-development-blue) | Emitted when an application session starts. |
 
 ## `myapp.session.started`
 

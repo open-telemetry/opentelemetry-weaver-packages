@@ -5,6 +5,7 @@
 {%- import 'examples_macros.j2' as examples -%}
 {%- import 'links.j2' as links -%}
 {%- import 'titles.j2' as titles -%}
+{%- import 'signal_table.j2' as table -%}
 {%- set ns = ctx.root_namespace -%}
 {%- set spans_url = links.registry_page_url(ns, "spans.md") | trim -%}
 {%- set metrics_url = links.registry_page_url(ns, "metrics.md") | trim -%}
@@ -30,14 +31,6 @@
 {%- set dep_spans = all_spans | selectattr("deprecated") | list -%}
 {%- set dep_attributes = all_attributes | selectattr("deprecated") | list -%}
 {%- set has_deprecated = dep_entities or dep_events or dep_metrics or dep_spans or dep_attributes -%}
-{#- `id_attr` is the field holding the signal id: `type` for spans and entities,
-   `name` for metrics and events. -#}
-{%- macro signal_table(signals, id_attr, page_url, id_header) %}
-| {{ id_header }} | Stability | Description |
-| --- | --- | --- |
-{% for signal in signals | sort(attribute=id_attr) %}| [`{{ signal[id_attr] }}`]({{ page_url }}#{{ links.signal_anchor(signal[id_attr]) }}) | {{ stability.badge(signal.stability, signal.deprecated, include_note=false) | trim }} | {{ stability.description(signal) }} |
-{% endfor %}
-{%- endmacro -%}
 {%- macro attribute_table(attributes) %}
 | Key | Stability | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- |
@@ -83,16 +76,16 @@
 {% endif -%}
 {% if entities %}
 ## Entities
-{{ signal_table(entities, "type", entities_url, "Type") }}{% endif -%}
+{{ table.render(entities, "type", entities_url) }}{% endif -%}
 {%- if events %}
 ## Events
-{{ signal_table(events, "name", events_url, "Name") }}{% endif -%}
+{{ table.render(events, "name", events_url) }}{% endif -%}
 {%- if metrics %}
 ## Metrics
-{{ signal_table(metrics, "name", metrics_url, "Name") }}{% endif -%}
+{{ table.render(metrics, "name", metrics_url) }}{% endif -%}
 {%- if spans %}
 ## Spans
-{{ signal_table(spans, "type", spans_url, "Type") }}{% endif -%}
+{{ table.render(spans, "type", spans_url) }}{% endif -%}
 {%- if attributes %}
 ## Attributes
 
@@ -104,16 +97,16 @@ Attributes defined in the `{{ ns }}` namespace. Application developers are encou
 ## Deprecated
 {% if dep_entities %}
 ### Entities
-{{ signal_table(dep_entities, "type", entities_url, "Type") }}{% endif -%}
+{{ table.render(dep_entities, "type", entities_url) }}{% endif -%}
 {%- if dep_events %}
 ### Events
-{{ signal_table(dep_events, "name", events_url, "Name") }}{% endif -%}
+{{ table.render(dep_events, "name", events_url) }}{% endif -%}
 {%- if dep_metrics %}
 ### Metrics
-{{ signal_table(dep_metrics, "name", metrics_url, "Name") }}{% endif -%}
+{{ table.render(dep_metrics, "name", metrics_url) }}{% endif -%}
 {%- if dep_spans %}
 ### Spans
-{{ signal_table(dep_spans, "type", spans_url, "Type") }}{% endif -%}
+{{ table.render(dep_spans, "type", spans_url) }}{% endif -%}
 {%- if dep_attributes %}
 ### Attributes
 

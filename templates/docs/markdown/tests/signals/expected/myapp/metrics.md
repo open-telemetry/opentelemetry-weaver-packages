@@ -3,7 +3,9 @@
 
 # Myapp metrics
 
-- [`myapp.request.duration`](#myapprequestduration)
+| Name | Stability | Description |
+| --- | --- | --- |
+| [`myapp.request.duration`](#myapprequestduration) | ![Development](https://img.shields.io/badge/-development-blue) | Duration of the application request. |
 
 ## `myapp.request.duration`
 

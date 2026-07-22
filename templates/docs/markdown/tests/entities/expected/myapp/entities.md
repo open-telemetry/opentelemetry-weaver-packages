@@ -3,10 +3,9 @@
 
 # Myapp entities
 
-- [`myapp.service`](#myappservice)
-- [Deprecated](#deprecated)
-  - [`myapp.legacy.service`](#myapplegacyservice)
-  - [`myapp.worker`](#myappworker)
+| Type | Stability | Description |
+| --- | --- | --- |
+| [`myapp.service`](#myappservice) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | A deployed service instance. |
 
 ## `myapp.service`
 
@@ -40,6 +39,11 @@ Identified by a stable id that survives restarts.
 | `pro` | Pro tier. | ![Stable](https://img.shields.io/badge/-stable-lightgreen) |
 
 ## Deprecated
+
+| Type | Stability | Description |
+| --- | --- | --- |
+| [`myapp.legacy.service`](#myapplegacyservice) | ![Deprecated](https://img.shields.io/badge/-deprecated-red) ![Stable](https://img.shields.io/badge/-stable-lightgreen) | A deployed legacy service instance.<br>**Renamed:** Renamed to `myapp.service`. |
+| [`myapp.worker`](#myappworker) | ![Deprecated](https://img.shields.io/badge/-deprecated-red) ![Stable](https://img.shields.io/badge/-stable-lightgreen) | A background worker process.<br>**Obsoleted:** Workers are no longer modeled as a separate entity. |
 
 ### `myapp.legacy.service`
 

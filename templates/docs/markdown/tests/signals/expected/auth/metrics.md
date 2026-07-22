@@ -3,7 +3,9 @@
 
 # Auth metrics
 
-- [`auth.attempts`](#authattempts)
+| Name | Stability | Description |
+| --- | --- | --- |
+| [`auth.attempts`](#authattempts) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | Number of authentication attempts. |
 
 ## `auth.attempts`
 
