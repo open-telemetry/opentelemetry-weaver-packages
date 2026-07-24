@@ -1,0 +1,77 @@
+{# Copied from https://github.com/open-telemetry/semantic-conventions/blob/v1.41.1/templates/registry/markdown/entity_macros.j2 #}
+{#- Macros for simplifying creating "Entity" documentation (v2). -#}
+{% import 'requirement.j2' as requirement %}
+{% import 'stability.j2' as stability %}
+{% import 'notes.j2' as notes %}
+{% import 'attribute_macros.j2' as attrs %}
+{% import 'enum_macros.j2' as enums %}
+{% import 'examples_macros.j2' as examples %}
+{% import 'links.j2' as links %}
+
+{#- Entities live at `{registry_base_url}/{namespace}/entities.md`, anchored per entity id. -#}
+{% macro registry_url(id) -%}
+{{ params.registry_base_url }}/{{ id | split_id | list | first | kebab_case }}/entities.md#{{ links.signal_anchor(id) }}
+{%- endmacro %}
+
+{#- The entities a span or event should be associated with. Renders nothing when
+   the signal declares none. -#}
+{% macro associations(entity_types) -%}
+{%- if entity_types is sequence %}
+
+**Entity Associations:** SHOULD be associated with one of the following entities:
+
+{% for e in entity_types %}- [`{{ e }}`]({{ registry_url(e) }})
+{% endfor %}
+{% endif %}
+{%- endmacro %}
+
+{#- Create role tags #}
+{% macro role_tag(role) -%}
+{% if role == "identity" %}Identity
+{% elif role == "description" %}Description
+{% else %}Other
+{% endif %}
+{%- endmacro %}
+
+{#- Header for snippets. -#}
+{% macro header(entity) -%}
+**Status:** {{ stability.badge(entity) | trim }}
+
+{{ entity.brief | trim }}
+{%- if entity.note %}
+
+{{ entity.note | trim }}
+{%- endif %}
+
+**Type:** `{{ entity.type }}`
+
+**Requirement Level:** {{ requirement.signal_level(entity.requirement_level) }}
+{%- endmacro %}
+
+{#- Render a single row on the entity table. -#}
+{% macro attribute_row(attribute, notes, role) -%}
+| {{ role_tag(role) | trim }} | {{ attrs.name_with_link(attribute) }} | {{ stability.badge(attribute, include_note=false) | trim }} | {{ requirement.render({"level": attribute.requirement_level, "name": attribute.key}, notes) | trim }} | {{ attrs.type(attribute) }} | {{ attrs.description(attribute, notes) }} | {{ examples.format(attribute) }}|
+{%- endmacro %}
+
+{#- Render attribute tables for entities. -#}
+{% macro attribute_table(attributes, notes, role) %}{% for attribute in attributes | attribute_sort %}{{ attribute_row(attribute, notes, role) }}
+{% endfor %}
+{%- endmacro %}
+
+{% macro all_attribute_table(e) -%}
+{%- set id_attrs = e.identity | default([]) %}{% set desc_attrs = e.description | default([]) -%}
+**Attributes:**
+
+| Role | Key | Stability | [Requirement Level]({{ links.requirement_level_url() }}) | Value Type | Description | Example Values |
+| --- | --- | --- | --- | --- | --- | --- |{%- if id_attrs | length > 0 %}
+{{ attribute_table(id_attrs, notes, "identity") | trim }}{% endif %}{%- if desc_attrs | length > 0 %}
+{{ attribute_table(desc_attrs, notes, "description") | trim }}{% endif %}
+{%- set notes_out = notes.render() | trim %}{% if notes_out %}
+
+{{ notes_out }}
+{%- endif %}
+{%- set enums_out = enums.tables((id_attrs + desc_attrs) | selectattr("type", "mapping") | list, notes) | trim %}{% if enums_out %}
+
+{{ enums_out }}
+{%- endif %}
+{%- endmacro %}

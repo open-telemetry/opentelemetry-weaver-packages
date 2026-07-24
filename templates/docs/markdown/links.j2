@@ -1,0 +1,61 @@
+{# All documentation/reference URLs used by the markdown templates.
+
+   This macro module is the single owner of every link. It only *reads* values
+   from `params` (configured in weaver.yaml) -- no URL is hardcoded or derived
+   here. Two independent categories of links, configured separately:
+
+   * OpenTelemetry general guidance (`params.otel_*_url`): naming, recording
+     errors, requirement levels. A global singleton; kept in config only so
+     it is easy to update, not because it varies per registry.
+
+   * Upstream / dependency docs (`params.upstream_docs_base_url`,
+     `params.upstream_docs_attribute_path`): where the attributes this
+     registry *imports* are documented. A per-registry choice -- not necessarily
+     the same project that owns the guidance above. #}
+
+{# --- OpenTelemetry general guidance links --- #}
+{% macro requirement_level_url() -%}{{ params.otel_requirement_level_url }}{%- endmacro %}
+{% macro naming_recommendations_url() -%}{{ params.otel_naming_recommendations_url }}{%- endmacro %}
+{% macro recording_errors_url() -%}{{ params.otel_recording_errors_url }}{%- endmacro %}
+{% macro span_guidelines_url() -%}{{ params.otel_span_guidelines_url }}{%- endmacro %}
+
+{# --- Registry page URL ---
+   Root-anchored absolute link to any page this registry generates, in the
+   namespace-first layout `{registry_base_url}/{namespace}/{page}` (e.g.
+   `/docs/registry/myapp/spans.md`). `registry_base_url` is the registry root
+   with no trailing slash. Root-anchored (not file-relative) so the same link
+   resolves whether it is read from a generated registry page or from a snippet
+   embedded in an arbitrary hand-written doc. #}
+{% macro registry_page_url(namespace, page) -%}
+{{ params.registry_base_url }}/{{ namespace | kebab_case }}/{{ page }}
+{%- endmacro %}
+
+{# --- Signal heading anchor ---
+   Signal pages render each span/metric/event/entity as a plain heading whose
+   text is the code-formatted id (`## `auth.attempts``). The renderer
+   auto-generates the heading id by lowercasing and dropping dots
+   (`auth.attempts` -> `authattempts`), so links target that same slug -- no
+   explicit `<a id>` is written. (Attributes live in a table, which has no
+   auto-anchor, so those keep an explicit kebab-cased `<a id>` instead.) #}
+{% macro signal_anchor(id) -%}{{ id | lower | replace(".", "") }}{%- endmacro %}
+
+{# --- Attribute documentation URL ---
+   Local attributes -- defined in this registry -- carry `provenance.path` (the
+   model file they live in) and link to the attribute's row in its namespace
+   README under `registry_base_url` (`{ns}/README.md#{attribute-key}`); the
+   README's Attributes section anchors each key by its kebab-cased id.
+   Imported attributes come from a dependency and have no `provenance.path`
+   (provenance is either null or `{source: <schema_url>}`); they link to their
+   upstream docs at `params.upstream_docs_base_url` + `params.upstream_docs_attribute_path`.
+
+   TODO: support multiple dependencies -- route imported attributes to different
+   upstreams (by `provenance.source` schema_url). Today every import shares a
+   single `upstream_docs_base_url`. #}
+{% macro attribute_doc_url(attribute) -%}
+{%- set ns = attribute.key | split_id | first | kebab_case -%}
+{%- if attribute.provenance and attribute.provenance.path -%}
+{{ params.registry_base_url }}/{{ ns }}/README.md#{{ attribute.key | kebab_case }}
+{%- else -%}
+{{ params.upstream_docs_base_url }}{{ params.upstream_docs_attribute_path | replace('{namespace}', ns) }}
+{%- endif -%}
+{%- endmacro %}

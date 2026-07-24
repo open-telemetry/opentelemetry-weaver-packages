@@ -1,0 +1,54 @@
+{% import 'examples_macros.j2' as examples %}
+{% import 'links.j2' as links %}
+{% import 'stability.j2' as stability %}
+
+{% macro type(attribute) %}{%- if attribute.type is mapping %}
+{%- if attribute.type.members[0].value is string %}string{%- endif %}
+{%- if attribute.type.members[0].value is int %}int{%- endif %}
+{%- if attribute.type.members[0].value is float %}double{%- endif %}
+{%- elif attribute.type == "template[boolean]" %}boolean
+{%- elif attribute.type == "template[int]" %}int
+{%- elif attribute.type == "template[double]" %}double
+{%- elif attribute.type == "template[string]" %}string
+{%- elif attribute.type == "template[boolean[]]" %}boolean[]
+{%- elif attribute.type == "template[int[]]" %}int[]
+{%- elif attribute.type == "template[double[]]" %}double[]
+{%- elif attribute.type == "template[string[]]" %}string[]
+{%- else %}{{ attribute.type | trim }}{%- endif %}{% endmacro %}
+
+{# v2 link rendering: locally-defined attributes carry `provenance.path` (their
+   YAML file under ./model/); attributes imported from a dependency have no
+   `provenance.path` (provenance is null or `{source: <schema_url>}`). The
+   local-vs-upstream URL construction is owned by links.j2, driven entirely by
+   weaver.yaml params. #}
+{% macro name_with_link(attribute) -%}
+[`{{ attribute.key }}`]({{ links.attribute_doc_url(attribute) | trim }})
+{%- endmacro %}
+
+{% macro schema_note(attribute) -%}
+{%- set schema_path = '' -%}
+{%- set annotations = attribute.annotations | default({}, true) -%}
+{%- if annotations is mapping and 'type' in annotations and annotations['type'] is mapping and 'json_schema' in annotations['type'] -%}
+{%- set schema_path = annotations['type']['json_schema'] | trim | trim('/') -%}
+{%- endif -%}
+{%- if schema_path -%}
+Instrumentations MUST follow [JSON schema](/{{ schema_path }}).
+
+When the attribute is recorded on events, it MUST be recorded in structured form. When recorded on spans, it MAY be recorded as a JSON string if structured format is not supported and SHOULD be recorded in structured form otherwise.
+{%- endif -%}
+{%- endmacro %}
+
+{% macro note(attribute) -%}
+{%- set base_note = attribute.note | default('', true) | trim -%}
+{%- set generated_schema_note = schema_note(attribute) | trim -%}
+{{ [base_note, generated_schema_note] | reject("eq", "") | join("\n\n") }}
+{%- endmacro %}
+
+{# Description cell of an attribute table. Deprecated attributes carry their
+   deprecation note here (the badge column has none) and skip the footnote --
+   what replaced them is what the reader needs. #}
+{% macro description(attribute, notes) -%}
+{%- if attribute.deprecated %}{{ stability.description(attribute) }}
+{%- else %}{{ attribute.brief | trim }}{{ notes.add({"note": note(attribute), "name": attribute.key}) }}
+{%- endif -%}
+{%- endmacro %}

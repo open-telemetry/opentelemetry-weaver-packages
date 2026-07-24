@@ -1,0 +1,19 @@
+file_format: definition/2
+attributes:
+  - key: myapp.session.id
+    type: string
+    stability: development
+    brief: Unique identifier of the application session.
+    examples: ["sess_5j66Up"]
+spans:
+  - type: myapp.request
+    kind: client
+    name:
+      note: TBD
+    stability: development
+    brief: Span describing an application request to a server.
+    attributes:
+      - ref: myapp.session.id
+        requirement_level: recommended
+      - ref: server.address
+        requirement_level: required

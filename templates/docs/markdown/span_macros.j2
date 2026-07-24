@@ -1,0 +1,35 @@
+{# v2 span objects expose: type (semantic id like gen_ai.inference.client),
+   kind (client/server/internal), brief, note, stability, attributes,
+   and `name.note` -- a markdown blob describing the span name template
+   (e.g. "**Span name** SHOULD be `{gen_ai.operation.name} {gen_ai.request.model}`."). #}
+{% import 'stability.j2' as stability %}
+{% import 'links.j2' as links %}
+{% import 'entity_macros.j2' as entities %}
+{% import 'requirement.j2' as requirement %}
+
+{# `span.name.note` is a full markdown blob authored in the model (e.g.
+   "**Span name** SHOULD be `{gen_ai.operation.name} {gen_ai.request.model}`.")
+   and is rendered verbatim. The span-name/kind/status lines come from structured
+   fields and are always emitted -- the general `note` must not restate them. #}
+{% macro header(span) -%}
+**Status:** {{ stability.badge(span) }}
+
+{{ span.brief | trim }}
+{%- if span.note %}
+
+{{ span.note | trim }}{% endif %}
+
+{# `span.name.note` continues the same paragraph, so it is joined with a single
+   newline rather than a blank line. -#}
+**Span name:** MUST follow the overall [guidelines for span names]({{ links.span_guidelines_url() }}).
+{%- if span.name and span.name.note %}
+{{ span.name.note | trim }}{% endif %}
+
+**Requirement Level:** {{ requirement.signal_level(span.requirement_level) }}
+
+**Span kind:** SHOULD be `{{ span.kind | upper }}`.
+
+**Span status:** SHOULD follow the [Recording Errors]({{ links.recording_errors_url() }}) document.
+{{- entities.associations(span.entity_associations) }}
+
+{% endmacro %}

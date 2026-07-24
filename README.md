@@ -9,7 +9,7 @@ Weaver packages come in two primary forms:
 
 ## Templates
 
-- [docs/markdown](templates/docs/markdown/README.md): Coming soon.
+- [docs/markdown](templates/docs/markdown/README.md): Generates Markdown docs for a registry - a namespace-first set of attribute, span, metric, event, and entity pages, plus embeddable snippet tables, with configurable cross-registry links.
 
 ## Policies
 

@@ -1,0 +1,11 @@
+{# Human-readable heading for a namespace.
+
+   The `namespace_mapping` text map wins when it has an entry for the namespace;
+   it exists for titles that casing alone cannot produce (`cicd` -> `CI/CD`).
+   Otherwise the id is title-cased with known initialisms upper-cased
+   (`http` -> `HTTP`). Both are configured in your `.weaver.toml`. #}
+
+{% macro namespace(ns) -%}
+{%- set mapped = ns | map_text("namespace_mapping", "") -%}
+{{ mapped if mapped else ns | title_case | acronym }}
+{%- endmacro %}

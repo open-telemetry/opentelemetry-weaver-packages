@@ -1,49 +1,61 @@
 file_format: definition/2
 attributes:
-- key: some.key
-  type: string
-  brief: A key in my registry
-  stability: stable
-- key: some.enum
-  type:
-    members:
-      - id: value_one
-        value: one
-        brief: First value
-      - id: value_two
-        value: two
-        brief: Second value
-  brief: An enum attribute
-  stability: stable
-- key: some.scalar_int_example
-  type: int
-  brief: An attribute with a single scalar int example
-  stability: stable
-  examples: 42
-- key: some.scalar_zero_example
-  type: int
-  brief: An attribute with a single falsy scalar example
-  stability: stable
-  examples: 0
-- key: some.scalar_string_example
-  type: string
-  brief: An attribute with a single scalar string example
-  stability: stable
-  examples: "solo"
-- key: some.scalar_bool_example
-  type: boolean
-  brief: An attribute with a single scalar boolean example
-  stability: stable
-  examples: false
-- key: some.array_examples
-  type: string
-  brief: An attribute with an array of examples
-  stability: stable
-  examples: ["one", "two"]
-- key: some.array_of_arrays_examples
-  type: string[]
-  brief: An array-typed attribute with array-of-arrays examples
-  stability: stable
-  examples:
-    - ["a", "b"]
-    - ["c"]
+  - key: myapp.task.id
+    type: string
+    stability: stable
+    brief: Unique identifier of the task.
+    note: The identifier is assigned by the scheduler and stays stable across retries.
+    examples: ["task_0001", "task_0042"]
+  - key: myapp.task.state
+    type:
+      members:
+        - id: queued
+          value: queued
+          stability: stable
+          brief: The task is waiting to run.
+        - id: running
+          value: running
+          stability: stable
+          brief: The task is running.
+        - id: done
+          value: done
+          stability: stable
+          brief: The task finished.
+    stability: stable
+    brief: Current state of the task.
+  - key: myapp.task.retries
+    type: int
+    stability: stable
+    brief: Number of times the task was retried.
+    examples: 42
+  - key: myapp.task.priority
+    type: int
+    stability: stable
+    brief: Priority of the task.
+    examples: 0
+  - key: myapp.task.owner
+    type: string
+    stability: stable
+    brief: Owner of the task.
+    examples: solo
+  - key: myapp.task.cancelled
+    type: boolean
+    stability: stable
+    brief: Whether the task was cancelled.
+    examples: false
+  - key: myapp.task.tags
+    type: string[]
+    stability: stable
+    brief: Tags attached to the task.
+    examples:
+      - ["a", "b"]
+      - ["c"]
+  - key: myapp.task.config
+    type: string
+    stability: stable
+    brief: Serialized task configuration.
+    examples:
+      - |-
+        {
+          "retries": 3
+        }

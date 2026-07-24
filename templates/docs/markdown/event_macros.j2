@@ -1,0 +1,18 @@
+{# v2 event objects expose: name, brief, note, stability, attributes. #}
+{% import 'stability.j2' as stability %}
+{% import 'entity_macros.j2' as entities %}
+{% import 'requirement.j2' as requirement %}
+{% macro header(event) -%}
+**Status:** {{ stability.badge(event) }}
+
+**Event name:** MUST be `{{ event.name }}`.
+
+{{ event.brief | trim }}
+{%- if event.note %}
+
+{{ event.note | trim }}{% endif %}
+
+**Requirement Level:** {{ requirement.signal_level(event.requirement_level) }}
+{{- entities.associations(event.entity_associations) }}
+
+{% endmacro %}
