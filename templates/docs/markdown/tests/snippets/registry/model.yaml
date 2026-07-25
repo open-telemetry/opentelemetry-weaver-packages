@@ -123,3 +123,20 @@ entities:
     identity:
       - ref: myapp.session.identifier
         requirement_level: required
+attribute_groups:
+  # Public: reaches templates and can be selected by a snippet marker.
+  - id: myapp.error
+    visibility: public
+    stability: development
+    brief: Attributes describing an application error.
+    note: Recorded by any signal that reports a failure.
+    attributes:
+      - ref: myapp.request.method
+        requirement_level: recommended
+      - ref: myapp.session.id
+        requirement_level: required
+  # Internal: weaver drops it while resolving, so no snippet can select it.
+  - id: myapp.internal.common
+    visibility: internal
+    attributes:
+      - ref: myapp.session.id

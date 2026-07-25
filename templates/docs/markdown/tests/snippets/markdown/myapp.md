@@ -21,3 +21,8 @@ Hand-written prose the generator must leave alone.
 
 <!-- weaver .registry.entities[] | select(.type == "myapp.service") -->
 <!-- endweaver -->
+
+## Error attribute group
+
+<!-- weaver .registry.attribute_groups[] | select(.id == "myapp.error") -->
+<!-- endweaver -->

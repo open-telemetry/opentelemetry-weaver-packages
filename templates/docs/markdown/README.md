@@ -53,8 +53,8 @@ definitions.
 
 The filter must resolve to a *single* object, and that object becomes the
 template context directly. Each entry under `.registry.spans`, `.metrics`,
-`.events` and `.entities` is already a whole definition from that schema, so
-selecting one is enough. `snippet.md.j2` then picks what to render by looking at
+`.events`, `.entities` and `.attribute_groups` is already a whole definition from
+that schema, so selecting one is enough. `snippet.md.j2` then picks what to render by looking at
 which fields the object has, taking the first row that matches:
 
 | If the object has | You get | Example filter |
@@ -63,8 +63,12 @@ which fields the object has, taking the first row that matches:
 | `instrument` | Metric | `.registry.metrics[] \| select(.name == "myapp.request.duration")` |
 | `identity` or `description` | Entity | `.registry.entities[] \| select(.type == "myapp.service")` |
 | `name` and `attributes` | Event | `.registry.events[] \| select(.name == "myapp.session.started")` |
+| `id` and `attributes` | Public attribute group | `.registry.attribute_groups[] \| select(.id == "myapp.error")` |
 
-An object matching no row renders as empty. 
+An object matching no row renders as empty. Only *public* attribute groups can be
+selected - weaver drops internal ones while resolving, so they never reach the
+template. Attribute groups are snippet-only - the generated registry does not
+give them pages of their own.
 
 ## Configuration
 
