@@ -3,7 +3,7 @@
 {%- import 'namespace_page.j2' as page -%}
 {%- import 'titles.j2' as titles -%}
 {%- macro section(span, heading) %}
-{{ heading }} `{{ span.type }}`
+{{ heading }} {{ titles.signal_heading(span.type) }}
 
 {{ sp.header(span) | trim }}
 

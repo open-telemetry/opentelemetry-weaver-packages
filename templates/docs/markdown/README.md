@@ -135,6 +135,22 @@ Attributes from a dependency you don't list render
 unlinked - the docs say the attribute is there without claiming to know where it
 is documented. 
 
+### Section headings in registry
+
+Each span, metric, event and entity gets a section headed by its id -
+``## `cicd.pipeline.run` ``. Set `humanize_headings=true` and the heading becomes
+prose instead - `## CI/CD Pipeline Run` - while the id is still spelled out in
+the body and in the overview table.
+
+| Param | Default | Effect |
+| --- | --- | --- |
+| `humanize_headings` | `false` | Title the section after the signal rather than its id. |
+
+The title is built word by word from the id, each word going through the same
+[namespace title](#namespace-titles) rules - so `cicd` becomes `CI/CD` if you
+mapped it and `http` becomes `HTTP` if you listed it as an acronym. Links follow
+the heading, so anchors change with it (`#cicdpipelinerun` -> `#cicd-pipeline-run`).
+
 ### Namespace titles
 
 A namespace page is titled after its namespace id, made readable in one of two

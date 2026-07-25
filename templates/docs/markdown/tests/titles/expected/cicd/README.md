@@ -3,7 +3,21 @@
 
 # CI/CD
 
+- [Entities](#entities)
+- [Spans](#spans)
 - [Attributes](#attributes)
+
+## Entities
+
+| Type | Stability | Description |
+| --- | --- | --- |
+| [`cicd.worker`](/cicd/entities.md#cicd-worker) | ![Development](https://img.shields.io/badge/-development-blue) | A worker executing pipeline runs. |
+
+## Spans
+
+| Type | Stability | Description |
+| --- | --- | --- |
+| [`cicd.pipeline.run`](/cicd/spans.md#cicd-pipeline-run) | ![Development](https://img.shields.io/badge/-development-blue) | Span describing a pipeline run. |
 
 ## Attributes
 

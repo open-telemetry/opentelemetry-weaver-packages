@@ -1,3 +1,4 @@
+{%- import 'titles.j2' as titles -%}
 {# All documentation/reference URLs used by the markdown templates.
 
    This macro module is the single owner of every link. It only *reads* values
@@ -30,13 +31,21 @@
 {%- endmacro %}
 
 {# --- Signal heading anchor ---
-   Signal pages render each span/metric/event/entity as a plain heading whose
-   text is the code-formatted id (`## `auth.attempts``). The renderer
-   auto-generates the heading id by lowercasing and dropping dots
-   (`auth.attempts` -> `authattempts`), so links target that same slug -- no
-   explicit `<a id>` is written. (Attributes live in a table, which has no
-   auto-anchor, so those keep an explicit kebab-cased `<a id>` instead.) #}
-{% macro signal_anchor(id) -%}{{ id | lower | replace(".", "") }}{%- endmacro %}
+   Signal pages render each span/metric/event/entity as a plain heading, so the
+   renderer auto-generates its id by lowercasing, dropping punctuation and
+   hyphenating spaces -- no explicit `<a id>` is written. This macro reproduces
+   that slug for whatever `titles.signal_heading` emitted: the code-formatted id
+   (`auth.attempts` -> `authattempts`) or, under `humanize_headings`, the prose
+   title (`CI/CD Pipeline Run` -> `cicd-pipeline-run`). (Attributes live in a
+   table, which has no auto-anchor, so those keep an explicit kebab-cased
+   `<a id>` instead.) #}
+{% macro signal_anchor(id) -%}
+{%- if params.humanize_headings -%}
+{{ titles.signal(id) | trim | lower | replace("/", "") | replace(".", "") | replace(" ", "-") }}
+{%- else -%}
+{{ id | lower | replace(".", "") }}
+{%- endif -%}
+{%- endmacro %}
 
 {# --- Attribute documentation URL ---
    Local attributes -- defined in this registry -- carry `provenance.path` (the

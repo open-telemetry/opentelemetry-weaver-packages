@@ -1,2 +1,3 @@
 params:
   registry_base_url: ""
+  humanize_headings: true

@@ -3,7 +3,7 @@
 {%- import 'namespace_page.j2' as page -%}
 {%- import 'titles.j2' as titles -%}
 {%- macro section(e, heading) %}
-{{ heading }} `{{ e.type }}`
+{{ heading }} {{ titles.signal_heading(e.type) }}
 
 {{ entity.header(e) | trim }}
 
