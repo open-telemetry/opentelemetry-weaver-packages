@@ -1,0 +1,16 @@
+{# v2 public attribute group objects expose: id, brief, note, stability,
+   deprecated, attributes. Internal groups never reach templates - weaver drops
+   them while resolving. Groups have no requirement level of their own; each
+   attribute carries its own. #}
+{% import 'stability.j2' as stability %}
+{% macro header(group) -%}
+**Status:** {{ stability.badge(group) | trim }}
+
+{{ group.brief | trim }}
+{%- if group.note %}
+
+{{ group.note | trim }}
+{%- endif %}
+
+**Attribute group:** `{{ group.id }}`
+{%- endmacro %}

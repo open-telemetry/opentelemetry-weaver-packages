@@ -1,0 +1,3 @@
+name: upstream-b
+schema_url: https://example.com/schemas/upstream-b/2.0.0
+stability: stable

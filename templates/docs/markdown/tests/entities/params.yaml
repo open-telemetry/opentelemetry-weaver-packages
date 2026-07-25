@@ -1,0 +1,7 @@
+# Test-only overrides. Real registries publish under their own docs root;
+# these tests keep links root-absolute but drop the repo-specific prefix.
+params:
+  registry_base_url: ""
+  # This registry carries deprecated entities and attributes on purpose: it is
+  # the scenario that covers how the "Deprecated" sections render.
+  exclude_deprecated: false

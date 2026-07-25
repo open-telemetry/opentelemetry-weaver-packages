@@ -1,0 +1,59 @@
+# Three namespaces, one per way a heading title is derived:
+#   cicd  -> from the `namespace_mapping` text map ("CI/CD")
+#   http  -> from the acronyms list ("HTTP")
+#   myapp -> plain title casing ("Myapp")
+#
+# The same three rules apply per word of a signal id under `humanize_headings`,
+# which this test turns on: `cicd.pipeline.run` -> "CI/CD Pipeline Run", and the
+# slash has to survive slugging into the `#cicd-pipeline-run` anchor.
+file_format: definition/2
+attributes:
+  - key: cicd.pipeline.name
+    type: string
+    stability: stable
+    brief: Name of the pipeline.
+    examples: ["build-and-test"]
+  - key: http.request.method
+    type: string
+    stability: stable
+    brief: HTTP request method.
+    examples: ["GET"]
+  - key: myapp.task.id
+    type: string
+    stability: stable
+    brief: Unique identifier of the task.
+    examples: ["task_0001"]
+spans:
+  - type: cicd.pipeline.run
+    kind: internal
+    name:
+      note: TBD
+    stability: development
+    brief: Span describing a pipeline run.
+    attributes:
+      - ref: cicd.pipeline.name
+        requirement_level: required
+metrics:
+  - name: http.client.request.duration
+    instrument: histogram
+    unit: s
+    stability: stable
+    brief: Duration of the HTTP client request.
+    attributes:
+      - ref: http.request.method
+        requirement_level: required
+events:
+  - name: myapp.task.started
+    stability: development
+    requirement_level: opt_in
+    brief: Emitted when a task starts.
+    attributes:
+      - ref: myapp.task.id
+        requirement_level: required
+entities:
+  - type: cicd.worker
+    stability: development
+    brief: A worker executing pipeline runs.
+    identity:
+      - ref: cicd.pipeline.name
+        requirement_level: required

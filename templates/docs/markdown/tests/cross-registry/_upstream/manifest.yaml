@@ -1,0 +1,3 @@
+name: arbitrary-upstream
+schema_url: https://example.com/schemas/arbitrary-upstream/1.0.0
+stability: stable

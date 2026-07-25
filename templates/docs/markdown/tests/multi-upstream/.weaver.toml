@@ -1,0 +1,5 @@
+# Where each dependency's attributes are documented, keyed by its schema url.
+# Upstream C is intentionally absent, so its attributes render unlinked.
+[template.text_maps.upstream_docs]
+"https://example.com/schemas/upstream-a/1.0.0" = "https://a.example/docs/registry/attributes/{namespace}.md"
+"https://example.com/schemas/upstream-b/2.0.0" = "https://b.example/reference/{namespace}/attributes/"

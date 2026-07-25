@@ -81,7 +81,7 @@ log_warn() {
   echo "$1"
 }
 
-# Tests the output of a test agianst expected value.
+# Tests the output of a test against expected value.
 # Args:
 #     1 - Observed Output file
 #     2 - Expected Output file

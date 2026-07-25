@@ -1,0 +1,8 @@
+name: cross-registry-example
+schema_url: https://example.com/schemas/cross-registry-example/1.0.0
+stability: development
+dependencies:
+  # Arbitrary upstream registry this one depends on for shared attributes.
+  # Path is relative to the working directory weaver runs in (the test dir).
+  - schema_url: https://example.com/schemas/arbitrary-upstream/1.0.0
+    registry_path: ./_upstream

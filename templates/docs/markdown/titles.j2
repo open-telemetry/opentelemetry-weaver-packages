@@ -1,0 +1,25 @@
+{# Human-readable heading for a namespace.
+
+   The `namespace_mapping` text map wins when it has an entry for the namespace;
+   it exists for titles that casing alone cannot produce (`cicd` -> `CI/CD`).
+   Otherwise the id is title-cased with known initialisms upper-cased
+   (`http` -> `HTTP`). Both are configured in your `.weaver.toml`. #}
+
+{% macro namespace(ns) -%}
+{%- set mapped = ns | map_text("namespace_mapping", "") -%}
+{{ mapped if mapped else ns | title_case | acronym }}
+{%- endmacro %}
+
+{# Human-readable title for a signal id: every dot-separated word goes through
+   the same treatment as a namespace, so `cicd.pipeline.run` -> `CI/CD Pipeline
+   Run` with `cicd` in `namespace_mapping`. #}
+{% macro signal(id) -%}
+{%- for word in id | split_id %}{{ " " if not loop.first }}{{ namespace(word) }}{% endfor -%}
+{%- endmacro %}
+
+{# Heading text for a signal section. Defaults to the id verbatim, which is what
+   readers copy into code; `humanize_headings` switches to prose titles. Keep it
+   in sync with `links.signal_anchor`, which has to slug whatever this emits. #}
+{% macro signal_heading(id) -%}
+{{ signal(id) | trim if params.humanize_headings else "`" ~ id ~ "`" }}
+{%- endmacro %}

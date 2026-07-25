@@ -38,4 +38,5 @@ entities:
   - type: valid.entity
     brief: Valid entity type.
     stability: stable
-    identity: []
+    identity:
+      - ref: valid.attr

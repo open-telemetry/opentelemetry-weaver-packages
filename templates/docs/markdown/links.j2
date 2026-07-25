@@ -1,0 +1,75 @@
+{%- import 'titles.j2' as titles -%}
+{# All documentation/reference URLs used by the markdown templates.
+
+   This macro module is the single owner of every link. It only *reads* values
+   from config -- no URL is hardcoded or derived here. Two independent
+   categories of links, configured separately:
+
+   * OpenTelemetry general guidance (`params.otel_*_url`): naming, recording
+     errors, requirement levels. A global singleton; kept in config only so
+     it is easy to update, not because it varies per registry.
+
+   * Upstream / dependency docs (the `upstream_docs` text map): where the
+     attributes this registry *imports* are documented. A per-registry choice --
+     not necessarily the same project that owns the guidance above. #}
+
+{# --- OpenTelemetry general guidance links --- #}
+{% macro requirement_level_url() -%}{{ params.otel_requirement_level_url }}{%- endmacro %}
+{% macro naming_recommendations_url() -%}{{ params.otel_naming_recommendations_url }}{%- endmacro %}
+{% macro recording_errors_url() -%}{{ params.otel_recording_errors_url }}{%- endmacro %}
+{% macro span_guidelines_url() -%}{{ params.otel_span_guidelines_url }}{%- endmacro %}
+
+{# --- Registry page URL ---
+   Root-anchored absolute link to any page this registry generates, in the
+   namespace-first layout `{registry_base_url}/{namespace}/{page}` (e.g.
+   `/docs/registry/myapp/spans.md`). `registry_base_url` is the registry root
+   with no trailing slash. Root-anchored (not file-relative) so the same link
+   resolves whether it is read from a generated registry page or from a snippet
+   embedded in an arbitrary hand-written doc. #}
+{% macro registry_page_url(namespace, page) -%}
+{{ params.registry_base_url }}/{{ namespace | kebab_case }}/{{ page }}
+{%- endmacro %}
+
+{# --- Signal heading anchor ---
+   Signal pages render each span/metric/event/entity as a plain heading, so the
+   renderer auto-generates its id by lowercasing, dropping punctuation and
+   hyphenating spaces -- no explicit `<a id>` is written. This macro reproduces
+   that slug for whatever `titles.signal_heading` emitted: the code-formatted id
+   (`auth.attempts` -> `authattempts`) or, under `humanize_headings`, the prose
+   title (`CI/CD Pipeline Run` -> `cicd-pipeline-run`). (Attributes live in a
+   table, which has no auto-anchor, so those keep an explicit kebab-cased
+   `<a id>` instead.) #}
+{% macro signal_anchor(id) -%}
+{%- if params.humanize_headings -%}
+{{ titles.signal(id) | trim | lower | replace("/", "") | replace(".", "") | replace(" ", "-") }}
+{%- else -%}
+{{ id | lower | replace(".", "") }}
+{%- endif -%}
+{%- endmacro %}
+
+{# --- Attribute documentation URL ---
+   Local attributes -- defined in this registry -- carry `provenance.path` (the
+   model file they live in) and link to the attribute's row in its namespace
+   README under `registry_base_url` (`{ns}/README.md#{attribute-key}`); the
+   README's Attributes section anchors each key by its kebab-cased id.
+   Imported attributes come from a dependency and have no `provenance.path`
+   (provenance is either null or `{source: <schema_url>}`); they link to that
+   dependency's own docs.
+
+   Their url template comes from the `upstream_docs` text map, keyed by the
+   dependency's schema url. One dependency or ten, it is the same lookup.
+
+   A dependency missing from the map yields an empty url rather than a guessed
+   one -- callers render the attribute unlinked. There is nothing sound to guess:
+   schema urls are versioned, so any built-in fallback would keep pointing at
+   whichever upstream it was written for, silently, for every dependency the map
+   does not cover. #}
+{% macro attribute_doc_url(attribute) -%}
+{%- set ns = attribute.key | split_id | first | kebab_case -%}
+{%- if attribute.provenance and attribute.provenance.path -%}
+{{ params.registry_base_url }}/{{ ns }}/README.md#{{ attribute.key | kebab_case }}
+{%- else -%}
+{%- set schema_url = attribute.provenance.source if attribute.provenance else "" -%}
+{{ schema_url | map_text("upstream_docs", "") | replace('{namespace}', ns) }}
+{%- endif -%}
+{%- endmacro %}
