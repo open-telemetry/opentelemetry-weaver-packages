@@ -46,20 +46,25 @@ the same span embedded in your doc.
 
 ### Snippet input
 
-The jq filter must resolve to a *single* object, and that object becomes the
-template context directly. Which snippet you get is picked from the fields
-present on it:
+The filter runs over the
+[materialized resolved schema](https://github.com/open-telemetry/weaver/blob/main/schemas/semconv-schemas.md#materialized-resolved-schema) -
+your registry with imports and attribute references expanded into full
+definitions.
 
-| Snippet | Selected when | Example filter |
+The filter must resolve to a *single* object, and that object becomes the
+template context directly. Each entry under `.registry.spans`, `.metrics`,
+`.events` and `.entities` is already a whole definition from that schema, so
+selecting one is enough. `snippet.md.j2` then picks what to render by looking at
+which fields the object has, taking the first row that matches:
+
+| If the object has | You get | Example filter |
 | --- | --- | --- |
-| Span | has `kind` | `.registry.spans[] \| select(.type == "myapp.request")` |
-| Metric | has `instrument` | `.registry.metrics[] \| select(.name == "myapp.request.duration")` |
-| Entity | has `identity` or `description` | `.registry.entities[] \| select(.type == "myapp.service")` |
-| Event | has `name` and `attributes` | `.registry.events[] \| select(.name == "myapp.session.started")` |
+| `kind` | Span | `.registry.spans[] \| select(.type == "myapp.request")` |
+| `instrument` | Metric | `.registry.metrics[] \| select(.name == "myapp.request.duration")` |
+| `identity` or `description` | Entity | `.registry.entities[] \| select(.type == "myapp.service")` |
+| `name` and `attributes` | Event | `.registry.events[] \| select(.name == "myapp.session.started")` |
 
-Objects under `.registry` already have the right shape, so a filter is normally
-just a `select` over one of them. An object matching none of the rows renders as
-empty.
+An object matching no row renders as empty. 
 
 ## Configuration
 
