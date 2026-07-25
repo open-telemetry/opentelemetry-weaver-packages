@@ -82,17 +82,34 @@ snippets.
 
 ### Links
 
-Every link in the generated docs comes from a param.
+Each attribute links to its own documentation: attributes defined in this
+registry link to its own pages, imported ones link upstream.
+[`tests/cross-registry`](tests/cross-registry) shows both.
+
+Links between generated pages come from params:
 
 | Param | Purpose |
 | --- | --- |
 | `registry_base_url` | Where this registry is published (no trailing slash). Links between generated pages are absolute, `<registry_base_url>/<namespace>/<page>.md`, so they also work from a snippet embedded anywhere. |
 | `otel_requirement_level_url`, `otel_naming_recommendations_url`, `otel_recording_errors_url` | OpenTelemetry general guidance. The same for everyone; params only so they are easy to update. |
-| `upstream_docs_base_url`, `upstream_docs_attribute_path` | Where attributes you *import* from another registry are documented. The link is the two joined, with `{namespace}` substituted. |
 
-Each attribute links to its own documentation: attributes defined in this
-registry link to its own pages, imported ones link upstream.
-[`tests/cross-registry`](tests/cross-registry) shows both.
+#### Upstream docs
+
+Where a *dependency's* attributes are documented is the `upstream_docs` text
+map, keyed by the `schema_url` you declared for that dependency. Values are url
+templates with `{namespace}` substituted:
+
+```toml
+[template.text_maps.upstream_docs]
+"https://opentelemetry.io/schemas/1.39.0" = "https://github.com/open-telemetry/semantic-conventions/blob/main/docs/registry/attributes/{namespace}.md"
+"https://example.com/schemas/platform/2.0.0" = "https://docs.example.com/reference/{namespace}/attributes/"
+```
+
+Like the title settings below this goes in your `.weaver.toml`, not `--param`.
+
+Attributes from a dependency you don't list render
+unlinked - the docs say the attribute is there without claiming to know where it
+is documented. 
 
 ### Namespace titles
 
@@ -114,12 +131,6 @@ package your project uses:
 acronyms = ["API", "HTTP", "SDK", "MyProduct"]
 text_maps = { namespace_mapping = { cicd = "CI/CD" } }
 ```
-
-## Limitations
-
-- **Single upstream only.** Every imported attribute links under
-  `upstream_docs_base_url`, so if you depend on more than one registry, links to
-  the others are wrong. Routing each import to its own upstream is a TODO.
 
 ## Tests
 

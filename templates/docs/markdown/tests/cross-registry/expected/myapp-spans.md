@@ -22,7 +22,7 @@ TBD
 
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- |
-| [`server.address`](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/registry/attributes/server.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Server domain name or IP address. | `example.com`; `10.1.2.80` |
+| [`server.address`](https://upstream.example/docs/attributes/server.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Server domain name or IP address. | `example.com`; `10.1.2.80` |
 | [`myapp.session.id`](/myapp/README.md#myapp-session-id) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | Unique identifier of the application session. | `sess_5j66Up` |
 
 <!-- prettier-ignore-end -->

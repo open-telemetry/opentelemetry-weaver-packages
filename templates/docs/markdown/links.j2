@@ -1,17 +1,16 @@
 {# All documentation/reference URLs used by the markdown templates.
 
    This macro module is the single owner of every link. It only *reads* values
-   from `params` (configured in weaver.yaml) -- no URL is hardcoded or derived
-   here. Two independent categories of links, configured separately:
+   from config -- no URL is hardcoded or derived here. Two independent
+   categories of links, configured separately:
 
    * OpenTelemetry general guidance (`params.otel_*_url`): naming, recording
      errors, requirement levels. A global singleton; kept in config only so
      it is easy to update, not because it varies per registry.
 
-   * Upstream / dependency docs (`params.upstream_docs_base_url`,
-     `params.upstream_docs_attribute_path`): where the attributes this
-     registry *imports* are documented. A per-registry choice -- not necessarily
-     the same project that owns the guidance above. #}
+   * Upstream / dependency docs (the `upstream_docs` text map): where the
+     attributes this registry *imports* are documented. A per-registry choice --
+     not necessarily the same project that owns the guidance above. #}
 
 {# --- OpenTelemetry general guidance links --- #}
 {% macro requirement_level_url() -%}{{ params.otel_requirement_level_url }}{%- endmacro %}
@@ -45,17 +44,23 @@
    README under `registry_base_url` (`{ns}/README.md#{attribute-key}`); the
    README's Attributes section anchors each key by its kebab-cased id.
    Imported attributes come from a dependency and have no `provenance.path`
-   (provenance is either null or `{source: <schema_url>}`); they link to their
-   upstream docs at `params.upstream_docs_base_url` + `params.upstream_docs_attribute_path`.
+   (provenance is either null or `{source: <schema_url>}`); they link to that
+   dependency's own docs.
 
-   TODO: support multiple dependencies -- route imported attributes to different
-   upstreams (by `provenance.source` schema_url). Today every import shares a
-   single `upstream_docs_base_url`. #}
+   Their url template comes from the `upstream_docs` text map, keyed by the
+   dependency's schema url. One dependency or ten, it is the same lookup.
+
+   A dependency missing from the map yields an empty url rather than a guessed
+   one -- callers render the attribute unlinked. There is nothing sound to guess:
+   schema urls are versioned, so any built-in fallback would keep pointing at
+   whichever upstream it was written for, silently, for every dependency the map
+   does not cover. #}
 {% macro attribute_doc_url(attribute) -%}
 {%- set ns = attribute.key | split_id | first | kebab_case -%}
 {%- if attribute.provenance and attribute.provenance.path -%}
 {{ params.registry_base_url }}/{{ ns }}/README.md#{{ attribute.key | kebab_case }}
 {%- else -%}
-{{ params.upstream_docs_base_url }}{{ params.upstream_docs_attribute_path | replace('{namespace}', ns) }}
+{%- set schema_url = attribute.provenance.source if attribute.provenance else "" -%}
+{{ schema_url | map_text("upstream_docs", "") | replace('{namespace}', ns) }}
 {%- endif -%}
 {%- endmacro %}

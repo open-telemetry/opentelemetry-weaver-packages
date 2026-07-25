@@ -20,9 +20,11 @@
    YAML file under ./model/); attributes imported from a dependency have no
    `provenance.path` (provenance is null or `{source: <schema_url>}`). The
    local-vs-upstream URL construction is owned by links.j2, driven entirely by
-   weaver.yaml params. #}
+   config. An imported attribute whose dependency is not in the `upstream_docs`
+   map has no known documentation, so it renders unlinked. #}
 {% macro name_with_link(attribute) -%}
-[`{{ attribute.key }}`]({{ links.attribute_doc_url(attribute) | trim }})
+{%- set url = links.attribute_doc_url(attribute) | trim -%}
+{%- if url %}[`{{ attribute.key }}`]({{ url }}){% else %}`{{ attribute.key }}`{% endif -%}
 {%- endmacro %}
 
 {% macro schema_note(attribute) -%}

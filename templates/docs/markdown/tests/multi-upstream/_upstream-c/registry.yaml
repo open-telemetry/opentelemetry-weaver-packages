@@ -1,0 +1,7 @@
+file_format: definition/2
+attributes:
+  - key: cloud.region
+    type: string
+    stability: stable
+    brief: The geographical region within a cloud provider.
+    examples: ["us-east-1"]

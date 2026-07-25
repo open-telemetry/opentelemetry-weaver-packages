@@ -1,0 +1,7 @@
+file_format: definition/2
+attributes:
+  - key: server.address
+    type: string
+    stability: stable
+    brief: Server domain name or IP address.
+    examples: ["example.com", "10.1.2.80"]

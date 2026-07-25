@@ -1,0 +1,4 @@
+# Where this registry's one dependency documents its attributes, keyed by the
+# schema url declared in registry/manifest.yaml.
+[template.text_maps.upstream_docs]
+"https://example.com/schemas/arbitrary-upstream/1.0.0" = "https://upstream.example/docs/attributes/{namespace}.md"

@@ -1,0 +1,14 @@
+name: multi-upstream-example
+schema_url: https://example.com/schemas/multi-upstream-example/1.0.0
+stability: development
+dependencies:
+  # Three upstreams, each with its own docs site. Paths are relative to the
+  # working directory weaver runs in (the test dir).
+  - schema_url: https://example.com/schemas/upstream-a/1.0.0
+    registry_path: ./_upstream-a
+  - schema_url: https://example.com/schemas/upstream-b/2.0.0
+    registry_path: ./_upstream-b
+  # Deliberately left out of the `upstream_docs` map in `.weaver.toml`: we do
+  # not know where it is documented, so its attributes render unlinked.
+  - schema_url: https://example.com/schemas/upstream-c/1.0.0
+    registry_path: ./_upstream-c
