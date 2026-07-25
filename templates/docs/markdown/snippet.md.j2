@@ -31,8 +31,10 @@
 {{ at.generate(_attrs) }}
 {%- elif (identity is defined or description is defined) and not _kind and not _instrument -%}
 {%- set entity_obj = {"type": (type | default(none)), "stability": _stability, "deprecated": _deprecated, "brief": _brief, "note": _note, "requirement_level": _requirement_level, "identity": identity | default([]), "description": description | default([])} -%}
-{{ entity.header(entity_obj) }}{{ entity.all_attribute_table(entity_obj) }}
-{%- elif _name and _attrs -%}
+{{ entity.header(entity_obj) | trim }}
+
+{{ entity.all_attribute_table(entity_obj) | trim }}
+{% elif _name and _attrs -%}
 {%- set event = {"name": _name, "stability": _stability, "deprecated": _deprecated, "brief": _brief, "note": _note, "requirement_level": _requirement_level, "entity_associations": (entity_associations | default(none))} -%}
 {{ ev.header(event) }}{{ at.generate(_attrs) }}
 {%- elif _attrs -%}

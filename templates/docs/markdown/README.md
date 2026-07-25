@@ -164,7 +164,7 @@ Each test lives in `tests/<name>/`:
 | `expected/` | The output to match. |
 | `params.yaml` | Params for this test (optional). |
 | `.weaver.toml` | Project config for this test - `[template]` `acronyms`, `text_maps` (optional). |
-| `markdown/` | Makes this a snippet test (optional): these files carry `<!-- weaver … -->` markers and are run through `update-markdown` instead of `generate`. |
+| `markdown/` | Makes this a snippet test (optional): these files carry `<!-- weaver … -->` markers and are run through `update-markdown` instead of `generate`. See [`tests/snippets`](tests/snippets), which has one marker per signal type. |
 
 Run them with `make test-templates`, or `make update-test-output` to rewrite
 `expected/` from the current output.
