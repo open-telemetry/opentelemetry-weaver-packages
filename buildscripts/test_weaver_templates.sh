@@ -33,9 +33,10 @@ log_warn() {
 #     2 - Expected Output directory
 #     3 - Test name
 check_output() {
-  OBSERVED_FILE="$1"
-  EXPECTED_FILE="$2"
-  TEST_NAME="$3"
+  # `local`, so reporting one result does not clobber the caller's TEST_NAME.
+  local OBSERVED_FILE="$1"
+  local EXPECTED_FILE="$2"
+  local TEST_NAME="$3"
   if [[ -n "$UPDATE_EXPECTED" ]]; then
     rm -rf "$EXPECTED_FILE"
     cp -R "$OBSERVED_FILE" "$EXPECTED_FILE"
@@ -80,20 +81,24 @@ run_template_test() {
   OBSERVED_DIR="${TEMPLATE_PACKAGE_DIR}/observed-output/${TEST_NAME}"
   rm -rf "${OBSERVED_DIR}"
   mkdir -p "${OBSERVED_DIR}"
-  if [ -d "${TEST_DIR}/markdown" ]; then
-    # Snippet test: the package ships a snippet.md.j2 and the test provides a
-    # `markdown/` directory of markdown files containing `<!-- weaver {jq} -->`
-    # markers. We run `registry update-markdown`, which fills those markers in
-    # place, then diff the result against `expected/`.
-    run_snippet_test "${TEST_DIR}" "${TEMPLATE_PACKAGE_DIR}" "${OBSERVED_DIR}"
-  else
-    run_generate_test "${TEST_DIR}" "${TEMPLATE_PACKAGE_DIR}" "${OBSERVED_DIR}"
-  fi
+  run_generate_test "${TEST_DIR}" "${TEMPLATE_PACKAGE_DIR}" "${OBSERVED_DIR}"
   # TODO - put errors / diagnostics into a file.
 #   if [ $? -ne 0 ]; then
 #     cat "${OBSERVED_DIR}/stderr"
 #   fi
   check_output "${OBSERVED_DIR}" "${TEST_DIR}/expected" "${TEST_NAME} - Template Output"
+
+  # A test that also ships a `markdown/` directory is rendered a second way: the
+  # package's snippet.md.j2 fills the `<!-- weaver {jq} -->` markers in those
+  # files. Running the same registry both ways is what keeps a definition
+  # rendering identically on a generated page and in a snippet.
+  if [ -d "${TEST_DIR}/markdown" ]; then
+    OBSERVED_MD_DIR="${TEMPLATE_PACKAGE_DIR}/observed-output/${TEST_NAME}-markdown"
+    rm -rf "${OBSERVED_MD_DIR}"
+    mkdir -p "${OBSERVED_MD_DIR}"
+    run_snippet_test "${TEST_DIR}" "${TEMPLATE_PACKAGE_DIR}" "${OBSERVED_MD_DIR}"
+    check_output "${OBSERVED_MD_DIR}" "${TEST_DIR}/expected-markdown" "${TEST_NAME} - Snippet Output"
+  fi
 }
 
 # Runs a full-registry test via `registry generate`.

@@ -65,9 +65,7 @@ which fields the object has, taking the first row that matches:
 | `name` and `attributes` | Event | `.registry.events[] \| select(.name == "myapp.session.started")` |
 | `id` and `attributes` | Public attribute group | `.registry.attribute_groups[] \| select(.id == "myapp.error")` |
 
-An object matching no row renders as empty. Only *public* attribute groups can be
-selected - weaver drops internal ones while resolving, so they never reach the
-template. Attribute groups are snippet-only - the generated registry does not
+An object matching no row renders as empty. Attribute groups are snippet-only - the generated registry does not
 give them pages of their own.
 
 ## Configuration
@@ -165,10 +163,15 @@ Each test lives in `tests/<name>/`:
 | File | Purpose |
 | --- | --- |
 | `registry/` | The input registry. |
-| `expected/` | The output to match. |
+| `expected/` | The `generate` output to match. |
 | `params.yaml` | Params for this test (optional). |
 | `.weaver.toml` | Project config for this test - `[template]` `acronyms`, `text_maps` (optional). |
-| `markdown/` | Makes this a snippet test (optional): these files carry `<!-- weaver … -->` markers and are run through `update-markdown` instead of `generate`. See [`tests/snippets`](tests/snippets), which has one marker per signal type. |
+| `markdown/` | Files carrying `<!-- weaver … -->` markers (optional). Present, the registry is *also* run through `update-markdown`. See [`tests/snippets`](tests/snippets), which has one marker per signal type. |
+| `expected-markdown/` | The `update-markdown` output to match. Required when `markdown/` exists. |
+
+Every test runs `generate`; a test with `markdown/` runs both. Rendering one
+registry both ways is what catches a definition drifting between its generated
+page and its snippet.
 
 Run them with `make test-templates`, or `make update-test-output` to rewrite
 `expected/` from the current output.
