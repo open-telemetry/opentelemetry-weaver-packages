@@ -28,7 +28,8 @@ entities:
   - type: Invalid_Entity
     brief: Invalid entity type
     stability: stable
-    identity: []
+    identity:
+      - ref: nonamespace
 
 spans:
   - type: Invalid_Span
