@@ -5,7 +5,7 @@ Generates Markdown documentation for a semantic convention registry.
 Stability: Development
 Owners: TBD
 
-> **Requires the next weaver release (presumably 0.25.0).**
+> **Requires weaver 0.25.0 or later.**
 
 ## Usage
 
@@ -130,7 +130,7 @@ Each test lives in `tests/<name>/`:
 | `registry/` | The input registry. |
 | `expected/` | The output to match. |
 | `params.yaml` | Params for this test (optional). |
-| `weaver-config.yaml` | What a registry would put in `.weaver.toml` - `acronyms`, `text_maps` (optional). |
+| `.weaver.toml` | Project config for this test - `[template]` `acronyms`, `text_maps` (optional). |
 | `markdown/` | Makes this a snippet test (optional): these files carry `<!-- weaver … -->` markers and are run through `update-markdown` instead of `generate`. |
 
 Run them with `make test-templates`, or `make update-test-output` to rewrite

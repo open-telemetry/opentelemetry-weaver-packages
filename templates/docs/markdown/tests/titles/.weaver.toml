@@ -1,0 +1,5 @@
+# Discovered by weaver walking up from the registry, exactly as a real project's
+# `.weaver.toml` would be.
+[template]
+acronyms = ["HTTP"]
+text_maps = { namespace_mapping = { cicd = "CI/CD" } }
