@@ -98,6 +98,28 @@ run_template_test() {
     mkdir -p "${OBSERVED_MD_DIR}"
     run_snippet_test "${TEST_DIR}" "${TEMPLATE_PACKAGE_DIR}" "${OBSERVED_MD_DIR}"
     check_output "${OBSERVED_MD_DIR}" "${TEST_DIR}/expected-markdown" "${TEST_NAME} - Snippet Output"
+    check_snippet_consistency "${OBSERVED_MD_DIR}" "${OBSERVED_DIR}" "${TEST_NAME}"
+  fi
+}
+
+# Asserts each definition renders the same as a snippet and on its generated
+# page. Compares the *observed* output of both runs, so it fails on drift even
+# when both expected trees were refreshed together (UPDATE_EXPECTED=1).
+# Args:
+#     1 - Observed `update-markdown` output directory
+#     2 - Observed `generate` output directory
+#     3 - Test name
+check_snippet_consistency() {
+  local OBSERVED_MD="$1"
+  local OBSERVED_GEN="$2"
+  local TEST_NAME="$3"
+  if ! command -v python3 >/dev/null 2>&1; then
+    log_err "Error: python3 not found; it is required to cross-check snippet output."
+  fi
+  echo "-> Cross-checking [${TEST_NAME}] snippet vs generated output ..."
+  if ! python3 "$(dirname "$0")/check_snippet_consistency.py" "${OBSERVED_MD}" "${OBSERVED_GEN}"; then
+    # TODO - We should try to accumulate errors and report status ONCE after all tests.
+    exit 1
   fi
 }
 

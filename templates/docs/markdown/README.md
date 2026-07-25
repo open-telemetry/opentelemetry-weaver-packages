@@ -169,9 +169,13 @@ Each test lives in `tests/<name>/`:
 | `markdown/` | Files carrying `<!-- weaver … -->` markers (optional). Present, the registry is *also* run through `update-markdown`. See [`tests/snippets`](tests/snippets), which has one marker per signal type. |
 | `expected-markdown/` | The `update-markdown` output to match. Required when `markdown/` exists. |
 
-Every test runs `generate`; a test with `markdown/` runs both. Rendering one
-registry both ways is what catches a definition drifting between its generated
-page and its snippet.
+Every test runs `generate`; a test with `markdown/` runs both. When it runs both,
+`buildscripts/check_snippet_consistency.py` then asserts each definition came out
+byte for byte identical in the snippet and in its `## \`<id>\`` section on the
+generated page - the two expected trees alone cannot catch the paths drifting
+apart. It reads the marker's jq filter to find the matching page, so
+`select(.type == "…")` style filters are what it understands; attribute groups
+have no generated page and are reported as skipped.
 
 Run them with `make test-templates`, or `make update-test-output` to rewrite
 `expected/` from the current output.
