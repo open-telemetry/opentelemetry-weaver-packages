@@ -3,7 +3,7 @@
 Generates Markdown documentation for a semantic convention registry.
 
 Stability: Development
-Owners: TBD
+Owners: @open-telemetry/weaver-package-maintainers
 
 > **Requires weaver 0.25.0 or later.**
 
@@ -43,6 +43,23 @@ This rewrites the content under each marker in place.
 
 A definition looks the same either way, so a span on a generated page matches
 the same span embedded in your doc.
+
+### Snippet input
+
+The jq filter must resolve to a *single* object, and that object becomes the
+template context directly. Which snippet you get is picked from the fields
+present on it:
+
+| Snippet | Selected when | Example filter |
+| --- | --- | --- |
+| Span | has `kind` | `.registry.spans[] \| select(.type == "myapp.request")` |
+| Metric | has `instrument` | `.registry.metrics[] \| select(.name == "myapp.request.duration")` |
+| Entity | has `identity` or `description` | `.registry.entities[] \| select(.type == "myapp.service")` |
+| Event | has `name` and `attributes` | `.registry.events[] \| select(.name == "myapp.session.started")` |
+
+Objects under `.registry` already have the right shape, so a filter is normally
+just a `select` over one of them. An object matching none of the rows renders as
+empty.
 
 ## Configuration
 

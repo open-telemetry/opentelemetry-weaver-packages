@@ -75,9 +75,7 @@ check_output() {
 run_template_test() {
   TEST_DIR="$1"
   TEMPLATE_PACKAGE_DIR="$2"
-  TEMPLATES_ROOT_DIR=$(realpath "${TEMPLATE_PACKAGE_DIR}/../..")
   TEST_NAME="${TEST_DIR#${TEMPLATE_PACKAGE_DIR}/}"
-  TEMPLATE_NAME="${TEMPLATE_PACKAGE_DIR#${TEMPLATES_ROOT_DIR}/}"
   echo "-> Running test [${TEST_NAME}] ..."
   OBSERVED_DIR="${TEMPLATE_PACKAGE_DIR}/observed-output/${TEST_NAME}"
   rm -rf "${OBSERVED_DIR}"
@@ -89,30 +87,44 @@ run_template_test() {
     # place, then diff the result against `expected/`.
     run_snippet_test "${TEST_DIR}" "${TEMPLATE_PACKAGE_DIR}" "${OBSERVED_DIR}"
   else
-    # Optional per-test template params (e.g. registry_base_url) via params.yaml.
-    PARAMS_ARG=""
-    if [ -f "${TEST_DIR}/params.yaml" ]; then
-      PARAMS_ARG="--params ${TEST_DIR}/params.yaml"
-    fi
-    # Note: We force ourselves into test dir, so provenance of files is always consistently relative.
-    # This also lets weaver discover a test's own `.weaver.toml` (`acronyms`,
-    # `text_maps`, ...) by walking up from the registry.
-    pushd "${TEST_DIR}"
-    NO_COLOR=1 ${WEAVER} registry generate \
-      -r registry \
-      --v2 \
-      --quiet \
-      ${PARAMS_ARG} \
-      --templates="${TEMPLATES_ROOT_DIR}" \
-      ${TEMPLATE_NAME} \
-      ${OBSERVED_DIR}
-    popd
+    run_generate_test "${TEST_DIR}" "${TEMPLATE_PACKAGE_DIR}" "${OBSERVED_DIR}"
   fi
   # TODO - put errors / diagnostics into a file.
 #   if [ $? -ne 0 ]; then
 #     cat "${OBSERVED_DIR}/stderr"
 #   fi
   check_output "${OBSERVED_DIR}" "${TEST_DIR}/expected" "${TEST_NAME} - Template Output"
+}
+
+# Runs a full-registry test via `registry generate`.
+# Args:
+#     1 - Test directory (contains registry/, expected/)
+#     2 - Template package directory
+#     3 - Observed output directory
+run_generate_test() {
+  GEN_TEST_DIR="$1"
+  GEN_PACKAGE_DIR="$2"
+  GEN_OBSERVED_DIR="$3"
+  GEN_TEMPLATES_ROOT=$(realpath "${GEN_PACKAGE_DIR}/../..")
+  GEN_TARGET="${GEN_PACKAGE_DIR#${GEN_TEMPLATES_ROOT}/}"
+  # Optional per-test template params (e.g. registry_base_url) via params.yaml.
+  GEN_PARAMS_ARG=""
+  if [ -f "${GEN_TEST_DIR}/params.yaml" ]; then
+    GEN_PARAMS_ARG="--params ${GEN_TEST_DIR}/params.yaml"
+  fi
+  # Note: We force ourselves into test dir, so provenance of files is always consistently relative.
+  # This also lets weaver discover a test's own `.weaver.toml` (`acronyms`,
+  # `text_maps`, ...) by walking up from the registry.
+  pushd "${GEN_TEST_DIR}"
+  NO_COLOR=1 ${WEAVER} registry generate \
+    -r registry \
+    --v2 \
+    --quiet \
+    ${GEN_PARAMS_ARG} \
+    --templates="${GEN_TEMPLATES_ROOT}" \
+    "${GEN_TARGET}" \
+    "${GEN_OBSERVED_DIR}"
+  popd
 }
 
 # Runs a snippet (embed) test via `registry update-markdown`.
