@@ -1,0 +1,64 @@
+name: Release
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    # Only release pull requests created by the prepare release workflow: merged,
+    # labeled `release`, and coming from a prepare release branch.
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.pull_request.merged == true &&
+       contains(github.event.pull_request.labels.*.name, 'release') &&
+       startsWith(github.event.pull_request.head.ref, 'otelbot/prepare-release-'))
+    permissions:
+      contents: write # required for creating the tag and the GitHub release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # The merge commit on main, not the pull request head.
+          ref: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Find the latest version in the change log
+        id: version
+        run: |
+          version=$(grep -m1 '^## v' CHANGELOG.md | sed 's/^## v//' || true)
+          if [[ ! "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "no version section found in CHANGELOG.md, see RELEASING.md"
+            exit 1
+          fi
+          if git rev-parse -q --verify "refs/tags/v${version}" > /dev/null; then
+            echo "v${version} is already tagged, the change log was not updated for this release"
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Generate release notes
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          ./buildscripts/extract_changelog.sh "$VERSION" > /tmp/release-notes.md
+          cat /tmp/release-notes.md
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+          TARGET: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
+        run: |
+          gh release create "v${VERSION}" \
+            --target "$TARGET" \
+            --title "v${VERSION}" \
+            --notes-file /tmp/release-notes.md
