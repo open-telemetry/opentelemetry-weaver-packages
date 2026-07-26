@@ -1,0 +1,46 @@
+file_format: definition/2
+attributes:
+  - key: a
+    brief: a attribute
+    type: string
+    stability: stable
+  - key: b
+    brief: b attribute
+    type: string
+    stability: stable
+  - key: c
+    brief: c attribute
+    type: string
+    stability: stable
+  - key: d
+    brief: d attribute
+    type: string
+    stability: stable
+attribute_groups:
+  - id: some.group.change_stability
+    brief: this will change stability
+    stability: alpha
+    visibility: public
+    attributes:
+      - ref: a
+  - id: some.group.missing.attrs
+    brief: this will be missing b and c attributes
+    stability: stable
+    visibility: public
+    attributes:
+      - ref: a
+  - id: some.group.added.attrs
+    brief: this will gain a recommended attribute
+    stability: stable
+    visibility: public
+    attributes:
+      - ref: a
+      - ref: d
+  - id: some.group.added.opt_in.attrs
+    brief: this will gain an opt_in attribute, which is allowed
+    stability: stable
+    visibility: public
+    attributes:
+      - ref: a
+      - ref: d
+        requirement_level: opt_in

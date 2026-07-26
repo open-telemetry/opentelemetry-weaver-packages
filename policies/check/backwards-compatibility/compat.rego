@@ -15,6 +15,7 @@ registry_metric_names := { metric.name | some metric in input.registry.metrics }
 registry_entity_types := { entity.type | some entity in input.registry.entities }
 registry_event_names := { event.name | some event in input.registry.events }
 registry_span_types := { span.type | some span in input.registry.spans }
+registry_attribute_group_ids := { group.id | some group in input.registry.attribute_groups }
 
 
 # Rules we enforce:
@@ -46,6 +47,14 @@ registry_span_types := { span.type | some span in input.registry.spans }
 #   - [x] Stable spans cannot become unstable
 #   - [x] Stable attributes cannot be dropped from stable span
 #   - [x] Span kind cannot change on stable spans.
+# - Attribute groups - PUBLIC groups only.
+#   Internal groups are an authoring convenience: they are not part of the
+#   resolved registry, nobody outside the registry can reference them, and
+#   they may change or disappear at any time.
+#   - [x] public attribute groups cannot be removed
+#   - [x] Stable public attribute groups cannot become unstable
+#   - [x] Attributes cannot be dropped from a stable public attribute group
+#   - [x] Non-opt_in attributes cannot be added to a stable public attribute group
 
 # Rule: Detect Removed Attributes
 #
@@ -744,6 +753,133 @@ deny contains finding if {
         "level": "violation",
         "signal_type": "span",
         "signal_name": span.type,
+    }
+}
+
+# Rule: Detect Removed Public Attribute Groups
+#
+# This rule checks for public attribute groups that existed in the baseline
+# registry but are no longer present in the current registry. Consumers
+# reference a public group as a whole, so removing one is a breaking change.
+#
+# In other words, we do not allow the removal of a public attribute group once
+# added to semantic conventions. They, however, may be deprecated.
+#
+# Internal attribute groups never reach the resolved registry, so they are not
+# covered by any of the rules below.
+deny contains finding if {
+    # Find data we need to enforce
+    some group in data.registry.attribute_groups
+
+    # Enforce the policy
+    not registry_attribute_group_ids[group.id]
+
+    # Generate human readable error.
+    finding := {
+        "id": "compatibility_attribute_group_removed",
+        "context": {
+            "attribute_group_id": group.id,
+        },
+        "message": sprintf("Attribute group '%s' no longer exists in semantic conventions", [group.id]),
+        "level": "violation",
+    }
+}
+
+
+# Rule: Stable public attribute groups cannot become unstable
+#
+# This rule checks that stable public attribute groups cannot have their
+# stability level changed.
+deny contains finding if {
+    # Find data we need to enforce
+    some group in data.registry.attribute_groups
+    group.stability == "stable"
+    some ngroup in input.registry.attribute_groups
+    group.id == ngroup.id
+    # Enforce the policy
+    ngroup.stability != "stable"
+
+    # Generate human readable error.
+    finding := {
+        "id": "compatibility_attribute_group_changed_stability",
+        "context": {
+            "attribute_group_id": group.id,
+        },
+        "message": sprintf("Attribute group '%s' cannot change from stable", [group.id]),
+        "level": "violation",
+    }
+}
+
+
+# Rule: Attributes on a stable public attribute group cannot be dropped.
+#
+# This rule checks that stable public attribute groups have stable sets of
+# attributes. Opt_in attributes are covered too: a consumer in another registry
+# may already be emitting them.
+deny contains finding if {
+    # Find data we need to enforce
+    some group in data.registry.attribute_groups
+    group.stability == "stable"
+    some ngroup in input.registry.attribute_groups
+    group.id == ngroup.id
+
+    baseline_attributes := { attr.key |
+        some attr in group.attributes
+    }
+    new_attributes := { attr.key |
+        some attr in ngroup.attributes
+    }
+    missing_attributes := baseline_attributes - new_attributes
+    # Enforce the policy
+    count(missing_attributes) > 0
+
+    # Generate human readable error.
+    finding := {
+        "id": "compatibility_attribute_group_dropped_attributes",
+        "context": {
+            "attribute_group_id": group.id,
+            "missing_attributes": missing_attributes,
+        },
+        "message": sprintf("Attribute group '%s' cannot remove attributes (missing '%s')", [group.id, missing_attributes]),
+        "level": "violation",
+    }
+}
+
+# Rule: Non-opt_in attributes cannot be added to a stable public attribute group.
+#
+# Public groups are referenced across registries: a signal in another registry
+# that includes this group silently gains every attribute added here. Adding a
+# required or recommended attribute therefore changes that signal's attribute
+# set without its owner making any change. Opt_in attributes are not emitted
+# unless a user asks for them, so adding those is allowed.
+deny contains finding if {
+    # Find data we need to enforce
+    some group in data.registry.attribute_groups
+    group.stability == "stable"
+    some ngroup in input.registry.attribute_groups
+    group.id == ngroup.id
+
+    baseline_attributes := { attr.key |
+        some attr in group.attributes
+        not is_opt_in(attr)
+    }
+    new_attributes := { attr.key |
+        some attr in ngroup.attributes
+        not is_opt_in(attr)
+    }
+    added_attributes := new_attributes - baseline_attributes
+    # Enforce the policy
+    count(added_attributes) > 0
+
+    # Generate human readable error.
+    finding := {
+        "id": "compatibility_attribute_group_added_attributes",
+        "context": {
+            "attribute_group_id": group.id,
+            "added_attributes": added_attributes,
+        },
+        "message": sprintf("Attribute group '%s' cannot add required/recommended attributes (added '%s')", [group.id, added_attributes]),
+        "level": "violation",
     }
 }
 

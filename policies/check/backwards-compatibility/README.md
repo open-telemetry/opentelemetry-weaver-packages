@@ -5,6 +5,12 @@ This package provides backwards compatibility guarantees required by OpenTelemet
 Stability: Development
 Owners: @open-telemetry/specs-semconv-maintainers
 
+## Details
+
+This package checks the current registry against a baseline registry and reports
+breaking changes to attributes, metrics, entities, events, spans, and public
+attribute groups.
+
 ## Usage
 
 ```bash

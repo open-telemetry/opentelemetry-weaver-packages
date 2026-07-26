@@ -1,0 +1,25 @@
+file_format: definition/2
+attributes:
+  - key: experimental.attr
+    brief: experimental attribute
+    type: string
+    stability: development
+  - key: opt_in.experimental.attr
+    brief: experimental attribute captured on demand
+    type: string
+    stability: development
+attribute_groups:
+  - id: stable.group
+    brief: stable public attribute group
+    stability: stable
+    visibility: public
+    attributes:
+      - ref: experimental.attr
+        requirement_level: recommended
+      - ref: opt_in.experimental.attr
+        requirement_level: opt_in
+  - id: internal.group
+    visibility: internal
+    attributes:
+      - ref: experimental.attr
+        requirement_level: recommended
