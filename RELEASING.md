@@ -32,10 +32,15 @@ which reads the topmost version in `CHANGELOG.md`, creates the `v{version}` tag
 and publishes a GitHub release with that section of the change log as release
 notes.
 
-The workflow only runs for merged pull requests that carry the `release` label
-and come from an `otelbot/prepare-release-*` branch, so ordinary changes to
-`CHANGELOG.md` never release. It fails if the change log has no untagged version
-section, which means the release pull request did not update the change log.
+On merge, the workflow only runs for pull requests that carry the `release`
+label and come from an `otelbot/prepare-release-*` branch in this repository, so
+ordinary changes to `CHANGELOG.md` never release. It fails if the change log has
+no untagged version section, which means the release pull request did not update
+the change log.
+
+The workflow can also be run manually with `workflow_dispatch` against `main`,
+which skips those checks - use it if the release pull request was merged without
+triggering the workflow.
 
 Verify that the [release](https://github.com/open-telemetry/opentelemetry-weaver-packages/releases)
 looks as expected once the workflow finishes.

@@ -13,12 +13,15 @@ permissions:
 
 jobs:
   release:
-    # Only release pull requests created by the prepare release workflow: merged,
-    # labeled `release`, and coming from a prepare release branch.
+    # Runs for merged pull requests that look like a prepare release pull request:
+    # labeled `release`, from a prepare release branch in this repository (not a
+    # fork). `workflow_dispatch` bypasses these checks and is the manual escape
+    # hatch when a release pull request was merged without triggering a release.
     if: >-
       github.event_name == 'workflow_dispatch' ||
       (github.event.pull_request.merged == true &&
        contains(github.event.pull_request.labels.*.name, 'release') &&
+       github.event.pull_request.head.repo.full_name == github.repository &&
        startsWith(github.event.pull_request.head.ref, 'otelbot/prepare-release-'))
     permissions:
       contents: write # required for creating the tag and the GitHub release

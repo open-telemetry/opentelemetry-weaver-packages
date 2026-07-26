@@ -21,6 +21,11 @@ if grep -q "^## v${version}$" "$changelog"; then
   exit 1
 fi
 
+if ! grep -q "^## Unreleased$" "$changelog"; then
+  echo "CHANGELOG.md has no '## Unreleased' section" >&2
+  exit 1
+fi
+
 unreleased=$(awk '/^## Unreleased$/ { found = 1; next } /^## / { found = 0 } found' "$changelog")
 if [[ -z "${unreleased//[[:space:]]/}" ]]; then
   echo "the Unreleased section of CHANGELOG.md is empty, nothing to release" >&2
