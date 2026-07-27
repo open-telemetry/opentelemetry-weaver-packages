@@ -37,7 +37,10 @@ This package enforces stability restrictions for OpenTelemetry semantic-conventi
   `development`/`experimental` < `alpha` < `beta` < `release_candidate` < `stable`,
   so this catches both a stable metric referencing a development attribute and,
   e.g., a `release_candidate` span referencing a `development` attribute. The
-  finding id is `stability_<signal>_lower_stability_attribute`.
+  finding id is `stability_<signal>_lower_stability_attribute`. Public
+  attribute groups are covered by this rule too (`signal` is `attribute_group`),
+  since other registries may reference them; internal groups are not part of the
+  resolved registry and are not checked.
 
 ### Exceptions
 

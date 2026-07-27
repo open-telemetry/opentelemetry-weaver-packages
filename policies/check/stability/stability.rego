@@ -61,6 +61,7 @@ deny contains finding if {
 
 # Flattened view of every (signal, attribute) pair subject to the stability check.
 # Entities contribute both their identity and description attributes.
+# Public attribute groups are included as well.
 signal_attribute contains item if {
     some metric in input.registry.metrics
     some attr in metric.attributes
@@ -77,6 +78,12 @@ signal_attribute contains item if {
     some span in input.registry.spans
     some attr in span.attributes
     item := {"signal_type": "span", "signal_name": span.type, "signal": span, "attr": attr}
+}
+
+signal_attribute contains item if {
+    some group in input.registry.attribute_groups
+    some attr in group.attributes
+    item := {"signal_type": "attribute_group", "signal_name": group.id, "signal": group, "attr": attr}
 }
 
 signal_attribute contains item if {
