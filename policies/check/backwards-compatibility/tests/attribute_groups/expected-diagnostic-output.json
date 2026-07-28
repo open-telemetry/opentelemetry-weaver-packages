@@ -1,0 +1,89 @@
+[
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=compatibility_attribute_group_added_attributes, context={\"added_attributes\":[\"d\"],\"attribute_group_id\":\"some.group.added.attrs\"}, message=Attribute group 'some.group.added.attrs' cannot add required/recommended attributes (added '{\"d\"}'), level=Violation, signal_type=None, signal_name=None, provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "added_attributes": [
+            "d"
+          ],
+          "attribute_group_id": "some.group.added.attrs"
+        },
+        "id": "compatibility_attribute_group_added_attributes",
+        "level": "violation",
+        "message": "Attribute group 'some.group.added.attrs' cannot add required/recommended attributes (added '{\"d\"}')",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=compatibility_attribute_group_changed_stability, context={\"attribute_group_id\":\"some.group.change_stability\"}, message=Attribute group 'some.group.change_stability' cannot change from stable, level=Violation, signal_type=None, signal_name=None, provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_group_id": "some.group.change_stability"
+        },
+        "id": "compatibility_attribute_group_changed_stability",
+        "level": "violation",
+        "message": "Attribute group 'some.group.change_stability' cannot change from stable",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=compatibility_attribute_group_dropped_attributes, context={\"attribute_group_id\":\"some.group.missing.attrs\",\"missing_attributes\":[\"b\",\"c\"]}, message=Attribute group 'some.group.missing.attrs' cannot remove attributes (missing '{\"b\", \"c\"}'), level=Violation, signal_type=None, signal_name=None, provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_group_id": "some.group.missing.attrs",
+          "missing_attributes": [
+            "b",
+            "c"
+          ]
+        },
+        "id": "compatibility_attribute_group_dropped_attributes",
+        "level": "violation",
+        "message": "Attribute group 'some.group.missing.attrs' cannot remove attributes (missing '{\"b\", \"c\"}')",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=compatibility_attribute_group_removed, context={\"attribute_group_id\":\"some.missing.group\"}, message=Attribute group 'some.missing.group' no longer exists in semantic conventions, level=Violation, signal_type=None, signal_name=None, provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_group_id": "some.missing.group"
+        },
+        "id": "compatibility_attribute_group_removed",
+        "level": "violation",
+        "message": "Attribute group 'some.missing.group' no longer exists in semantic conventions",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
+      }
+    }
+  }
+]
