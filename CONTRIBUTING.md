@@ -35,6 +35,28 @@ make test-templates   # template packages only
 
 Requires `weaver` on your PATH. Set the `WEAVER` environment variable to use a custom path.
 
+## Changelog
+
+Every user-facing change needs an entry in [CHANGELOG.md](CHANGELOG.md), added
+in the same pull request as the change itself. Put it under the `## Unreleased`
+heading, in the `### Templates` or `### Policies` subsection (create the
+subsection if it is missing), and prefix it with the package it applies to:
+
+```markdown
+## Unreleased
+
+### Policies
+
+- `check/stability`: Allow deprecated attributes to be referenced from
+  deprecated groups. ([#123](https://github.com/open-telemetry/opentelemetry-weaver-packages/pull/123))
+```
+
+Changes that don't affect users of the packages - CI, tests, refactoring - don't
+need an entry; start the pull request title with `[chore]` instead.
+
+Entries under `## Unreleased` become the release notes of the next release. See
+[RELEASING.md](RELEASING.md) for how a release is cut.
+
 ## Templates
 
 Weaver template packages consist of a `weaver.yaml`, a set of jinja templates, a `README.md` and `tests` directory filled with tests for the templates.
