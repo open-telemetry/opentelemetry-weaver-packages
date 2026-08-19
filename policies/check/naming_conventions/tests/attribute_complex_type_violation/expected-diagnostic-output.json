@@ -22,7 +22,7 @@
   },
   {
     "diagnostic": {
-      "message": "Policy violation: id=naming_convention_attribute_complex_type_violation, context={\"attribute_key\":\"test.complex\",\"attribute_type\":\"template[any]\"}, message=Attribute 'test.complex' has type 'template[any]' and is used as identity on entity 'test'. Complex attributes are only allowed on events and spans., level=Violation, signal_type=Some(\"entity\"), signal_name=Some(\"test\"), provenance: current"
+      "message": "Policy violation: id=naming_convention_attribute_complex_type_violation, context={\"attribute_key\":\"test.complex\",\"attribute_type\":\"template[any]\"}, message=Attribute 'test.complex' has type 'template[any]' and is used as identity on entity 'entity.test'. Complex attributes are only allowed on events and spans., level=Violation, signal_type=Some(\"entity\"), signal_name=Some(\"entity.test\"), provenance: current"
     },
     "error": {
       "provenance": "current",
@@ -34,8 +34,8 @@
         },
         "id": "naming_convention_attribute_complex_type_violation",
         "level": "violation",
-        "message": "Attribute 'test.complex' has type 'template[any]' and is used as identity on entity 'test'. Complex attributes are only allowed on events and spans.",
-        "signal_name": "test",
+        "message": "Attribute 'test.complex' has type 'template[any]' and is used as identity on entity 'entity.test'. Complex attributes are only allowed on events and spans.",
+        "signal_name": "entity.test",
         "signal_type": "entity",
         "type": "PolicyFinding"
       }

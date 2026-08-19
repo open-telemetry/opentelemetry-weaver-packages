@@ -22,5 +22,3 @@ change. See [CONTRIBUTING.md](CONTRIBUTING.md#changelog) for details.
   rules.
 - `check/stability`: Enforces stability rules for attribute definition and
   usage.
-- `check/entity_associations`: Checks that entity associations in a registry are
-  well formed.
