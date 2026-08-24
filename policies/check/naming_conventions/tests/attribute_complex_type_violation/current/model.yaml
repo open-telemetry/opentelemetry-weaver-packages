@@ -20,7 +20,7 @@ metrics:
     attributes:
       - ref: test.complex
 entities:
-  - type: entity.test
+  - type: test
     brief: An entity with complexity.
     stability: stable
     identity:

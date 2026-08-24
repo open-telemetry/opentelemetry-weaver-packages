@@ -20,3 +20,9 @@ This package ensures that every entity referenced by a signal via
 `entity_associations` resolves to an entity that actually exists in the registry.
 A signal that associates an unknown entity produces an
 `entity_association_unknown_entity` violation.
+
+Weaver validates this during resolution for the current materialized form, where
+an association is an object `{ "type": ..., "provenance": { "source": ... } }`.
+Such a registry has already been checked, so the policy skips object
+associations and is a no-op for it. The check remains for the old form, where an
+association is a bare entity-type string that older weaver did not validate.

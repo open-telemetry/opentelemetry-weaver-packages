@@ -10,11 +10,20 @@ entities:
     stability: stable
     identity:
       - ref: my.id
+  - type: other.entity
+    brief: Another known entity.
+    stability: stable
+    identity:
+      - ref: my.id
 metrics:
   - name: my.metric
-    brief: A metric associating an unknown entity.
+    brief: A metric with a nested association over known entities.
     stability: stable
     instrument: counter
     unit: "1"
     entity_associations:
-      - unknown.entity
+      - all_of:
+          - known.entity
+          - one_of:
+              - other.entity
+              - known.entity
