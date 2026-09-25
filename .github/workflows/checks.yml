@@ -19,7 +19,7 @@ jobs:
       with:
         persist-credentials: false
     - name: set up weaver
-      uses: open-telemetry/weaver/.github/actions/setup-weaver@26c685ff52b925056ff1d53476c6022638c01220 # v0.25.1
+      uses: open-telemetry/weaver/.github/actions/setup-weaver@38befce4bc68fe320d20f189465c93835ac20c12 # v0.26.1
     - name: verify template packages
       run: ./buildscripts/test_weaver_templates.sh
   policy-packages-check:
@@ -30,6 +30,6 @@ jobs:
       with:
         persist-credentials: false
     - name: set up weaver
-      uses: open-telemetry/weaver/.github/actions/setup-weaver@26c685ff52b925056ff1d53476c6022638c01220 # v0.25.1
+      uses: open-telemetry/weaver/.github/actions/setup-weaver@38befce4bc68fe320d20f189465c93835ac20c12 # v0.26.1
     - name: verify policy packages
       run: ./buildscripts/test_weaver_policies.sh
