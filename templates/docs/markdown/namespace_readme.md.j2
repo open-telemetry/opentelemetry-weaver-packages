@@ -32,7 +32,7 @@
 {{ notes_out }}
 {%- endif %}
 {% for enum in attributes | sort(attribute="key") -%}
-{%- if enum.type is mapping -%}{{ enums.table({"key": enum.key, "type": enum.type}, notes) }}{% endif -%}
+{%- if enum.type is mapping and enums.is_fallback_only(enum) == "False" -%}{{ enums.table({"key": enum.key, "type": enum.type}, notes) }}{% endif -%}
 {%- endfor -%}
 {%- endmacro -%}
 {#- `intro` is the lead-in paragraph of the Attributes section; the deprecated

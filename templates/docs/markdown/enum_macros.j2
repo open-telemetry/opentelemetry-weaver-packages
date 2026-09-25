@@ -1,4 +1,6 @@
 {% import 'stability.j2' as stability %}
+{#- True when the enum's only non-deprecated member is its annotated fallback value. -#}
+{% macro is_fallback_only(enum) %}{% set ns = namespace(active=[]) %}{% for m in enum.type.members if not m.deprecated %}{% set ns.active = [ns.active, [m]] | flatten %}{% endfor %}{% set fallback = enum.annotations.enum_fallback if (enum.annotations is defined and enum.annotations.enum_fallback is defined) else none %}{% if (ns.active | length == 1) and fallback and (ns.active[0].id == fallback) %}{{ "True" }}{% else %}{{ "False" }}{% endif %}{% endmacro %}
 {% macro table(enum, notes) %}
 ---
 
@@ -11,5 +13,5 @@
 {% endfor %}{{ notes.render() }}{% endmacro %}
 {% macro tables(enums, notes) -%}
 {% for enum in enums | sort(attribute="key") -%}
-{{ table(enum, notes) -}}
+{%- if is_fallback_only(enum) == "False" -%}{{ table(enum, notes) -}}{%- endif -%}
 {% endfor %}{% endmacro %}
