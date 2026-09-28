@@ -13,6 +13,7 @@ Attributes defined in the `myapp` namespace. Application developers are encourag
 | --- | --- | --- | --- | --- |
 | <a id="myapp-task-cancelled">`myapp.task.cancelled`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | boolean | Whether the task was cancelled. | `false` |
 | <a id="myapp-task-config">`myapp.task.config`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | string | Serialized task configuration. | <pre>{<br>  "retries": 3<br>}</pre> |
+| <a id="myapp-task-error-type">`myapp.task.error.type`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | string | Describes a class of error the task ended with. | `_OTHER` |
 | <a id="myapp-task-id">`myapp.task.id`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | string | Unique identifier of the task. [1] | `task_0001`; `task_0042` |
 | <a id="myapp-task-owner">`myapp.task.owner`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | string | Owner of the task. | `solo` |
 | <a id="myapp-task-priority">`myapp.task.priority`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | int | Priority of the task. | `0` |

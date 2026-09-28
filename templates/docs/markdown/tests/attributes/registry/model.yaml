@@ -59,3 +59,14 @@ attributes:
         {
           "retries": 3
         }
+  - key: myapp.task.error.type
+    type:
+      members:
+        - id: other
+          value: "_OTHER"
+          stability: stable
+          brief: A fallback error value to be used when the instrumentation doesn't define a custom value.
+    stability: stable
+    annotations:
+      enum_fallback: other
+    brief: Describes a class of error the task ended with.
