@@ -49,16 +49,20 @@ templates:
         metrics:    (semconv_grouped_metrics($opts)    | map({key: .root_namespace, value: .metrics})  | from_entries),
         events:     (semconv_grouped_events($opts)     | map({key: .root_namespace, value: .events})   | from_entries),
         entities:   (semconv_signal("entity"; $opts) | group_by(.root_namespace) | map({key: .[0].root_namespace, value: (. | sort_by(.type))}) | from_entries),
-        attributes: (semconv_grouped_attributes($opts) | map({key: .root_namespace, value: .attributes}) | from_entries)
+        attributes: (semconv_grouped_attributes($opts) | map({key: .root_namespace, value: .attributes}) | from_entries),
+        metric_refinements: (.refinements.metrics | map(select(.id | startswith("refinement."))) | map(. + {_ns: (.id | ltrimstr("refinement.") | split(".")[0])}) | group_by(._ns) | map({key: .[0]._ns, value: .}) | from_entries),
+        entity_refinements: (.refinements.entities | map(select(.id | startswith("refinement."))) | map(. + {_ns: (.id | ltrimstr("refinement.") | split(".")[0])}) | group_by(._ns) | map({key: .[0]._ns, value: .}) | from_entries)
       } as $byns
-      | ([$byns.spans, $byns.metrics, $byns.events, $byns.entities, $byns.attributes] | map(keys) | add | unique)
+      | ([$byns.spans, $byns.metrics, $byns.events, $byns.entities, $byns.attributes, $byns.metric_refinements, $byns.entity_refinements] | map(keys) | add | unique)
       | map({
           root_namespace: .,
-          spans:      ($byns.spans[.]      // []),
-          metrics:    ($byns.metrics[.]    // []),
-          events:     ($byns.events[.]     // []),
-          entities:   ($byns.entities[.]   // []),
-          attributes: ($byns.attributes[.] // [])
+          spans:              ($byns.spans[.]              // []),
+          metrics:            ($byns.metrics[.]            // []),
+          events:             ($byns.events[.]             // []),
+          entities:           ($byns.entities[.]           // []),
+          attributes:         ($byns.attributes[.]         // []),
+          metric_refinements: ($byns.metric_refinements[.] // []),
+          entity_refinements: ($byns.entity_refinements[.] // [])
         })
     application_mode: single
     file_name: README.md
@@ -85,6 +89,18 @@ templates:
     application_mode: each
     file_name: "{{ ctx.root_namespace | kebab_case }}/metrics.md"
 
+  # Metric refinements page: one per namespace that defines refinements of upstream metrics.
+  - template: metric_refinements_namespace.md.j2
+    when: $generate_metric_registry
+    filter: |-
+      .refinements.metrics
+      | map(select(.id | startswith("refinement.")))
+      | map(. + {_ns: (.id | ltrimstr("refinement.") | split(".")[0])})
+      | group_by(._ns)
+      | map({root_namespace: .[0]._ns, metric_refinements: .})
+    application_mode: each
+    file_name: "{{ ctx.root_namespace | kebab_case }}/metric-refinements.md"
+
   - template: event_namespace.md.j2
     when: $generate_event_registry
     filter: |-
@@ -100,3 +116,15 @@ templates:
       | map({ root_namespace: .[0].root_namespace, entities: (. | sort_by(.type)) })
     application_mode: each
     file_name: "{{ ctx.root_namespace | kebab_case }}/entities.md"
+
+  # Entity refinements page: one per namespace that defines refinements of upstream entities.
+  - template: entity_refinements_namespace.md.j2
+    when: $generate_entity_registry
+    filter: |-
+      .refinements.entities
+      | map(select(.id | startswith("refinement.")))
+      | map(. + {_ns: (.id | ltrimstr("refinement.") | split(".")[0])})
+      | group_by(._ns)
+      | map({root_namespace: .[0]._ns, entity_refinements: .})
+    application_mode: each
+    file_name: "{{ ctx.root_namespace | kebab_case }}/entity-refinements.md"
