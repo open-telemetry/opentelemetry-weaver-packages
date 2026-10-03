@@ -1,0 +1,48 @@
+file_format: definition/2
+
+spans:
+  - type: migrated.direct
+    kind: client
+    name:
+      note: Use the operation name.
+    stability: development
+    brief: A client operation.
+  - type: migrated.prefixed
+    kind: client
+    name:
+      note: Use the operation name.
+    stability: development
+    brief: A client operation.
+  - type: missing.unannotated
+    kind: client
+    name:
+      note: Use the operation name.
+    stability: development
+    brief: A client operation.
+  - type: missing.wrong_key
+    kind: client
+    name:
+      note: Use the operation name.
+    stability: development
+    brief: A client operation.
+  - type: missing.wrong_namespace
+    kind: client
+    name:
+      note: Use the operation name.
+    stability: development
+    brief: A client operation.
+  - type: missing.unrelated
+    kind: client
+    name:
+      note: Use the operation name.
+    stability: development
+    brief: A client operation.
+  - type: missing.baseline_only
+    kind: client
+    name:
+      note: Use the operation name.
+    stability: development
+    brief: A client operation.
+    annotations:
+      compatibility:
+        policy_exceptions: [span_missing]

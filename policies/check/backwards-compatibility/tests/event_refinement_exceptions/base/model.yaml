@@ -1,0 +1,30 @@
+file_format: definition/2
+
+events:
+  - name: migrated.direct
+    stability: development
+    brief: A event.
+  - name: migrated.prefixed
+    stability: development
+    brief: A event.
+  - name: missing.unannotated
+    stability: development
+    brief: A event.
+  - name: missing.wrong_key
+    stability: development
+    brief: A event.
+  - name: missing.wrong_namespace
+    stability: development
+    brief: A event.
+  - name: missing.unrelated
+    stability: development
+    brief: A event.
+  - name: missing.baseline_only
+    stability: development
+    brief: A event.
+    annotations:
+      compatibility:
+        policy_exceptions: [event_missing]
+  - name: missing.wrong_signal
+    stability: development
+    brief: A event.

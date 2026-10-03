@@ -1,0 +1,46 @@
+file_format: definition/2
+
+metrics:
+  - name: migrated.direct
+    stability: development
+    brief: A metric.
+    instrument: counter
+    unit: '{operation}'
+  - name: migrated.prefixed
+    stability: development
+    brief: A metric.
+    instrument: counter
+    unit: '{operation}'
+  - name: missing.unannotated
+    stability: development
+    brief: A metric.
+    instrument: counter
+    unit: '{operation}'
+  - name: missing.wrong_key
+    stability: development
+    brief: A metric.
+    instrument: counter
+    unit: '{operation}'
+  - name: missing.wrong_namespace
+    stability: development
+    brief: A metric.
+    instrument: counter
+    unit: '{operation}'
+  - name: missing.unrelated
+    stability: development
+    brief: A metric.
+    instrument: counter
+    unit: '{operation}'
+  - name: missing.baseline_only
+    stability: development
+    brief: A metric.
+    instrument: counter
+    unit: '{operation}'
+    annotations:
+      compatibility:
+        policy_exceptions: [metric_missing]
+  - name: missing.wrong_signal
+    stability: development
+    brief: A metric.
+    instrument: counter
+    unit: '{operation}'

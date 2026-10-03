@@ -1,0 +1,52 @@
+file_format: definition/2
+
+events:
+  - name: base.event
+    stability: development
+    brief: A event.
+
+spans:
+  - type: base.span
+    kind: client
+    name:
+      note: Use the operation name.
+    stability: development
+    brief: A span.
+
+event_refinements:
+  - id: migrated.direct
+    ref: base.event
+    annotations:
+      compatibility:
+        policy_exceptions: [event_missing]
+  - id: event.migrated.prefixed
+    ref: base.event
+    annotations:
+      compatibility:
+        policy_exceptions: [event_missing]
+  - id: event.missing.unannotated
+    ref: base.event
+  - id: event.missing.wrong_key
+    ref: base.event
+    annotations:
+      compatibility:
+        policy_exceptions: [unrelated]
+  - id: event.missing.wrong_namespace
+    ref: base.event
+    annotations:
+      stability:
+        policy_exceptions: [event_missing]
+  - id: event.unrelated
+    ref: base.event
+    annotations:
+      compatibility:
+        policy_exceptions: [event_missing]
+  - id: event.missing.baseline_only
+    ref: base.event
+
+span_refinements:
+  - id: event.missing.wrong_signal
+    ref: base.span
+    annotations:
+      compatibility:
+        policy_exceptions: [event_missing]

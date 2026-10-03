@@ -1,0 +1,30 @@
+file_format: definition/2
+
+entities:
+  - type: migrated.direct
+    stability: development
+    brief: A entity.
+  - type: migrated.prefixed
+    stability: development
+    brief: A entity.
+  - type: missing.unannotated
+    stability: development
+    brief: A entity.
+  - type: missing.wrong_key
+    stability: development
+    brief: A entity.
+  - type: missing.wrong_namespace
+    stability: development
+    brief: A entity.
+  - type: missing.unrelated
+    stability: development
+    brief: A entity.
+  - type: missing.baseline_only
+    stability: development
+    brief: A entity.
+    annotations:
+      compatibility:
+        policy_exceptions: [entity_missing]
+  - type: missing.wrong_signal
+    stability: development
+    brief: A entity.

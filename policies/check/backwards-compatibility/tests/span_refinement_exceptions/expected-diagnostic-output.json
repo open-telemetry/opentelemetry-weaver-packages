@@ -1,0 +1,92 @@
+[
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=compatibility_span_missing, context={}, message=Span 'missing.unannotated' no longer exists in semantic conventions, level=Violation, signal_type=Some(\"span\"), signal_name=Some(\"missing.unannotated\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {},
+        "id": "compatibility_span_missing",
+        "level": "violation",
+        "message": "Span 'missing.unannotated' no longer exists in semantic conventions",
+        "signal_name": "missing.unannotated",
+        "signal_type": "span",
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=compatibility_span_missing, context={}, message=Span 'missing.wrong_key' no longer exists in semantic conventions, level=Violation, signal_type=Some(\"span\"), signal_name=Some(\"missing.wrong_key\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {},
+        "id": "compatibility_span_missing",
+        "level": "violation",
+        "message": "Span 'missing.wrong_key' no longer exists in semantic conventions",
+        "signal_name": "missing.wrong_key",
+        "signal_type": "span",
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=compatibility_span_missing, context={}, message=Span 'missing.wrong_namespace' no longer exists in semantic conventions, level=Violation, signal_type=Some(\"span\"), signal_name=Some(\"missing.wrong_namespace\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {},
+        "id": "compatibility_span_missing",
+        "level": "violation",
+        "message": "Span 'missing.wrong_namespace' no longer exists in semantic conventions",
+        "signal_name": "missing.wrong_namespace",
+        "signal_type": "span",
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=compatibility_span_missing, context={}, message=Span 'missing.unrelated' no longer exists in semantic conventions, level=Violation, signal_type=Some(\"span\"), signal_name=Some(\"missing.unrelated\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {},
+        "id": "compatibility_span_missing",
+        "level": "violation",
+        "message": "Span 'missing.unrelated' no longer exists in semantic conventions",
+        "signal_name": "missing.unrelated",
+        "signal_type": "span",
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=compatibility_span_missing, context={}, message=Span 'missing.baseline_only' no longer exists in semantic conventions, level=Violation, signal_type=Some(\"span\"), signal_name=Some(\"missing.baseline_only\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {},
+        "id": "compatibility_span_missing",
+        "level": "violation",
+        "message": "Span 'missing.baseline_only' no longer exists in semantic conventions",
+        "signal_name": "missing.baseline_only",
+        "signal_type": "span",
+        "type": "PolicyFinding"
+      }
+    }
+  }
+]

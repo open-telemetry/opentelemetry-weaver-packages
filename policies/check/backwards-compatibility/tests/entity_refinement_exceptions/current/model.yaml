@@ -1,0 +1,52 @@
+file_format: definition/2
+
+entities:
+  - type: base.entity
+    stability: development
+    brief: A entity.
+
+spans:
+  - type: base.span
+    kind: client
+    name:
+      note: Use the operation name.
+    stability: development
+    brief: A span.
+
+entity_refinements:
+  - id: migrated.direct
+    ref: base.entity
+    annotations:
+      compatibility:
+        policy_exceptions: [entity_missing]
+  - id: entity.migrated.prefixed
+    ref: base.entity
+    annotations:
+      compatibility:
+        policy_exceptions: [entity_missing]
+  - id: entity.missing.unannotated
+    ref: base.entity
+  - id: entity.missing.wrong_key
+    ref: base.entity
+    annotations:
+      compatibility:
+        policy_exceptions: [unrelated]
+  - id: entity.missing.wrong_namespace
+    ref: base.entity
+    annotations:
+      stability:
+        policy_exceptions: [entity_missing]
+  - id: entity.unrelated
+    ref: base.entity
+    annotations:
+      compatibility:
+        policy_exceptions: [entity_missing]
+  - id: entity.missing.baseline_only
+    ref: base.entity
+
+span_refinements:
+  - id: entity.missing.wrong_signal
+    ref: base.span
+    annotations:
+      compatibility:
+        policy_exceptions: [entity_missing]
