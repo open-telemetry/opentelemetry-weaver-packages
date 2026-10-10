@@ -28,6 +28,13 @@ removal_suppressed(signal_type, signal_name, exception_key) if {
     compatibility_policy_exceptions(refinement)[exception_key]
 }
 
+removal_suppressed("entity", entity_type, "entity_missing") if {
+    # Only public attribute groups are included in the resolved registry.
+    some group in input.registry.attribute_groups
+    group.id == entity_type
+    compatibility_policy_exceptions(group)["entity_missing"]
+}
+
 # Rules we enforce:
 # - Attributes
 #   - [x] Attributes cannot be removed

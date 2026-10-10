@@ -48,3 +48,26 @@ Its ID may include the kind prefix, such as `span.` or `metric.`.
 The example suppresses removal of `aws.lambda.server` only.
 
 Other compatibility checks still run. Baseline annotations do not suppress findings.
+
+### Entity converted to a public attribute group
+
+A replacement public attribute group can suppress entity removal with the same
+annotation:
+
+```yaml
+attribute_groups:
+  - id: device
+    visibility: public
+    stability: development
+    brief: Device attributes.
+    annotations:
+      compatibility:
+        policy_exceptions: [entity_missing]
+    attributes:
+      - ref: device.id
+        requirement_level: opt_in
+```
+
+The group ID must exactly match the removed entity type. Internal groups,
+unannotated groups, and baseline annotations do not suppress removal findings.
+Other compatibility checks still run.

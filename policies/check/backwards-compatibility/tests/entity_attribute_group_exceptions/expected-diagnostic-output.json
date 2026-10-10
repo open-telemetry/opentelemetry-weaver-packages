@@ -1,0 +1,110 @@
+[
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=compatibility_entity_missing, context={}, message=Entity 'missing.unannotated' no longer exists in semantic conventions, level=Violation, signal_type=Some(\"entity\"), signal_name=Some(\"missing.unannotated\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {},
+        "id": "compatibility_entity_missing",
+        "level": "violation",
+        "message": "Entity 'missing.unannotated' no longer exists in semantic conventions",
+        "signal_name": "missing.unannotated",
+        "signal_type": "entity",
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=compatibility_entity_missing, context={}, message=Entity 'missing.wrong_key' no longer exists in semantic conventions, level=Violation, signal_type=Some(\"entity\"), signal_name=Some(\"missing.wrong_key\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {},
+        "id": "compatibility_entity_missing",
+        "level": "violation",
+        "message": "Entity 'missing.wrong_key' no longer exists in semantic conventions",
+        "signal_name": "missing.wrong_key",
+        "signal_type": "entity",
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=compatibility_entity_missing, context={}, message=Entity 'missing.wrong_namespace' no longer exists in semantic conventions, level=Violation, signal_type=Some(\"entity\"), signal_name=Some(\"missing.wrong_namespace\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {},
+        "id": "compatibility_entity_missing",
+        "level": "violation",
+        "message": "Entity 'missing.wrong_namespace' no longer exists in semantic conventions",
+        "signal_name": "missing.wrong_namespace",
+        "signal_type": "entity",
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=compatibility_entity_missing, context={}, message=Entity 'missing.internal' no longer exists in semantic conventions, level=Violation, signal_type=Some(\"entity\"), signal_name=Some(\"missing.internal\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {},
+        "id": "compatibility_entity_missing",
+        "level": "violation",
+        "message": "Entity 'missing.internal' no longer exists in semantic conventions",
+        "signal_name": "missing.internal",
+        "signal_type": "entity",
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=compatibility_entity_missing, context={}, message=Entity 'missing.other_id' no longer exists in semantic conventions, level=Violation, signal_type=Some(\"entity\"), signal_name=Some(\"missing.other_id\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {},
+        "id": "compatibility_entity_missing",
+        "level": "violation",
+        "message": "Entity 'missing.other_id' no longer exists in semantic conventions",
+        "signal_name": "missing.other_id",
+        "signal_type": "entity",
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=compatibility_entity_missing, context={}, message=Entity 'missing.baseline_only' no longer exists in semantic conventions, level=Violation, signal_type=Some(\"entity\"), signal_name=Some(\"missing.baseline_only\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {},
+        "id": "compatibility_entity_missing",
+        "level": "violation",
+        "message": "Entity 'missing.baseline_only' no longer exists in semantic conventions",
+        "signal_name": "missing.baseline_only",
+        "signal_type": "entity",
+        "type": "PolicyFinding"
+      }
+    }
+  }
+]

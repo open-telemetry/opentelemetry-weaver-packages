@@ -16,6 +16,10 @@ change. See [CONTRIBUTING.md](CONTRIBUTING.md#changelog) for details.
 
 ### Policies
 
+- `check/backwards-compatibility`: Allow a public attribute group with the same ID
+  as a removed entity type to suppress `entity_missing` through its compatibility
+  annotations.
+
 - `check/backwards-compatibility`: Checks a registry against a baseline registry
   for breaking changes.
 - `check/naming_conventions`: Enforces OpenTelemetry semantic convention naming
