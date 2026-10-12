@@ -1,0 +1,45 @@
+file_format: definition/2
+attributes:
+  - key: entity.id
+    type: string
+    stability: development
+    brief: Entity identifier.
+entities:
+  - type: migrated.device
+    stability: development
+    brief: An entity.
+    identity:
+      - ref: entity.id
+  - type: missing.unannotated
+    stability: development
+    brief: An entity.
+    identity:
+      - ref: entity.id
+  - type: missing.wrong_key
+    stability: development
+    brief: An entity.
+    identity:
+      - ref: entity.id
+  - type: missing.wrong_namespace
+    stability: development
+    brief: An entity.
+    identity:
+      - ref: entity.id
+  - type: missing.internal
+    stability: development
+    brief: An entity.
+    identity:
+      - ref: entity.id
+  - type: missing.other_id
+    stability: development
+    brief: An entity.
+    identity:
+      - ref: entity.id
+  - type: missing.baseline_only
+    stability: development
+    brief: An entity.
+    identity:
+      - ref: entity.id
+    annotations:
+      compatibility:
+        policy_exceptions: [entity_missing]

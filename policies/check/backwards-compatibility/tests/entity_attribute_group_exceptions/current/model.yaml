@@ -1,0 +1,59 @@
+file_format: definition/2
+attributes:
+  - key: entity.id
+    type: string
+    stability: development
+    brief: Entity identifier.
+attribute_groups:
+  - id: migrated.device
+    visibility: public
+    stability: development
+    brief: Device attributes.
+    attributes:
+      - ref: entity.id
+    annotations:
+      compatibility:
+        policy_exceptions: [entity_missing]
+  - id: missing.unannotated
+    visibility: public
+    stability: development
+    brief: Device attributes.
+    attributes:
+      - ref: entity.id
+  - id: missing.wrong_key
+    visibility: public
+    stability: development
+    brief: Device attributes.
+    attributes:
+      - ref: entity.id
+    annotations:
+      compatibility:
+        policy_exceptions: [unrelated]
+  - id: missing.wrong_namespace
+    visibility: public
+    stability: development
+    brief: Device attributes.
+    attributes:
+      - ref: entity.id
+    annotations:
+      stability:
+        policy_exceptions: [entity_missing]
+  - id: missing.internal
+    visibility: internal
+    attributes:
+      - ref: entity.id
+  - id: unrelated
+    visibility: public
+    stability: development
+    brief: Device attributes.
+    attributes:
+      - ref: entity.id
+    annotations:
+      compatibility:
+        policy_exceptions: [entity_missing]
+  - id: missing.baseline_only
+    visibility: public
+    stability: development
+    brief: Device attributes.
+    attributes:
+      - ref: entity.id
