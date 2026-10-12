@@ -1,0 +1,18 @@
+{%- set policy_violations = ctx | selectattr("error.type", "equalto", "policy_violation") | list %}
+{%- set other_diagnostics = ctx | rejectattr("error.type", "equalto", "policy_violation") | list %}
+
+{%- if policy_violations %}
+::group::Policy violation report
+{%- for item in policy_violations %}
+::error file={{ item.error.provenance }}, title={{ item.error.violation.id }}::message={{ item.error.violation.message }}
+{%- endfor %}
+::endgroup::
+{% endif %}
+
+{%- if other_diagnostics %}
+::group::Diagnostic report
+{% for item in other_diagnostics %}
+{{ item.diagnostic.ansi_message }}
+{% endfor %}
+::endgroup::
+{% endif %}

@@ -26,6 +26,12 @@ You get a top-level `README.md` listing all namespaces, and per namespace:
 - `<namespace>/spans.md`, `metrics.md`, `events.md`, `entities.md` - one page per
   signal type the namespace defines. Nothing is written for signal types it
   doesn't define.
+- `<namespace>/entity-refinements.md` - entity refinements the namespace defines,
+  if any. Refinements extend upstream entity types with domain-specific identity
+  or description attributes.
+- `<namespace>/metric-refinements.md` - metric refinements the namespace defines,
+  if any. Refinements extend upstream metric definitions with additional entity
+  associations and attribute constraints.
 
 You can generate only some signal types, or skip the registry entirely - see
 [Output toggles](#output-toggles).
@@ -85,9 +91,9 @@ nothing is generated.
 | Param | Default | Effect |
 | --- | --- | --- |
 | `generate_attribute_registry` | `true` | List attributes on the namespace README. |
-| `generate_entity_registry` | `true` | Generate `<namespace>/entities.md`. |
+| `generate_entity_registry` | `true` | Generate `<namespace>/entities.md` and `<namespace>/entity-refinements.md`. |
 | `generate_span_registry` | `true` | Generate `<namespace>/spans.md`. |
-| `generate_metric_registry` | `true` | Generate `<namespace>/metrics.md`. |
+| `generate_metric_registry` | `true` | Generate `<namespace>/metrics.md` and `<namespace>/metric-refinements.md`. |
 | `generate_event_registry` | `true` | Generate `<namespace>/events.md`. |
 
 These only affect the generated registry, not `update-markdown`. A snippet is
