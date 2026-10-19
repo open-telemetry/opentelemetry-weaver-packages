@@ -38,9 +38,14 @@
 {%- endfor -%}
 {%- endmacro -%}
 {#- `intro` is the lead-in paragraph of the Attributes section; the deprecated
-   half of that section repeats the heading, not the prose. -#}
+   half of that section repeats the heading, not the prose.
+   Section table links use the bare filename (`section.page`) so they are
+   file-relative: this file lives at `{ns}/README.md` and its targets live at
+   `{ns}/*.md` — all siblings. Root-absolute links (via registry_page_url) are
+   reserved for attribute links in signal pages, which also appear in snippets
+   that may be embedded at arbitrary directory depths. -#}
 {%- macro body(section, signals, intro=false) -%}
-{%- if section.page %}{{ table.render(signals, section.id_attr, links.registry_page_url(ns, section.page) | trim) }}
+{%- if section.page %}{{ table.render(signals, section.id_attr, section.page) }}
 {%- else %}
 {% if intro %}Attributes defined in the `{{ ns }}` namespace. Application developers are encouraged to reuse existing attributes; see these [naming recommendations]({{ links.naming_recommendations_url() }}) regarding attribute selection and naming for custom use cases.
 

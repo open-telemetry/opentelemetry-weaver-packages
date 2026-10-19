@@ -11,13 +11,13 @@
 
 | Id | Stability | Description |
 | --- | --- | --- |
-| [`refinement.myapp.host`](/myapp/entity-refinements.md#refinementmyapphost) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | Refines the host entity for myapp deployments. |
+| [`refinement.myapp.host`](entity-refinements.md#refinementmyapphost) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | Refines the host entity for myapp deployments. |
 
 ## Metric refinements
 
 | Id | Stability | Description |
 | --- | --- | --- |
-| [`refinement.myapp.http.request.duration`](/myapp/metric-refinements.md#refinementmyapphttprequestduration) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | Refines http.server.request.duration for myapp services. |
+| [`refinement.myapp.http.request.duration`](metric-refinements.md#refinementmyapphttprequestduration) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | Refines http.server.request.duration for myapp services. |
 
 ## Attributes
 

@@ -13,7 +13,7 @@
 
 | Type | Stability | Description |
 | --- | --- | --- |
-| [`myapp.service`](/myapp/entities.md#myappservice) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | A deployed service instance. |
+| [`myapp.service`](entities.md#myappservice) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | A deployed service instance. |
 
 ## Attributes
 
@@ -42,8 +42,8 @@ Attributes defined in the `myapp` namespace. Application developers are encourag
 
 | Type | Stability | Description |
 | --- | --- | --- |
-| [`myapp.legacy.service`](/myapp/entities.md#myapplegacyservice) | ![Deprecated](https://img.shields.io/badge/-deprecated-red) ![Stable](https://img.shields.io/badge/-stable-lightgreen) | A deployed legacy service instance.<br>**Renamed:** Renamed to `myapp.service`. |
-| [`myapp.worker`](/myapp/entities.md#myappworker) | ![Deprecated](https://img.shields.io/badge/-deprecated-red) ![Stable](https://img.shields.io/badge/-stable-lightgreen) | A background worker process.<br>**Obsoleted:** Workers are no longer modeled as a separate entity. |
+| [`myapp.legacy.service`](entities.md#myapplegacyservice) | ![Deprecated](https://img.shields.io/badge/-deprecated-red) ![Stable](https://img.shields.io/badge/-stable-lightgreen) | A deployed legacy service instance.<br>**Renamed:** Renamed to `myapp.service`. |
+| [`myapp.worker`](entities.md#myappworker) | ![Deprecated](https://img.shields.io/badge/-deprecated-red) ![Stable](https://img.shields.io/badge/-stable-lightgreen) | A background worker process.<br>**Obsoleted:** Workers are no longer modeled as a separate entity. |
 
 ### Attributes
 

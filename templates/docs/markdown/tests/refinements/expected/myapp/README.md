@@ -11,15 +11,15 @@
 
 | Id | Stability | Description |
 | --- | --- | --- |
-| [`refinement.myapp.host`](/myapp/entity-refinements.md#refinementmyapphost) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | Refines the host entity for myapp deployments. |
-| [`refinement.myapp.host.dev`](/myapp/entity-refinements.md#refinementmyapphostdev) | ![Development](https://img.shields.io/badge/-development-blue) | Development-tier host refinement with environment context. |
+| [`refinement.myapp.host`](entity-refinements.md#refinementmyapphost) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | Refines the host entity for myapp deployments. |
+| [`refinement.myapp.host.dev`](entity-refinements.md#refinementmyapphostdev) | ![Development](https://img.shields.io/badge/-development-blue) | Development-tier host refinement with environment context. |
 
 ## Metric refinements
 
 | Id | Stability | Description |
 | --- | --- | --- |
-| [`refinement.myapp.http.legacy.duration`](/myapp/metric-refinements.md#refinementmyapphttplegacyduration) | ![Development](https://img.shields.io/badge/-development-blue) | Development-only refinement, kept for internal tracing. |
-| [`refinement.myapp.http.request.duration`](/myapp/metric-refinements.md#refinementmyapphttprequestduration) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | Refines http.server.request.duration for myapp services. |
+| [`refinement.myapp.http.legacy.duration`](metric-refinements.md#refinementmyapphttplegacyduration) | ![Development](https://img.shields.io/badge/-development-blue) | Development-only refinement, kept for internal tracing. |
+| [`refinement.myapp.http.request.duration`](metric-refinements.md#refinementmyapphttprequestduration) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | Refines http.server.request.duration for myapp services. |
 
 ## Attributes
 
