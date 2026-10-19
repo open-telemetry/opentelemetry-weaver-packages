@@ -1,0 +1,14 @@
+
+::group::Policy violation report
+::error file=current, title=naming_convention_metric_brief_period::message=Non-empty metric brief 'First line%0A::notice::Injected line' must end with a period (.).
+::endgroup::
+
+::group::Diagnostic report
+
+  ⚠ The signal group `metric.test.multiline` does not set `requirement_level`.
+  │ This will be required in the future.
+  │ Provenance: "current/model.yaml"
+
+
+::endgroup::
+

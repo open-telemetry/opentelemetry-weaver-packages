@@ -263,6 +263,27 @@ run_policy_test() {
   fi
   check_output "${OBSERVED_DIR}/diagnostic-output.json" "${TEST_DIR}/expected-diagnostic-output.json" "${TEST_NAME} - Diagnostic Output"
   validate_signal_conventions "${OBSERVED_DIR}/diagnostic-output.json" "${TEST_NAME}"
+
+  # When a test ships expected-gh-output.txt, run a second pass with the
+  # gh_workflow_command diagnostic format and diff the text output.
+  # This exercises the Jinja template's newline-escaping logic.
+  if [[ -f "${TEST_DIR}/expected-gh-output.txt" ]]; then
+    GH_DIAGNOSTIC_OUTPUT="${OBSERVED_DIR}/gh-output.txt"
+    pushd "${TEST_DIR}" > /dev/null 2>&1
+    NO_COLOR=1 ${WEAVER} registry check \
+      -r current \
+      ${BASELINE_FLAG} \
+      -p "${POLICY_PACKAGE_DIR}" \
+      --v2 \
+      --quiet \
+      --diagnostic-template="${DIAGNOSTIC_WORKAROUND}" \
+      --diagnostic-format gh_workflow_command \
+      --diagnostic-stdout \
+      > "${GH_DIAGNOSTIC_OUTPUT}" \
+      2>> "${OBSERVED_DIR}/stderr"
+    popd > /dev/null 2>&1
+    check_output "${GH_DIAGNOSTIC_OUTPUT}" "${TEST_DIR}/expected-gh-output.txt" "${TEST_NAME} - GH Workflow Command Output"
+  fi
 }
 
 # Runs a set of policy tests for a given package.
