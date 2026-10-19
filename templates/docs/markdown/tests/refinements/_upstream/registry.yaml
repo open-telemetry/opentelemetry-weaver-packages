@@ -1,0 +1,20 @@
+file_format: definition/2
+metrics:
+  - name: http.server.request.duration
+    instrument: histogram
+    unit: s
+    stability: stable
+    brief: Duration of HTTP server requests.
+entities:
+  - type: host
+    stability: stable
+    brief: A host machine.
+    identity:
+      - ref: host.name
+        requirement_level: required
+attributes:
+  - key: host.name
+    type: string
+    stability: stable
+    brief: Name identifying the host machine.
+    examples: ["my-host"]
