@@ -26,4 +26,4 @@ TBD
 
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- |
-| [`cicd.pipeline.name`](/cicd/README.md#cicd-pipeline-name) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Name of the pipeline. | `build-and-test` |
+| `cicd.pipeline.name` | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Name of the pipeline. | `build-and-test` |

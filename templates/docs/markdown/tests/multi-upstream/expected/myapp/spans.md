@@ -29,4 +29,4 @@ TBD
 | [`db.system.name`](https://b.example/reference/db/attributes/) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | The database management system product. | `postgresql`; `mysql` |
 | [`server.address`](https://a.example/docs/registry/attributes/server.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Server domain name or IP address. | `example.com`; `10.1.2.80` |
 | `cloud.region` | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Recommended` | string | The geographical region within a cloud provider. | `us-east-1` |
-| [`myapp.session.id`](/myapp/README.md#myapp-session-id) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | Unique identifier of the application session. | `sess_5j66Up` |
+| `myapp.session.id` | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | Unique identifier of the application session. | `sess_5j66Up` |

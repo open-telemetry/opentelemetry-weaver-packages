@@ -50,8 +50,8 @@ templates:
         events:     (semconv_grouped_events($opts)     | map({key: .root_namespace, value: .events})   | from_entries),
         entities:   (semconv_signal("entity"; $opts) | group_by(.root_namespace) | map({key: .[0].root_namespace, value: (. | sort_by(.type))}) | from_entries),
         attributes: (semconv_grouped_attributes($opts) | map({key: .root_namespace, value: .attributes}) | from_entries),
-        metric_refinements: (.refinements.metrics | map(select(.id | startswith("refinement."))) | map(. + {_ns: (.id | ltrimstr("refinement.") | split(".")[0])}) | group_by(._ns) | map({key: .[0]._ns, value: .}) | from_entries),
-        entity_refinements: (.refinements.entities | map(select(.id | startswith("refinement."))) | map(. + {_ns: (.id | ltrimstr("refinement.") | split(".")[0])}) | group_by(._ns) | map({key: .[0]._ns, value: .}) | from_entries)
+        metric_refinements: (.refinements.metrics | map(select(.id | startswith("refinement."))) | map(select(if $opts.exclude_deprecated then (.deprecated == null) else true end)) | map(select(if $opts.stable_only then (.stability == "stable") else true end)) | map(. + {_ns: (.id | ltrimstr("refinement.") | split(".")[0])}) | group_by(._ns) | map({key: .[0]._ns, value: .}) | from_entries),
+        entity_refinements: (.refinements.entities | map(select(.id | startswith("refinement."))) | map(select(if $opts.exclude_deprecated then (.deprecated == null) else true end)) | map(select(if $opts.stable_only then (.stability == "stable") else true end)) | map(. + {_ns: (.id | ltrimstr("refinement.") | split(".")[0])}) | group_by(._ns) | map({key: .[0]._ns, value: .}) | from_entries)
       } as $byns
       | ([$byns.spans, $byns.metrics, $byns.events, $byns.entities, $byns.attributes, $byns.metric_refinements, $byns.entity_refinements] | map(keys) | add | unique)
       | map({
@@ -93,8 +93,11 @@ templates:
   - template: metric_refinements_namespace.md.j2
     when: $generate_metric_registry
     filter: |-
-      .refinements.metrics
+      {exclude_deprecated: $exclude_deprecated, stable_only: $stable_only} as $opts
+      | .refinements.metrics
       | map(select(.id | startswith("refinement.")))
+      | map(select(if $opts.exclude_deprecated then (.deprecated == null) else true end))
+      | map(select(if $opts.stable_only then (.stability == "stable") else true end))
       | map(. + {_ns: (.id | ltrimstr("refinement.") | split(".")[0])})
       | group_by(._ns)
       | map({root_namespace: .[0]._ns, metric_refinements: .})
@@ -121,8 +124,11 @@ templates:
   - template: entity_refinements_namespace.md.j2
     when: $generate_entity_registry
     filter: |-
-      .refinements.entities
+      {exclude_deprecated: $exclude_deprecated, stable_only: $stable_only} as $opts
+      | .refinements.entities
       | map(select(.id | startswith("refinement.")))
+      | map(select(if $opts.exclude_deprecated then (.deprecated == null) else true end))
+      | map(select(if $opts.stable_only then (.stability == "stable") else true end))
       | map(. + {_ns: (.id | ltrimstr("refinement.") | split(".")[0])})
       | group_by(._ns)
       | map({root_namespace: .[0]._ns, entity_refinements: .})

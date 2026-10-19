@@ -19,4 +19,4 @@
 
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- |
-| [`auth.user.id`](/auth/README.md#auth-user-id) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Recommended` | string | Identifier of the authenticated user. | `u_1234` |
+| `auth.user.id` | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Recommended` | string | Identifier of the authenticated user. | `u_1234` |
