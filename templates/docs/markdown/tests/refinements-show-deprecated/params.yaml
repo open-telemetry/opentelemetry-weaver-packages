@@ -1,0 +1,5 @@
+# exclude_deprecated: false — deprecated refinements are included.
+# Verifies: deprecated refinements appear and render the deprecation notice correctly.
+params:
+  registry_base_url: ""
+  exclude_deprecated: false

@@ -21,4 +21,4 @@ Emitted when a task starts.
 
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- |
-| [`myapp.task.id`](/myapp/README.md#myapp-task-id) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Unique identifier of the task. | `task_0001` |
+| `myapp.task.id` | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Unique identifier of the task. | `task_0001` |

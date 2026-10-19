@@ -10,7 +10,7 @@
 
 | Name | Stability | Description |
 | --- | --- | --- |
-| [`auth.attempts`](/auth/metrics.md#authattempts) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | Number of authentication attempts. |
+| [`auth.attempts`](metrics.md#authattempts) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | Number of authentication attempts. |
 
 ## Attributes
 

@@ -13,8 +13,10 @@
    signal's own page (`page`) and identifies signals by `id_attr`. -#}
 {%- set sections = [
   {"title": "Entities", "all": ctx.entities if params.generate_entity_registry else [], "id_attr": "type", "page": "entities.md"},
+  {"title": "Entity refinements", "all": ctx.entity_refinements if params.generate_entity_registry else [], "id_attr": "id", "page": "entity-refinements.md"},
   {"title": "Events", "all": ctx.events if params.generate_event_registry else [], "id_attr": "name", "page": "events.md"},
   {"title": "Metrics", "all": ctx.metrics if params.generate_metric_registry else [], "id_attr": "name", "page": "metrics.md"},
+  {"title": "Metric refinements", "all": ctx.metric_refinements if params.generate_metric_registry else [], "id_attr": "id", "page": "metric-refinements.md"},
   {"title": "Spans", "all": ctx.spans if params.generate_span_registry else [], "id_attr": "type", "page": "spans.md"},
   {"title": "Attributes", "all": ctx.attributes if params.generate_attribute_registry else []}
 ] -%}
@@ -36,9 +38,14 @@
 {%- endfor -%}
 {%- endmacro -%}
 {#- `intro` is the lead-in paragraph of the Attributes section; the deprecated
-   half of that section repeats the heading, not the prose. -#}
+   half of that section repeats the heading, not the prose.
+   Section table links use the bare filename (`section.page`) so they are
+   file-relative: this file lives at `{ns}/README.md` and its targets live at
+   `{ns}/*.md` — all siblings. Root-absolute links (via registry_page_url) are
+   reserved for attribute links in signal pages, which also appear in snippets
+   that may be embedded at arbitrary directory depths. -#}
 {%- macro body(section, signals, intro=false) -%}
-{%- if section.page %}{{ table.render(signals, section.id_attr, links.registry_page_url(ns, section.page) | trim) }}
+{%- if section.page %}{{ table.render(signals, section.id_attr, section.page) }}
 {%- else %}
 {% if intro %}Attributes defined in the `{{ ns }}` namespace. Application developers are encouraged to reuse existing attributes; see these [naming recommendations]({{ links.naming_recommendations_url() }}) regarding attribute selection and naming for custom use cases.
 
@@ -50,13 +57,13 @@
 
 # {{ titles.namespace(ns) }}
 
-{% for section in sections %}{% if section.all | rejectattr("deprecated") | list %}- [{{ section.title }}](#{{ section.title | lower }})
+{% for section in sections %}{% if section.all | rejectattr("deprecated") | list %}- [{{ section.title }}](#{{ section.title | lower | replace(" ", "-") }})
 {% endif %}{% endfor -%}
 {% if has_deprecated %}- [Deprecated](#deprecated)
 {% endif -%}
 {#- The deprecated sub-sections repeat the section names, so their anchors get the
    `-1` suffix -- but only when the non-deprecated section is also there. -#}
-{% for section in sections %}{% if section.all | selectattr("deprecated") | list %}  - [{{ section.title }}](#{{ section.title | lower }}{{ "-1" if section.all | rejectattr("deprecated") | list }})
+{% for section in sections %}{% if section.all | selectattr("deprecated") | list %}  - [{{ section.title }}](#{{ section.title | lower | replace(" ", "-") }}{{ "-1" if section.all | rejectattr("deprecated") | list }})
 {% endif %}{% endfor -%}
 {% for section in sections %}{% set current = section.all | rejectattr("deprecated") | list %}{% if current %}
 ## {{ section.title }}

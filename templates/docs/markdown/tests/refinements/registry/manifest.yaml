@@ -1,0 +1,8 @@
+name: refinements-test-registry
+schema_url: https://example.com/schemas/refinements-test/1.0.0
+stability: development
+dependencies:
+  # Minimal upstream registry defining the signals that refinements extend.
+  # Path is relative to the working directory weaver runs in (the test dir).
+  - schema_url: https://example.com/schemas/refinements-upstream/1.0.0
+    registry_path: ./_upstream

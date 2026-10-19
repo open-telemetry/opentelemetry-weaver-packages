@@ -48,28 +48,33 @@
 {%- endmacro %}
 
 {# --- Attribute documentation URL ---
-   Local attributes -- defined in this registry -- carry `provenance.path` (the
-   model file they live in) and link to the attribute's row in its namespace
-   README under `registry_base_url` (`{ns}/README.md#{attribute-key}`); the
-   README's Attributes section anchors each key by its kebab-cased id.
-   Imported attributes come from a dependency and have no `provenance.path`
-   (provenance is either null or `{source: <schema_url>}`); they link to that
-   dependency's own docs.
+   Local attributes -- defined in this registry -- carry `provenance.path` that
+   begins with `model/` (relative to the repo root) AND have no `provenance.source`.
+   They link to the attribute's row in its namespace README under `registry_base_url`
+   (`{ns}/README.md#{attribute-key}`).
 
-   Their url template comes from the `upstream_docs` text map, keyed by the
-   dependency's schema url. One dependency or ten, it is the same lookup.
+   Imported (upstream) attributes may be resolved by Weaver in two ways:
+   1. Via a versioned dependency: `provenance.source` is set to the schema URL.
+      These are linked via the `upstream_docs` text-map (keyed by schema URL).
+   2. Via `ref:` within a local entity or metric: Weaver populates `provenance.path`
+      pointing into the upstream cache (`.build/…`) but leaves `provenance.source`
+      empty. Checking `provenance.source` alone therefore misclassifies these as
+      local, producing broken links to namespace pages this repo does not generate.
 
-   A dependency missing from the map yields an empty url rather than a guessed
-   one -- callers render the attribute unlinked. There is nothing sound to guess:
-   schema urls are versioned, so any built-in fallback would keep pointing at
-   whichever upstream it was written for, silently, for every dependency the map
-   does not cover. #}
+   The safe ownership test: an attribute is locally owned only when both conditions
+   hold — `provenance.source` is absent AND `provenance.path` starts with `model/`.
+   Any other combination means the attribute belongs to an upstream registry.
+
+   A dependency schema URL missing from `upstream_docs` yields an empty URL;
+   callers render the attribute unlinked rather than guessing a stale URL. #}
 {% macro attribute_doc_url(attribute) -%}
 {%- set ns = attribute.key | split_id | first | kebab_case -%}
-{%- if attribute.provenance and attribute.provenance.path -%}
-{{ params.registry_base_url }}/{{ ns }}/README.md#{{ attribute.key | kebab_case }}
-{%- else -%}
 {%- set schema_url = attribute.provenance.source if attribute.provenance else "" -%}
+{%- set prov_path = attribute.provenance.path if attribute.provenance else "" -%}
+{%- set is_local = (not schema_url) and prov_path.startswith("model/") -%}
+{%- if schema_url -%}
 {{ schema_url | map_text("upstream_docs", "") | replace('{namespace}', ns) }}
+{%- elif is_local -%}
+{{ params.registry_base_url }}/{{ ns }}/README.md#{{ attribute.key | kebab_case }}
 {%- endif -%}
 {%- endmacro %}

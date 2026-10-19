@@ -1,0 +1,6 @@
+# stable_only: true — only stable (non-deprecated) refinements appear.
+# Verifies: both deprecated AND development refinements are suppressed.
+params:
+  registry_base_url: ""
+  stable_only: true
+  exclude_deprecated: true

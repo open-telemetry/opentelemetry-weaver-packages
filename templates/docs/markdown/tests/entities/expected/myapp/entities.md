@@ -23,9 +23,9 @@ Identified by a stable id that survives restarts.
 
 | Role | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- | --- |
-| Identity | [`myapp.service.id`](/myapp/README.md#myapp-service-id) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Stable identifier of the service. | `svc_42` |
-| Description | [`myapp.service.name`](/myapp/README.md#myapp-service-name) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Recommended` | string | Human-readable service name. [1] | `checkout` |
-| Description | [`myapp.service.tier`](/myapp/README.md#myapp-service-tier) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Recommended` | string | Service tier. | `free`; `pro` |
+| Identity | `myapp.service.id` | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Stable identifier of the service. | `svc_42` |
+| Description | `myapp.service.name` | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Recommended` | string | Human-readable service name. [1] | `checkout` |
+| Description | `myapp.service.tier` | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Recommended` | string | Service tier. | `free`; `pro` |
 
 **[1] `myapp.service.name`:** Defaults to the executable name when the service does not set one explicitly.
 
@@ -59,7 +59,7 @@ A deployed legacy service instance.
 
 | Role | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- | --- |
-| Identity | [`myapp.service.identifier`](/myapp/README.md#myapp-service-identifier) | ![Deprecated](https://img.shields.io/badge/-deprecated-red) ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Stable identifier of the service.<br>**Renamed:** Renamed to `myapp.service.id`. | `svc_42` |
+| Identity | `myapp.service.identifier` | ![Deprecated](https://img.shields.io/badge/-deprecated-red) ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Stable identifier of the service.<br>**Renamed:** Renamed to `myapp.service.id`. | `svc_42` |
 
 ### `myapp.worker`
 
@@ -75,4 +75,4 @@ A background worker process.
 
 | Role | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- | --- |
-| Identity | [`myapp.service.identifier`](/myapp/README.md#myapp-service-identifier) | ![Deprecated](https://img.shields.io/badge/-deprecated-red) ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Stable identifier of the service.<br>**Renamed:** Renamed to `myapp.service.id`. | `svc_42` |
+| Identity | `myapp.service.identifier` | ![Deprecated](https://img.shields.io/badge/-deprecated-red) ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Stable identifier of the service.<br>**Renamed:** Renamed to `myapp.service.id`. | `svc_42` |

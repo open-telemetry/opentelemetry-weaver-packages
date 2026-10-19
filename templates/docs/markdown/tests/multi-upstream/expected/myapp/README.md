@@ -10,7 +10,7 @@
 
 | Type | Stability | Description |
 | --- | --- | --- |
-| [`myapp.query`](/myapp/spans.md#myappquery) | ![Development](https://img.shields.io/badge/-development-blue) | Span describing an application query to a database. |
+| [`myapp.query`](spans.md#myappquery) | ![Development](https://img.shields.io/badge/-development-blue) | Span describing an application query to a database. |
 
 ## Attributes
 

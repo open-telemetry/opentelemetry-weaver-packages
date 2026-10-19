@@ -19,4 +19,4 @@
 
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- |
-| [`http.request.method`](/http/README.md#http-request-method) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | HTTP request method. | `GET` |
+| `http.request.method` | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | HTTP request method. | `GET` |

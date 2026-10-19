@@ -1,0 +1,9 @@
+templates:
+  - template: errors.txt.j2
+    # Filter out UnstableFileFormat advisories: these are emitted by Weaver's
+    # resolver once per file that uses `file_format: definition/2` and reflect
+    # the experimental status of the v2 format spec, not any authoring error.
+    # All other diagnostics (policy violations, MissingRequirementLevel, etc.)
+    # are preserved.
+    filter: 'map(select(.error.FailToResolveDefinition.UnstableFileFormat == null))'
+    application_mode: single

@@ -10,7 +10,7 @@
 
 | Name | Stability | Description |
 | --- | --- | --- |
-| [`myapp.task.started`](/myapp/events.md#myapp-task-started) | ![Development](https://img.shields.io/badge/-development-blue) | Emitted when a task starts. |
+| [`myapp.task.started`](events.md#myapp-task-started) | ![Development](https://img.shields.io/badge/-development-blue) | Emitted when a task starts. |
 
 ## Attributes
 

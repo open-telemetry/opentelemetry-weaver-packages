@@ -26,8 +26,8 @@ TBD
 
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- |
-| [`myapp.request.method`](/myapp/README.md#myapp-request-method) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Application-level request method. | `GET`; `POST` |
-| [`myapp.session.id`](/myapp/README.md#myapp-session-id) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | Unique identifier of the application session. | `sess_5j66Up` |
+| `myapp.request.method` | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Application-level request method. | `GET`; `POST` |
+| `myapp.session.id` | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | Unique identifier of the application session. | `sess_5j66Up` |
 
 ---
 
