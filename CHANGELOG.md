@@ -20,6 +20,8 @@ change. See [CONTRIBUTING.md](CONTRIBUTING.md#changelog) for details.
   for breaking changes.
 - `check/naming_conventions`: Enforces OpenTelemetry semantic convention naming
   rules.
+- `check/naming_conventions`: Report generated-constant collisions between span
+  types, the same way metric, event, and entity collisions are already reported.
 - `check/stability`: Enforces stability rules for attribute definition and
   usage.
 - `check/entity_associations`: Checks that entity associations in a registry are
