@@ -22,6 +22,7 @@ change. See [CONTRIBUTING.md](CONTRIBUTING.md#changelog) for details.
   rules.
 - `check/naming_conventions`: Report generated-constant collisions between span
   types, the same way metric, event, and entity collisions are already reported.
+  ([#80](https://github.com/open-telemetry/opentelemetry-weaver-packages/pull/80))
 - `check/stability`: Enforces stability rules for attribute definition and
   usage.
 - `check/entity_associations`: Checks that entity associations in a registry are
