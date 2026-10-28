@@ -65,6 +65,11 @@ metrics:
     attributes:
       - ref: myapp.request.method
         requirement_level: required
+        note: MUST be set to `GET`.
+        examples: ["GET"]
+        annotations:
+          markdown:
+            omit_enum_table: true
   - name: auth.attempts
     instrument: counter
     unit: "{attempt}"
