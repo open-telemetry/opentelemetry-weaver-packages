@@ -4,7 +4,7 @@ import rego.v1
 
 # The attribute_name_collisions.rego policy checks generated-constant collisions
 # between attributes. This policy covers the other signal kinds: metrics, events,
-# and entities. Each kind lives in its own namespace in generated code, so
+# entities, and spans. Each kind lives in its own namespace in generated code, so
 # collisions are only checked within a single kind.
 
 signal_constant contains obj if {
@@ -20,6 +20,11 @@ signal_constant contains obj if {
 signal_constant contains obj if {
     some entity in input.registry.entities
     obj := signal_constant_entry("entity", entity.type, entity)
+}
+
+signal_constant contains obj if {
+    some span in input.registry.spans
+    obj := signal_constant_entry("span", span.type, span)
 }
 
 signal_constant_entry(signal_type, name, source) := {
