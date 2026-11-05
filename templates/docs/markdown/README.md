@@ -172,6 +172,23 @@ acronyms = ["API", "HTTP", "SDK", "MyProduct"]
 text_maps = { namespace_mapping = { cicd = "CI/CD" } }
 ```
 
+### Hiding pinned enum tables
+
+When a signal pins an enum attribute to one value, the full list of well-known
+values is noise on that signal. Set `omit_enum_table` on the attribute ref to
+drop the table from the signal page and its snippet. The namespace README still
+lists all values.
+
+```yaml
+attributes:
+  - ref: rpc.system.name
+    note: MUST be set to `grpc`.
+    examples: ["grpc"]
+    annotations:
+      markdown:
+        omit_enum_table: true
+```
+
 ## Tests
 
 Each test lives in `tests/<name>/`:
