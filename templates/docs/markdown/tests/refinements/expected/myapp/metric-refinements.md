@@ -27,7 +27,7 @@ Refines upstream metric: `http.server.request.duration`
 
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- |
-| `myapp.region` | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Recommended` | string | Cloud region the service is deployed in. | `us-east-1` |
+| [`myapp.region`](/myapp/README.md#myapp-region) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Recommended` | string | Cloud region the service is deployed in. | `us-east-1` |
 
 ## `refinement.myapp.http.request.duration`
 
@@ -43,4 +43,4 @@ Refines upstream metric: `http.server.request.duration`
 
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- |
-| `myapp.region` | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Cloud region the service is deployed in. | `us-east-1` |
+| [`myapp.region`](/myapp/README.md#myapp-region) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Cloud region the service is deployed in. | `us-east-1` |

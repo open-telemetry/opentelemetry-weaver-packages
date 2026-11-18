@@ -30,7 +30,7 @@ Refines the host entity for myapp deployments.
 | Role | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- | --- |
 | Identity | `host.name` | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Name identifying the host machine. | `my-host` |
-| Description | `myapp.region` | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Cloud region the service is deployed in. | `us-east-1` |
+| Description | [`myapp.region`](/myapp/README.md#myapp-region) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Cloud region the service is deployed in. | `us-east-1` |
 
 ## `refinement.myapp.host.dev`
 
@@ -49,7 +49,7 @@ Development-tier host refinement with environment context.
 | Role | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- | --- |
 | Identity | `host.name` | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Name identifying the host machine. | `my-host` |
-| Description | `myapp.env` | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | Deployment environment of the service. | `production`; `staging` |
+| Description | [`myapp.env`](/myapp/README.md#myapp-env) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | Deployment environment of the service. | `production`; `staging` |
 
 ---
 
