@@ -1,0 +1,6 @@
+# Where the upstream dependency's attributes are documented, keyed by its schema
+# url. Upstream attributes pulled into a local refinement via `ref:` (e.g.
+# `host.name`) must link here, while the refinement's own attributes link to
+# the local namespace README.
+[template.text_maps.upstream_docs]
+"https://example.com/schemas/refinements-upstream/1.0.0" = "https://upstream.example/docs/attributes/{namespace}.md"
