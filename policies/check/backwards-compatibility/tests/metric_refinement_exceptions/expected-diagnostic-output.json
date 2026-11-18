@@ -1,0 +1,110 @@
+[
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=compatibility_metric_missing, context={}, message=Metric 'missing.unannotated' no longer exists in semantic conventions, level=Violation, signal_type=Some(\"metric\"), signal_name=Some(\"missing.unannotated\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {},
+        "id": "compatibility_metric_missing",
+        "level": "violation",
+        "message": "Metric 'missing.unannotated' no longer exists in semantic conventions",
+        "signal_name": "missing.unannotated",
+        "signal_type": "metric",
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=compatibility_metric_missing, context={}, message=Metric 'missing.wrong_key' no longer exists in semantic conventions, level=Violation, signal_type=Some(\"metric\"), signal_name=Some(\"missing.wrong_key\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {},
+        "id": "compatibility_metric_missing",
+        "level": "violation",
+        "message": "Metric 'missing.wrong_key' no longer exists in semantic conventions",
+        "signal_name": "missing.wrong_key",
+        "signal_type": "metric",
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=compatibility_metric_missing, context={}, message=Metric 'missing.wrong_namespace' no longer exists in semantic conventions, level=Violation, signal_type=Some(\"metric\"), signal_name=Some(\"missing.wrong_namespace\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {},
+        "id": "compatibility_metric_missing",
+        "level": "violation",
+        "message": "Metric 'missing.wrong_namespace' no longer exists in semantic conventions",
+        "signal_name": "missing.wrong_namespace",
+        "signal_type": "metric",
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=compatibility_metric_missing, context={}, message=Metric 'missing.unrelated' no longer exists in semantic conventions, level=Violation, signal_type=Some(\"metric\"), signal_name=Some(\"missing.unrelated\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {},
+        "id": "compatibility_metric_missing",
+        "level": "violation",
+        "message": "Metric 'missing.unrelated' no longer exists in semantic conventions",
+        "signal_name": "missing.unrelated",
+        "signal_type": "metric",
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=compatibility_metric_missing, context={}, message=Metric 'missing.baseline_only' no longer exists in semantic conventions, level=Violation, signal_type=Some(\"metric\"), signal_name=Some(\"missing.baseline_only\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {},
+        "id": "compatibility_metric_missing",
+        "level": "violation",
+        "message": "Metric 'missing.baseline_only' no longer exists in semantic conventions",
+        "signal_name": "missing.baseline_only",
+        "signal_type": "metric",
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=compatibility_metric_missing, context={}, message=Metric 'missing.wrong_signal' no longer exists in semantic conventions, level=Violation, signal_type=Some(\"metric\"), signal_name=Some(\"missing.wrong_signal\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {},
+        "id": "compatibility_metric_missing",
+        "level": "violation",
+        "message": "Metric 'missing.wrong_signal' no longer exists in semantic conventions",
+        "signal_name": "missing.wrong_signal",
+        "signal_type": "metric",
+        "type": "PolicyFinding"
+      }
+    }
+  }
+]

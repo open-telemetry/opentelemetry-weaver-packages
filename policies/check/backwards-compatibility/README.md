@@ -19,3 +19,32 @@ $ weaver registry check \
     -r {your repository} \
     --baseline-registry {your_baseline_version}
 ```
+
+## Exceptions
+
+When a signal becomes a refinement, put the removal exception on its replacement:
+
+```yaml
+span_refinements:
+  - id: span.aws.lambda.server
+    ref: faas.server
+    annotations:
+      compatibility:
+        policy_exceptions:
+          - span_missing
+```
+
+Use the finding ID without the `compatibility_` prefix:
+
+| Signal | Exception |
+| --- | --- |
+| Span | `span_missing` |
+| Metric | `metric_missing` |
+| Event | `event_missing` |
+| Entity | `entity_missing` |
+
+The refinement must have the same signal kind and match the former name or type.
+Its ID may include the kind prefix, such as `span.` or `metric.`.
+The example suppresses removal of `aws.lambda.server` only.
+
+Other compatibility checks still run. Baseline annotations do not suppress findings.

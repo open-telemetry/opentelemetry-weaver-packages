@@ -1,0 +1,82 @@
+[
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=unbounded_attribute_entity_identity, context={\"attribute_key\":\"test.body\"}, message=Attribute 'test.body' is marked as unbounded and cannot be used as identity on entity 'test.entity'., level=Violation, signal_type=Some(\"entity\"), signal_name=Some(\"test.entity\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_key": "test.body"
+        },
+        "id": "unbounded_attribute_entity_identity",
+        "level": "violation",
+        "message": "Attribute 'test.body' is marked as unbounded and cannot be used as identity on entity 'test.entity'.",
+        "signal_name": "test.entity",
+        "signal_type": "entity",
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=unbounded_attribute_metric, context={\"attribute_key\":\"test.body\"}, message=Attribute 'test.body' is marked as unbounded and cannot be used on metric 'test.metric'., level=Violation, signal_type=Some(\"metric\"), signal_name=Some(\"test.metric\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_key": "test.body"
+        },
+        "id": "unbounded_attribute_metric",
+        "level": "violation",
+        "message": "Attribute 'test.body' is marked as unbounded and cannot be used on metric 'test.metric'.",
+        "signal_name": "test.metric",
+        "signal_type": "metric",
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=unbounded_attribute_required, context={\"attribute_key\":\"test.body\"}, message=Attribute 'test.body' on event 'test.event' is marked as unbounded and cannot be required., level=Violation, signal_type=Some(\"event\"), signal_name=Some(\"test.event\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_key": "test.body"
+        },
+        "id": "unbounded_attribute_required",
+        "level": "violation",
+        "message": "Attribute 'test.body' on event 'test.event' is marked as unbounded and cannot be required.",
+        "signal_name": "test.event",
+        "signal_type": "event",
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=unbounded_attribute_required, context={\"attribute_key\":\"test.body\"}, message=Attribute 'test.body' on span 'test.required' is marked as unbounded and cannot be required., level=Violation, signal_type=Some(\"span\"), signal_name=Some(\"test.required\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_key": "test.body"
+        },
+        "id": "unbounded_attribute_required",
+        "level": "violation",
+        "message": "Attribute 'test.body' on span 'test.required' is marked as unbounded and cannot be required.",
+        "signal_name": "test.required",
+        "signal_type": "span",
+        "type": "PolicyFinding"
+      }
+    }
+  }
+]

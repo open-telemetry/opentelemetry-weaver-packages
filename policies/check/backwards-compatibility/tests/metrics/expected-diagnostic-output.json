@@ -83,14 +83,14 @@
   },
   {
     "diagnostic": {
-      "message": "Policy violation: id=compatibility_metric_missing, context={}, message=Metric 'some.stable.change.metric' cannot change from stable, level=Violation, signal_type=Some(\"metric\"), signal_name=Some(\"some.stable.change.metric\"), provenance: current"
+      "message": "Policy violation: id=compatibility_metric_changed_stability, context={}, message=Metric 'some.stable.change.metric' cannot change from stable, level=Violation, signal_type=Some(\"metric\"), signal_name=Some(\"some.stable.change.metric\"), provenance: current"
     },
     "error": {
       "provenance": "current",
       "type": "policy_violation",
       "violation": {
         "context": {},
-        "id": "compatibility_metric_missing",
+        "id": "compatibility_metric_changed_stability",
         "level": "violation",
         "message": "Metric 'some.stable.change.metric' cannot change from stable",
         "signal_name": "some.stable.change.metric",

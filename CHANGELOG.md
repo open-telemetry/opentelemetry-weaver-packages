@@ -13,6 +13,8 @@ change. See [CONTRIBUTING.md](CONTRIBUTING.md#changelog) for details.
   registry - namespace-first pages for attributes, spans, metrics, events, and
   entities, plus embeddable snippet tables and configurable cross-registry
   links.
+- `docs/markdown`: Add the `markdown.omit_enum_table` annotation to skip the
+  enum values table where a signal pins the attribute to one value.
 - `docs/markdown`: Add `entity-refinements.md` and `metric-refinements.md` pages
   for namespaces that define refinements of upstream entities or metrics.
   Refinements are automatically listed in the namespace `README.md` table of

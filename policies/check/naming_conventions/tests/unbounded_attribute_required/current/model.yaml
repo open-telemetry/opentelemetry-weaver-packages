@@ -1,0 +1,59 @@
+file_format: definition/2
+attributes:
+  - key: test.body
+    type: string
+    brief: Body.
+    stability: development
+    annotations:
+      value:
+        unbounded_size: true
+  - key: test.name
+    type: string
+    brief: Name.
+    stability: development
+spans:
+  - type: test.required
+    brief: Span requiring an unbounded attribute.
+    stability: development
+    kind: client
+    name:
+      note: test
+    attributes:
+      - ref: test.body
+        requirement_level: required
+      - ref: test.name
+        requirement_level: required
+  - type: test.opt_in
+    brief: Span with an opt-in unbounded attribute.
+    stability: development
+    kind: client
+    name:
+      note: test
+    attributes:
+      - ref: test.body
+        requirement_level: opt_in
+events:
+  - name: test.event
+    brief: Event requiring an unbounded attribute.
+    stability: development
+    attributes:
+      - ref: test.body
+        requirement_level: required
+entities:
+  - type: test.entity
+    brief: Entity with an unbounded identity attribute.
+    stability: development
+    identity:
+      - ref: test.name
+      - ref: test.body
+        requirement_level: opt_in
+metrics:
+  - name: test.metric
+    brief: Metric with an unbounded attribute.
+    stability: development
+    instrument: counter
+    unit: "1"
+    attributes:
+      - ref: test.body
+        requirement_level: opt_in
+      - ref: test.name

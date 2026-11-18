@@ -1,0 +1,22 @@
+file_format: definition/2
+attributes:
+  - key: test.payload
+    type: any
+    brief: Payload.
+    stability: development
+  - key: test.payload_ref
+    type: string
+    brief: Reference to the payload.
+    stability: development
+  - key: test.content_ref
+    type: string
+    brief: Reference without counterpart.
+    stability: development
+  - key: test.body
+    type: any
+    brief: Body.
+    stability: development
+  - key: test.body_ref
+    type: int
+    brief: Reference with invalid type.
+    stability: development

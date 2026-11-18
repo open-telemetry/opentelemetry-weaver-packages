@@ -50,7 +50,7 @@
 
 {#- Render a single row on the entity table. -#}
 {% macro attribute_row(attribute, notes, role) -%}
-| {{ role_tag(role) | trim }} | {{ attrs.name_with_link(attribute) }} | {{ stability.badge(attribute, include_note=false) | trim }} | {{ requirement.render({"level": attribute.requirement_level, "name": attribute.key}, notes) | trim }} | {{ attrs.type(attribute) }} | {{ attrs.description(attribute, notes) }} | {{ examples.format(attribute) }}|
+| {{ role_tag(role) | trim }} | {{ attrs.name_with_link(attribute) }} | {{ stability.badge(attribute, include_note=false) | trim }} | {{ requirement.render({"level": ("required" if role == "identity" else attribute.requirement_level), "name": attribute.key}, notes) | trim }} | {{ attrs.type(attribute) }} | {{ attrs.description(attribute, notes) }} | {{ examples.format(attribute) }}|
 {%- endmacro %}
 
 {#- Render attribute tables for entities. -#}

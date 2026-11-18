@@ -1,0 +1,44 @@
+[
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=naming_convention_attribute_ref_type_violation, context={\"attribute_key\":\"test.body_ref\",\"attribute_type\":\"int\"}, message=Attribute 'test.body_ref' ends with '_ref' and must have type 'string', but got 'int'., level=Violation, signal_type=None, signal_name=None, provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_key": "test.body_ref",
+          "attribute_type": "int"
+        },
+        "id": "naming_convention_attribute_ref_type_violation",
+        "level": "violation",
+        "message": "Attribute 'test.body_ref' ends with '_ref' and must have type 'string', but got 'int'.",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=naming_convention_attribute_ref_counterpart_missing, context={\"attribute_key\":\"test.content_ref\",\"base_key\":\"test.content\"}, message=Attribute 'test.content_ref' ends with '_ref' but counterpart attribute 'test.content' does not exist., level=Violation, signal_type=None, signal_name=None, provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_key": "test.content_ref",
+          "base_key": "test.content"
+        },
+        "id": "naming_convention_attribute_ref_counterpart_missing",
+        "level": "violation",
+        "message": "Attribute 'test.content_ref' ends with '_ref' but counterpart attribute 'test.content' does not exist.",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
+      }
+    }
+  }
+]

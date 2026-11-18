@@ -1,0 +1,40 @@
+file_format: definition/2
+
+spans:
+  - type: base.client
+    kind: client
+    name:
+      note: Use the operation name.
+    stability: development
+    brief: A client operation.
+
+span_refinements:
+  - id: migrated.direct
+    ref: base.client
+    annotations:
+      compatibility:
+        policy_exceptions: [span_missing]
+  - id: span.migrated.prefixed
+    ref: base.client
+    annotations:
+      compatibility:
+        policy_exceptions: [span_missing]
+  - id: span.missing.unannotated
+    ref: base.client
+  - id: span.missing.wrong_key
+    ref: base.client
+    annotations:
+      compatibility:
+        policy_exceptions: [span_changed_kind]
+  - id: span.missing.wrong_namespace
+    ref: base.client
+    annotations:
+      stability:
+        policy_exceptions: [span_missing]
+  - id: span.unrelated
+    ref: base.client
+    annotations:
+      compatibility:
+        policy_exceptions: [span_missing]
+  - id: span.missing.baseline_only
+    ref: base.client

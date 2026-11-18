@@ -151,7 +151,12 @@ run_generate_test() {
     --templates="${GEN_TEMPLATES_ROOT}" \
     "${GEN_TARGET}" \
     "${GEN_OBSERVED_DIR}"
+  local WEAVER_EXIT=$?
   popd
+  if [ $WEAVER_EXIT -ne 0 ]; then
+    echo "  ❌ FAIL: ${GEN_TEST_DIR#${GEN_PACKAGE_DIR}/} - weaver registry generate failed (exit code $WEAVER_EXIT)"
+    exit 1
+  fi
 }
 
 # Runs a snippet (embed) test via `registry update-markdown`.
@@ -180,7 +185,12 @@ run_snippet_test() {
     --templates="${SNIP_TEMPLATES_ROOT}" \
     --target "${SNIP_TARGET}" \
     "${SNIP_OBSERVED_DIR}"
+  local WEAVER_EXIT=$?
   popd
+  if [ $WEAVER_EXIT -ne 0 ]; then
+    echo "  ❌ FAIL: ${SNIP_TEST_DIR#${SNIP_PACKAGE_DIR}/} - weaver registry update-markdown failed (exit code $WEAVER_EXIT)"
+    exit 1
+  fi
 }
 
 # Runs a set of policy tests for a given package.
