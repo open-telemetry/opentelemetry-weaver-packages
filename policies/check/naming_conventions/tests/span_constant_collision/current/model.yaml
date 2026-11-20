@@ -1,0 +1,14 @@
+file_format: definition/2
+spans:
+  - type: foo.bar.baz
+    name:
+      note: TBD
+    kind: client
+    stability: stable
+    brief: First span.
+  - type: foo.bar_baz
+    name:
+      note: TBD
+    kind: client
+    stability: stable
+    brief: Colliding span.
