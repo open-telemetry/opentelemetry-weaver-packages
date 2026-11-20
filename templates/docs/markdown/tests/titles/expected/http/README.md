@@ -10,7 +10,7 @@
 
 | Name | Stability | Description |
 | --- | --- | --- |
-| [`http.client.request.duration`](/http/metrics.md#http-client-request-duration) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | Duration of the HTTP client request. |
+| [`http.client.request.duration`](metrics.md#http-client-request-duration) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | Duration of the HTTP client request. |
 
 ## Attributes
 

@@ -1,0 +1,22 @@
+[
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=naming_convention_metric_brief_period, context={\"brief\":\"First line\\n::notice::Injected line\"}, message=Non-empty metric brief 'First line\n::notice::Injected line' must end with a period (.)., level=Violation, signal_type=Some(\"metric\"), signal_name=Some(\"test.multiline\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "brief": "First line\n::notice::Injected line"
+        },
+        "id": "naming_convention_metric_brief_period",
+        "level": "violation",
+        "message": "Non-empty metric brief 'First line\n::notice::Injected line' must end with a period (.).",
+        "signal_name": "test.multiline",
+        "signal_type": "metric",
+        "type": "PolicyFinding"
+      }
+    }
+  }
+]

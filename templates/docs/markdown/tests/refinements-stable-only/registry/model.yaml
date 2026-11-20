@@ -1,0 +1,74 @@
+file_format: definition/2
+attributes:
+  - key: myapp.region
+    type: string
+    stability: stable
+    brief: Cloud region the service is deployed in.
+    examples: ["us-east-1"]
+  - key: myapp.env
+    type:
+      members:
+        - id: production
+          value: production
+          stability: stable
+          brief: Production environment.
+        - id: staging
+          value: staging
+          stability: stable
+          brief: Staging environment.
+    stability: development
+    brief: Deployment environment of the service.
+
+metric_refinements:
+  - id: refinement.myapp.http.request.duration
+    ref: http.server.request.duration
+    stability: stable
+    brief: Refines http.server.request.duration for myapp services.
+    attributes:
+      - ref: myapp.region
+        requirement_level: required
+  - id: refinement.myapp.http.legacy.duration
+    ref: http.server.request.duration
+    stability: development
+    brief: Development-only refinement, kept for internal tracing.
+    attributes:
+      - ref: myapp.region
+        requirement_level: recommended
+  - id: refinement.myapp.http.old.duration
+    ref: http.server.request.duration
+    stability: stable
+    deprecated:
+      reason: renamed
+      renamed_to: refinement.myapp.http.request.duration
+      note: Renamed to `refinement.myapp.http.request.duration`.
+    brief: Obsolete refinement for http.server.request.duration.
+    attributes:
+      - ref: myapp.region
+        requirement_level: recommended
+
+entity_refinements:
+  - id: refinement.myapp.host
+    ref: host
+    stability: stable
+    brief: Refines the host entity for myapp deployments.
+    description:
+      - ref: myapp.region
+        requirement_level: required
+  - id: refinement.myapp.host.dev
+    ref: host
+    stability: development
+    brief: Development-tier host refinement with environment context.
+    description:
+      - ref: myapp.env
+        requirement_level: recommended
+  - id: refinement.myapp.host.old
+    ref: host
+    stability: stable
+    deprecated:
+      reason: renamed
+      renamed_to: refinement.myapp.host
+      note: Renamed to `refinement.myapp.host`.
+    brief: Obsolete host refinement.
+    description:
+      - ref: myapp.region
+        requirement_level: recommended

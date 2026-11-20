@@ -13,25 +13,25 @@
 
 | Type | Stability | Description |
 | --- | --- | --- |
-| [`myapp.service`](/myapp/entities.md#myappservice) | ![Development](https://img.shields.io/badge/-development-blue) | A deployed application service instance. |
+| [`myapp.service`](entities.md#myappservice) | ![Development](https://img.shields.io/badge/-development-blue) | A deployed application service instance. |
 
 ## Events
 
 | Name | Stability | Description |
 | --- | --- | --- |
-| [`myapp.session.started`](/myapp/events.md#myappsessionstarted) | ![Development](https://img.shields.io/badge/-development-blue) | Emitted when an application session starts. |
+| [`myapp.session.started`](events.md#myappsessionstarted) | ![Development](https://img.shields.io/badge/-development-blue) | Emitted when an application session starts. |
 
 ## Metrics
 
 | Name | Stability | Description |
 | --- | --- | --- |
-| [`myapp.request.duration`](/myapp/metrics.md#myapprequestduration) | ![Development](https://img.shields.io/badge/-development-blue) | Duration of the application request. |
+| [`myapp.request.duration`](metrics.md#myapprequestduration) | ![Development](https://img.shields.io/badge/-development-blue) | Duration of the application request. |
 
 ## Spans
 
 | Type | Stability | Description |
 | --- | --- | --- |
-| [`myapp.request`](/myapp/spans.md#myapprequest) | ![Development](https://img.shields.io/badge/-development-blue) | Span describing an application request to a server. |
+| [`myapp.request`](spans.md#myapprequest) | ![Development](https://img.shields.io/badge/-development-blue) | Span describing an application request to a server. |
 
 ## Attributes
 

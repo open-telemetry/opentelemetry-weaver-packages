@@ -48,16 +48,18 @@
 {%- endmacro %}
 
 {# --- Attribute documentation URL ---
-   Local attributes -- defined in this registry -- carry `provenance.path` (the
-   model file they live in) and link to the attribute's row in its namespace
-   README under `registry_base_url` (`{ns}/README.md#{attribute-key}`); the
-   README's Attributes section anchors each key by its kebab-cased id.
-   Imported attributes come from a dependency and have no `provenance.path`
-   (provenance is either null or `{source: <schema_url>}`); they link to that
-   dependency's own docs.
+   Imported attributes -- including upstream attributes pulled into a local
+   refinement via `ref:` -- carry `provenance.source`, the dependency's schema
+   url. They link to that dependency's own docs via the `upstream_docs` text
+   map, keyed by schema url. `source` is checked first: it is the only reliable
+   ownership signal, since `provenance.path` is a file path whose layout
+   (`model/`, `registry/`, ...) varies from registry to registry.
 
-   Their url template comes from the `upstream_docs` text map, keyed by the
-   dependency's schema url. One dependency or ten, it is the same lookup.
+   Local attributes -- defined in this registry -- carry `provenance.path` (the
+   model file they live in) and no `source`. They link to the attribute's row in
+   its namespace README under `registry_base_url`
+   (`{ns}/README.md#{attribute-key}`); the README's Attributes section anchors
+   each key by its kebab-cased id.
 
    A dependency missing from the map yields an empty url rather than a guessed
    one -- callers render the attribute unlinked. There is nothing sound to guess:
@@ -66,10 +68,10 @@
    does not cover. #}
 {% macro attribute_doc_url(attribute) -%}
 {%- set ns = attribute.key | split_id | first | kebab_case -%}
-{%- if attribute.provenance and attribute.provenance.path -%}
-{{ params.registry_base_url }}/{{ ns }}/README.md#{{ attribute.key | kebab_case }}
-{%- else -%}
 {%- set schema_url = attribute.provenance.source if attribute.provenance else "" -%}
+{%- if schema_url -%}
 {{ schema_url | map_text("upstream_docs", "") | replace('{namespace}', ns) }}
+{%- elif attribute.provenance and attribute.provenance.path -%}
+{{ params.registry_base_url }}/{{ ns }}/README.md#{{ attribute.key | kebab_case }}
 {%- endif -%}
 {%- endmacro %}
