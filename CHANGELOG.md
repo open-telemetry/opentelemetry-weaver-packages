@@ -28,3 +28,6 @@ change. See [CONTRIBUTING.md](CONTRIBUTING.md#changelog) for details.
   well formed. Skips the current materialized form, whose referential integrity
   weaver already validates during resolution, and stays a back-compatible check
   for the old bare-string form.
+- `check/backwards-compatibility`: Attribute group findings set `signal_type`
+  to `attribute_group` and `signal_name` to the group id, so finding filters can
+  target specific groups.

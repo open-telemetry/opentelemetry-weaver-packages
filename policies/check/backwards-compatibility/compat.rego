@@ -791,6 +791,8 @@ deny contains finding if {
     # Generate human readable error.
     finding := {
         "id": "compatibility_attribute_group_removed",
+        "signal_type": "attribute_group",
+        "signal_name": group.id,
         "context": {
             "attribute_group_id": group.id,
         },
@@ -816,6 +818,8 @@ deny contains finding if {
     # Generate human readable error.
     finding := {
         "id": "compatibility_attribute_group_changed_stability",
+        "signal_type": "attribute_group",
+        "signal_name": group.id,
         "context": {
             "attribute_group_id": group.id,
         },
@@ -850,6 +854,8 @@ deny contains finding if {
     # Generate human readable error.
     finding := {
         "id": "compatibility_attribute_group_dropped_attributes",
+        "signal_type": "attribute_group",
+        "signal_name": group.id,
         "context": {
             "attribute_group_id": group.id,
             "missing_attributes": missing_attributes,
@@ -888,6 +894,8 @@ deny contains finding if {
     # Generate human readable error.
     finding := {
         "id": "compatibility_attribute_group_added_attributes",
+        "signal_type": "attribute_group",
+        "signal_name": group.id,
         "context": {
             "attribute_group_id": group.id,
             "added_attributes": added_attributes,
