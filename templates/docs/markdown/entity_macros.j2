@@ -13,16 +13,32 @@
 {{ params.registry_base_url }}/{{ id | split_id | list | first | kebab_case }}/entities.md#{{ links.signal_anchor(id) }}
 {%- endmacro %}
 
-{#- The entities a span or event should be associated with. Renders nothing when
-   the signal declares none. -#}
+{#- One association expression, inline. Since weaver 0.26 a leaf is `{type, provenance}`
+   (older versions passed a bare type string) and leaves can be nested under
+   `one_of` / `all_of`. Upstream entities (`provenance.source` set) have no docs map,
+   so they render unlinked, same as when `link` is false. -#}
+{% macro association(e, link=true) -%}
+{%- if e is string -%}
+{%- if link %}[`{{ e }}`]({{ registry_url(e) }}){% else %}`{{ e }}`{% endif -%}
+{%- elif e.type -%}
+{%- if link and not (e.provenance and e.provenance.source) %}[`{{ e.type }}`]({{ registry_url(e.type) }}){% else %}`{{ e.type }}`{% endif -%}
+{%- elif e.one_of -%}
+one of ({% for c in e.one_of %}{% if not loop.first %}, {% endif %}{{ association(c, link) }}{% endfor %})
+{%- elif e.all_of -%}
+all of ({% for c in e.all_of %}{% if not loop.first %}, {% endif %}{{ association(c, link) }}{% endfor %})
+{%- endif -%}
+{%- endmacro %}
+
+{#- The entities a span or event should be associated with. A top-level list is an
+   implicit `one_of`. Renders nothing when the signal declares none. -#}
 {% macro associations(entity_types) -%}
 {%- if entity_types is sequence %}
 
 **Entity Associations:** SHOULD be associated with one of the following entities:
-
-{% for e in entity_types %}- [`{{ e }}`]({{ registry_url(e) }})
-{% endfor %}
-{% endif %}
+{% for e in entity_types %}
+- {{ association(e) }}
+{%- endfor %}
+{%- endif %}
 {%- endmacro %}
 
 {#- Create role tags #}

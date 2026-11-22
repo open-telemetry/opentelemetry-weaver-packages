@@ -1,0 +1,77 @@
+file_format: definition/2
+attributes:
+  - key: myapp.service.name
+    type: string
+    stability: stable
+    brief: Logical name of the service.
+    examples: ["checkout"]
+  - key: myapp.host.id
+    type: string
+    stability: stable
+    brief: Unique host identifier.
+    examples: ["i-0abc"]
+  - key: myapp.request.size
+    type: int
+    stability: stable
+    brief: Request size in bytes.
+    examples: [1024]
+
+entities:
+  - type: myapp.service
+    stability: stable
+    brief: A deployed service.
+    identity:
+      - ref: myapp.service.name
+  - type: myapp.host
+    stability: stable
+    brief: A host running the service.
+    identity:
+      - ref: myapp.host.id
+
+spans:
+  # Bare list - an implicit `one_of` - mixing local and upstream entities.
+  - type: myapp.request
+    kind: server
+    stability: stable
+    brief: A request handled by the service.
+    requirement_level: recommended
+    name:
+      note: "{method}"
+    entity_associations:
+      - myapp.service
+      - k8s.pod
+    attributes:
+      - ref: myapp.request.size
+        requirement_level: recommended
+
+metrics:
+  # Nested `all_of` / `one_of` expression.
+  - name: myapp.request.count
+    instrument: counter
+    unit: "{request}"
+    stability: stable
+    brief: Number of requests handled.
+    requirement_level: recommended
+    entity_associations:
+      - all_of:
+          - myapp.service
+          - one_of:
+              - myapp.host
+              - k8s.pod
+    attributes:
+      - ref: myapp.request.size
+        requirement_level: recommended
+
+events:
+  - name: myapp.started
+    stability: stable
+    brief: Emitted when the service starts.
+    requirement_level: recommended
+    # Nested expression in a bulleted (linked) list.
+    entity_associations:
+      - one_of:
+          - myapp.service
+          - k8s.pod
+    attributes:
+      - ref: myapp.service.name
+        requirement_level: required
