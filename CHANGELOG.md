@@ -15,6 +15,14 @@ change. See [CONTRIBUTING.md](CONTRIBUTING.md#changelog) for details.
   links.
 - `docs/markdown`: Add the `markdown.omit_enum_table` annotation to skip the
   enum values table where a signal pins the attribute to one value.
+- `docs/markdown`: Fix duplicate footnote numbers in metric sections, where the
+  metric note and attribute notes were numbered separately. Numbering now
+  restarts per definition, so a definition renders the same on its page and as
+  a snippet.
+- `docs/markdown`: Footnote readability: an attribute's requirement condition
+  and note share one labeled footnote, notes of 50 characters or less are shown
+  inline, footnote markers link to their footnote, and `---` separates
+  definitions instead of preceding enum value tables.
 
 ### Policies
 

@@ -3,8 +3,12 @@
 {% import 'metric_macros.j2' as metrics %}
 {% import 'requirement.j2' as requirement %}
 
-{# v2 metric objects expose: name, instrument, unit, brief, note, stability, attributes, entity_associations. #}
-{% macro generate(group) %}| Name | Instrument Type | Unit (UCUM) | Description | Stability | Entity Associations |
+{# v2 metric objects expose: name, instrument, unit, brief, note, stability, attributes, entity_associations.
+   Each `import 'notes.j2'` has its own footnote counter, so pass the page's
+   `notes` (shared with attribute_table) to keep footnote numbers unique. #}
+{% macro generate(group, shared_notes=none) %}{% if shared_notes %}{{ table(group, shared_notes) }}{% else %}{{ table(group, notes) }}{% endif %}{% endmacro %}
+
+{% macro table(group, notes) %}{{ notes.scope(group.name) }}| Name | Instrument Type | Unit (UCUM) | Description | Stability | Entity Associations |
 | -------- | --------------- | ----------- | -------------- | --------- | ------ |
 | `{{ group.name }}` | {{ metrics.instrument(group.instrument) | trim }} | `{{ group.unit }}` | {{ group.brief | trim }}{{ notes.add({"note": group.note}) }} | {{ stability.badge(group) | trim }} | {% if group.entity_associations %}{% for e in group.entity_associations %}{% if not loop.first %}; {% endif %}`{{ e | trim }}`{% endfor %} {% endif %}|
 

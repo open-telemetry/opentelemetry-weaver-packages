@@ -10,8 +10,14 @@
 {# v2 attribute_table: input is a list of attribute objects with `key`, `brief`,
    `requirement_level`, `provenance`, etc. directly inlined. Provenance is null
    for imported attributes; name_with_link reads it to pick the right link. #}
-{% macro generate(attributes) -%}
+{#- `shared_notes` lets a page share one footnote counter with the metric table
+   (each `import 'notes.j2'` has its own). `section` is the definition the table
+   belongs to; it scopes footnote ids. -#}
+{% macro generate(attributes, shared_notes=none, section=none) -%}{% if shared_notes %}{{ table(attributes, shared_notes, section) }}{% else %}{{ table(attributes, notes, section) }}{% endif %}{%- endmacro %}
+
+{% macro table(attributes, notes, section) -%}
 {%- if attributes | length > 0 -%}
+{%- if section %}{{ notes.scope(section.type or section.name or section.id) }}{% endif -%}
 **Attributes:**
 
 | Key | Stability | [Requirement Level]({{ links.requirement_level_url() }}) | Value Type | Description | Example Values |

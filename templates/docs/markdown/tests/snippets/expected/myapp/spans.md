@@ -29,8 +29,6 @@ TBD
 | [`myapp.request.method`](/myapp/README.md#myapp-request-method) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Application-level request method. | `GET`; `POST` |
 | [`myapp.session.id`](/myapp/README.md#myapp-session-id) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | Unique identifier of the application session. | `sess_5j66Up` |
 
----
-
 `myapp.request.method` has the following list of well-known values. If one of them applies, then the respective value MUST be used; otherwise, a custom value MAY be used.
 
 | Value | Description | Stability |
