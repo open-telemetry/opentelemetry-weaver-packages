@@ -3,10 +3,17 @@
 
 # Myapp
 
+- [Entities](#entities)
 - [Events](#events)
 - [Metrics](#metrics)
 - [Spans](#spans)
 - [Attributes](#attributes)
+
+## Entities
+
+| Type | Stability | Description |
+| --- | --- | --- |
+| [`myapp.job.run`](/myapp/entities.md#myappjobrun) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | A job run. |
 
 ## Events
 
@@ -35,8 +42,11 @@ Attributes defined in the `myapp` namespace. Application developers are encourag
 | --- | --- | --- | --- | --- |
 | <a id="myapp-job-attempt">`myapp.job.attempt`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int | Attempt number, starting at 1. [[1]](#note-1) | `1`; `3` |
 | <a id="myapp-job-id">`myapp.job.id`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | string | Identifier of the job. [[2]](#note-2) | `job-42` |
+| <a id="myapp-job-priority">`myapp.job.priority`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | Priority of the job. [[3]](#note-3) | `high` |
 | <a id="myapp-job-queue">`myapp.job.queue`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | string | Name of the queue the job was taken from. Case-sensitive. | `default` |
 
 <a id="note-1"></a>**[1] `myapp.job.attempt`:** Instrumentations that cannot see retries done by the scheduler report 1 for every attempt.
 
 <a id="note-2"></a>**[2] `myapp.job.id`:** The identifier is assigned by the scheduler and stays the same across retries of the same job.
+
+<a id="note-3"></a>**[3] `myapp.job.priority`:** Either high | low.

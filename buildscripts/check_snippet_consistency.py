@@ -56,7 +56,10 @@ def generated_section(pages_dir, collection, definition_id):
         (i for i in range(start, len(lines)) if lines[i].startswith("## ")),
         len(lines),
     )
-    return "\n".join(lines[start:end]), None
+    body = "\n".join(lines[start:end]).rstrip()
+    # Pages separate consecutive definitions with `---`; it is not part of the definition.
+    body = body.removesuffix("\n---").rstrip()
+    return body, None
 
 
 def main(snippets_dir, pages_dir):

@@ -20,9 +20,9 @@ change. See [CONTRIBUTING.md](CONTRIBUTING.md#changelog) for details.
   restarts per definition, so a definition renders the same on its page and as
   a snippet.
 - `docs/markdown`: Footnote readability: an attribute's requirement condition
-  and note share one labeled footnote, notes of 50 characters or less are shown
-  inline, footnote markers link to their footnote, and `---` separates
-  definitions instead of preceding enum value tables.
+  and note share one labeled footnote, single-line notes of 50 characters or
+  less are shown inline, footnote markers link to their footnote, and `---`
+  separates definitions instead of preceding enum value tables.
 
 ### Policies
 

@@ -20,9 +20,17 @@
 
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- |
-| [`myapp.job.attempt`](/myapp/README.md#myapp-job-attempt) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | int | Attempt number, starting at 1. [[1]](#myapp-job-count-note-1) | `1`; `3` |
+| [`myapp.job.attempt`](/myapp/README.md#myapp-job-attempt) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | int | Attempt number, starting at 1. [[1]](#metric-myapp-job-count-note-1) | `1`; `3` |
+| [`myapp.job.priority`](/myapp/README.md#myapp-job-priority) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` [[2]](#metric-myapp-job-count-note-2) | string | Priority of the job. [[2]](#metric-myapp-job-count-note-2) | `high` |
 
-<a id="myapp-job-count-note-1"></a>**[1] `myapp.job.attempt`:** Instrumentations that cannot see retries done by the scheduler report 1 for every attempt.
+<a id="metric-myapp-job-count-note-1"></a>**[1] `myapp.job.attempt`:** Instrumentations that cannot see retries done by the scheduler report 1 for every attempt.
+
+<a id="metric-myapp-job-count-note-2"></a>**[2] `myapp.job.priority`:**
+
+**Requirement level:** If known.
+Omit otherwise.
+
+**Note:** Either high | low.
 
 ---
 
@@ -30,24 +38,24 @@
 
 | Name | Instrument Type | Unit (UCUM) | Description | Stability | Entity Associations |
 | -------- | --------------- | ----------- | -------------- | --------- | ------ |
-| `myapp.job.duration` | Histogram | `s` | Duration of a job run. [[1]](#myapp-job-duration-note-1) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | |
+| `myapp.job.duration` | Histogram | `s` | Duration of a job run. [[1]](#metric-myapp-job-duration-note-1) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | |
 
 **Requirement Level:** `Recommended`
 
-<a id="myapp-job-duration-note-1"></a>**[1]:** Measured from when the job is taken from the queue until it completes.
+<a id="metric-myapp-job-duration-note-1"></a>**[1]:** Measured from when the job is taken from the queue until it completes.
 
 **Attributes:**
 
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- |
 | [`myapp.job.queue`](/myapp/README.md#myapp-job-queue) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Name of the queue the job was taken from. Case-sensitive. | `default` |
-| [`myapp.job.id`](/myapp/README.md#myapp-job-id) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` [[2]](#myapp-job-duration-note-2) | string | Identifier of the job. [[2]](#myapp-job-duration-note-2) | `job-42` |
-| [`myapp.job.attempt`](/myapp/README.md#myapp-job-attempt) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | int | Attempt number, starting at 1. [[3]](#myapp-job-duration-note-3) | `1`; `3` |
+| [`myapp.job.id`](/myapp/README.md#myapp-job-id) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` [[2]](#metric-myapp-job-duration-note-2) | string | Identifier of the job. [[2]](#metric-myapp-job-duration-note-2) | `job-42` |
+| [`myapp.job.attempt`](/myapp/README.md#myapp-job-attempt) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | int | Attempt number, starting at 1. [[3]](#metric-myapp-job-duration-note-3) | `1`; `3` |
 
-<a id="myapp-job-duration-note-2"></a>**[2] `myapp.job.id`:**
+<a id="metric-myapp-job-duration-note-2"></a>**[2] `myapp.job.id`:**
 
 **Requirement level:** When the scheduler assigns an identifier to the job.
 
 **Note:** The identifier is assigned by the scheduler and stays the same across retries of the same job.
 
-<a id="myapp-job-duration-note-3"></a>**[3] `myapp.job.attempt`:** Instrumentations that cannot see retries done by the scheduler report 1 for every attempt.
+<a id="metric-myapp-job-duration-note-3"></a>**[3] `myapp.job.attempt`:** Instrumentations that cannot see retries done by the scheduler report 1 for every attempt.
