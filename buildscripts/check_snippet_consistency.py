@@ -57,8 +57,10 @@ def generated_section(pages_dir, collection, definition_id):
         len(lines),
     )
     body = "\n".join(lines[start:end]).rstrip()
-    # Pages separate consecutive definitions with `---`; it is not part of the definition.
-    body = body.removesuffix("\n---").rstrip()
+    # Pages put `---` between consecutive definitions; it is not part of the
+    # definition. The last one (at EOF or before `## Deprecated`) has none.
+    if end < len(lines) and lines[end] != "## Deprecated":
+        body = body.removesuffix("\n---").rstrip()
     return body, None
 
 
