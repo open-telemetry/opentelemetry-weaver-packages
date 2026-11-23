@@ -1,6 +1,48 @@
 [
   {
     "diagnostic": {
+      "message": "Policy violation: id=naming_convention_attribute_ref_counterpart_missing, context={\"attribute_key\":\"test.content_ref\",\"base_key\":\"test.content\"}, message=Attribute 'test.content_ref' ends with '_ref' but counterpart attribute 'test.content' does not exist., level=Violation, signal_type=None, signal_name=None, provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_key": "test.content_ref",
+          "base_key": "test.content"
+        },
+        "id": "naming_convention_attribute_ref_counterpart_missing",
+        "level": "violation",
+        "message": "Attribute 'test.content_ref' ends with '_ref' but counterpart attribute 'test.content' does not exist.",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=naming_convention_attribute_ref_counterpart_not_unbounded, context={\"attribute_key\":\"test.bounded_ref\",\"base_key\":\"test.bounded\"}, message=Attribute 'test.bounded_ref' ends with '_ref' and requires counterpart attribute 'test.bounded' to set annotations.value.unbounded_size: true., level=Violation, signal_type=None, signal_name=None, provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_key": "test.bounded_ref",
+          "base_key": "test.bounded"
+        },
+        "id": "naming_convention_attribute_ref_counterpart_not_unbounded",
+        "level": "violation",
+        "message": "Attribute 'test.bounded_ref' ends with '_ref' and requires counterpart attribute 'test.bounded' to set annotations.value.unbounded_size: true.",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
       "message": "Policy violation: id=naming_convention_attribute_ref_type_violation, context={\"attribute_key\":\"test.body_ref\",\"attribute_type\":\"int\"}, message=Attribute 'test.body_ref' ends with '_ref' and must have type 'string', but got 'int'., level=Violation, signal_type=None, signal_name=None, provenance: current"
     },
     "error": {
@@ -22,21 +64,84 @@
   },
   {
     "diagnostic": {
-      "message": "Policy violation: id=naming_convention_attribute_ref_counterpart_missing, context={\"attribute_key\":\"test.content_ref\",\"base_key\":\"test.content\"}, message=Attribute 'test.content_ref' ends with '_ref' but counterpart attribute 'test.content' does not exist., level=Violation, signal_type=None, signal_name=None, provenance: current"
+      "message": "Policy violation: id=naming_convention_signal_ref_missing_base, context={\"attribute_key\":\"test.payload_ref\",\"base_key\":\"test.payload\"}, message=event 'test.missing_base_event' includes reference attribute 'test.payload_ref' and must also include 'test.payload'., level=Violation, signal_type=Some(\"event\"), signal_name=Some(\"test.missing_base_event\"), provenance: current"
     },
     "error": {
       "provenance": "current",
       "type": "policy_violation",
       "violation": {
         "context": {
-          "attribute_key": "test.content_ref",
-          "base_key": "test.content"
+          "attribute_key": "test.payload_ref",
+          "base_key": "test.payload"
         },
-        "id": "naming_convention_attribute_ref_counterpart_missing",
+        "id": "naming_convention_signal_ref_missing_base",
         "level": "violation",
-        "message": "Attribute 'test.content_ref' ends with '_ref' but counterpart attribute 'test.content' does not exist.",
-        "signal_name": null,
-        "signal_type": null,
+        "message": "event 'test.missing_base_event' includes reference attribute 'test.payload_ref' and must also include 'test.payload'.",
+        "signal_name": "test.missing_base_event",
+        "signal_type": "event",
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=naming_convention_signal_ref_missing_base, context={\"attribute_key\":\"test.payload_ref\",\"base_key\":\"test.payload\"}, message=event 'test.missing_base_event_refinement' includes reference attribute 'test.payload_ref' and must also include 'test.payload'., level=Violation, signal_type=Some(\"event\"), signal_name=Some(\"test.missing_base_event_refinement\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_key": "test.payload_ref",
+          "base_key": "test.payload"
+        },
+        "id": "naming_convention_signal_ref_missing_base",
+        "level": "violation",
+        "message": "event 'test.missing_base_event_refinement' includes reference attribute 'test.payload_ref' and must also include 'test.payload'.",
+        "signal_name": "test.missing_base_event_refinement",
+        "signal_type": "event",
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=naming_convention_signal_ref_missing_base, context={\"attribute_key\":\"test.payload_ref\",\"base_key\":\"test.payload\"}, message=span 'test.missing_base_span' includes reference attribute 'test.payload_ref' and must also include 'test.payload'., level=Violation, signal_type=Some(\"span\"), signal_name=Some(\"test.missing_base_span\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_key": "test.payload_ref",
+          "base_key": "test.payload"
+        },
+        "id": "naming_convention_signal_ref_missing_base",
+        "level": "violation",
+        "message": "span 'test.missing_base_span' includes reference attribute 'test.payload_ref' and must also include 'test.payload'.",
+        "signal_name": "test.missing_base_span",
+        "signal_type": "span",
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=naming_convention_signal_ref_missing_base, context={\"attribute_key\":\"test.payload_ref\",\"base_key\":\"test.payload\"}, message=span 'test.missing_base_span_refinement' includes reference attribute 'test.payload_ref' and must also include 'test.payload'., level=Violation, signal_type=Some(\"span\"), signal_name=Some(\"test.missing_base_span_refinement\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_key": "test.payload_ref",
+          "base_key": "test.payload"
+        },
+        "id": "naming_convention_signal_ref_missing_base",
+        "level": "violation",
+        "message": "span 'test.missing_base_span_refinement' includes reference attribute 'test.payload_ref' and must also include 'test.payload'.",
+        "signal_name": "test.missing_base_span_refinement",
+        "signal_type": "span",
         "type": "PolicyFinding"
       }
     }

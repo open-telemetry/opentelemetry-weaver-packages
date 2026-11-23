@@ -4,6 +4,9 @@ attributes:
     type: any
     brief: Payload.
     stability: development
+    annotations:
+      value:
+        unbounded_size: true
   - key: test.payload_ref
     type: string
     brief: Reference to the payload.
@@ -16,7 +19,83 @@ attributes:
     type: any
     brief: Body.
     stability: development
+    annotations:
+      value:
+        unbounded_size: true
   - key: test.body_ref
     type: int
     brief: Reference with invalid type.
     stability: development
+  - key: test.bounded
+    type: string
+    brief: Bounded attribute without unbounded_size annotation.
+    stability: development
+  - key: test.bounded_ref
+    type: string
+    brief: Reference whose counterpart is not unbounded.
+    stability: development
+spans:
+  - type: test.valid_span
+    brief: Span with both base and reference attributes.
+    stability: development
+    kind: client
+    name:
+      note: test
+    attributes:
+      - ref: test.payload
+        requirement_level: opt_in
+      - ref: test.payload_ref
+        requirement_level: opt_in
+  - type: test.missing_base_span
+    brief: Span with reference attribute but missing base attribute.
+    stability: development
+    kind: client
+    name:
+      note: test
+    attributes:
+      - ref: test.payload_ref
+        requirement_level: opt_in
+  - type: test.base_span
+    brief: Base span for refinement testing.
+    stability: development
+    kind: client
+    name:
+      note: test
+  - type: test.deprecated_span
+    brief: Deprecated span with reference attribute only.
+    stability: development
+    deprecated:
+      reason: obsoleted
+      note: Replaced by test.valid_span.
+    kind: client
+    name:
+      note: test
+    attributes:
+      - ref: test.payload_ref
+        requirement_level: opt_in
+span_refinements:
+  - id: test.missing_base_span_refinement
+    ref: test.base_span
+    brief: Span refinement with reference attribute but missing base attribute.
+    stability: development
+    attributes:
+      - ref: test.payload_ref
+        requirement_level: opt_in
+events:
+  - name: test.missing_base_event
+    brief: Event with reference attribute but missing base attribute.
+    stability: development
+    attributes:
+      - ref: test.payload_ref
+        requirement_level: opt_in
+  - name: test.base_event
+    brief: Base event for refinement testing.
+    stability: development
+event_refinements:
+  - id: test.missing_base_event_refinement
+    ref: test.base_event
+    brief: Event refinement with reference attribute but missing base attribute.
+    stability: development
+    attributes:
+      - ref: test.payload_ref
+        requirement_level: opt_in
