@@ -27,7 +27,7 @@ This package enforces naming and structural rules for OpenTelemetry semantic con
 - **Name Formatting**: Enforces regex-based naming conventions for attributes, metrics, events, entities, and enum members.
 - **Attribute Namespaces**: Ensures that all non-deprecated attributes are correctly namespaced.
 - **Event Best Practices**: Prevents forbidden attributes like `event.name` from being manually added to events.
-- **Reference Attributes**: Ensures that attributes ending with `_ref` have type `string` and a counterpart attribute without the `_ref` suffix.
+- **Reference Attributes**: Ensures that attributes ending with `_ref` have type `string`, have a counterpart attribute without the `_ref` suffix marked `value.unbounded_size: true`, and are accompanied by that base attribute on any non-deprecated span, event, entity, or refinement that includes them.
 - **Unbounded Attributes**: Ensures that attributes annotated with `value.unbounded_size: true` are never `required` and are not used on metrics or as entity identity.
 
 ## Handling Naming Exceptions

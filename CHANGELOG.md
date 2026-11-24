@@ -22,6 +22,10 @@ change. See [CONTRIBUTING.md](CONTRIBUTING.md#changelog) for details.
   for breaking changes.
 - `check/naming_conventions`: Enforces OpenTelemetry semantic convention naming
   rules.
+- `check/naming_conventions`: Require the counterpart of a `_ref` attribute to
+  set `annotations.value.unbounded_size: true`, and require spans, events,
+  entities, and refinements that include a `_ref` attribute to also include its
+  base attribute.
 - `check/stability`: Enforces stability rules for attribute definition and
   usage.
 - `check/entity_associations`: Checks that entity associations in a registry are
