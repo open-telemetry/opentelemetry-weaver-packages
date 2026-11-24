@@ -34,6 +34,35 @@ attributes:
     type: string
     brief: Reference whose counterpart is not unbounded.
     stability: development
+  - key: test.entity.id
+    type: string
+    brief: Entity identifier.
+    stability: development
+  - key: test.summary
+    type: string
+    brief: Unbounded string attribute for entity testing.
+    stability: development
+    annotations:
+      value:
+        unbounded_size: true
+  - key: test.summary_ref
+    type: string
+    brief: Reference to the summary.
+    stability: development
+  - key: test.legacy
+    type: string
+    brief: Unbounded attribute with a deprecated reference counterpart.
+    stability: development
+    annotations:
+      value:
+        unbounded_size: true
+  - key: test.legacy_ref
+    type: string
+    brief: Deprecated reference attribute.
+    stability: development
+    deprecated:
+      reason: obsoleted
+      note: Replaced by test.summary_ref.
 spans:
   - type: test.valid_span
     brief: Span with both base and reference attributes.
@@ -54,6 +83,24 @@ spans:
       note: test
     attributes:
       - ref: test.payload_ref
+        requirement_level: opt_in
+  - type: test.deprecated_ref_span
+    brief: Non-deprecated span with a deprecated reference attribute and missing base attribute.
+    stability: development
+    kind: client
+    name:
+      note: test
+    attributes:
+      - ref: test.legacy_ref
+        requirement_level: opt_in
+  - type: test.orphan_ref_span
+    brief: Span with a reference attribute whose counterpart does not exist.
+    stability: development
+    kind: client
+    name:
+      note: test
+    attributes:
+      - ref: test.content_ref
         requirement_level: opt_in
   - type: test.base_span
     brief: Base span for refinement testing.
@@ -98,4 +145,47 @@ event_refinements:
     stability: development
     attributes:
       - ref: test.payload_ref
+        requirement_level: opt_in
+entities:
+  - type: test.valid_entity
+    brief: Entity with both base and reference attributes.
+    stability: development
+    identity:
+      - ref: test.entity.id
+    description:
+      - ref: test.summary
+        requirement_level: opt_in
+      - ref: test.summary_ref
+        requirement_level: opt_in
+  - type: test.missing_base_entity
+    brief: Entity with reference attribute but missing base attribute.
+    stability: development
+    identity:
+      - ref: test.entity.id
+    description:
+      - ref: test.summary_ref
+        requirement_level: opt_in
+  - type: test.base_entity
+    brief: Base entity for refinement testing.
+    stability: development
+    identity:
+      - ref: test.entity.id
+  - type: test.deprecated_entity
+    brief: Deprecated entity with reference attribute only.
+    stability: development
+    deprecated:
+      reason: obsoleted
+      note: Replaced by test.valid_entity.
+    identity:
+      - ref: test.entity.id
+    description:
+      - ref: test.summary_ref
+        requirement_level: opt_in
+entity_refinements:
+  - id: test.missing_base_entity_refinement
+    ref: test.base_entity
+    brief: Entity refinement with reference attribute but missing base attribute.
+    stability: development
+    description:
+      - ref: test.summary_ref
         requirement_level: opt_in

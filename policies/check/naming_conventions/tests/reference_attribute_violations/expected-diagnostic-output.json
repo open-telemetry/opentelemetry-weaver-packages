@@ -64,6 +64,48 @@
   },
   {
     "diagnostic": {
+      "message": "Policy violation: id=naming_convention_signal_ref_missing_base, context={\"attribute_key\":\"test.content_ref\",\"base_key\":\"test.content\"}, message=span 'test.orphan_ref_span' includes reference attribute 'test.content_ref' and must also include 'test.content'., level=Violation, signal_type=Some(\"span\"), signal_name=Some(\"test.orphan_ref_span\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_key": "test.content_ref",
+          "base_key": "test.content"
+        },
+        "id": "naming_convention_signal_ref_missing_base",
+        "level": "violation",
+        "message": "span 'test.orphan_ref_span' includes reference attribute 'test.content_ref' and must also include 'test.content'.",
+        "signal_name": "test.orphan_ref_span",
+        "signal_type": "span",
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=naming_convention_signal_ref_missing_base, context={\"attribute_key\":\"test.legacy_ref\",\"base_key\":\"test.legacy\"}, message=span 'test.deprecated_ref_span' includes reference attribute 'test.legacy_ref' and must also include 'test.legacy'., level=Violation, signal_type=Some(\"span\"), signal_name=Some(\"test.deprecated_ref_span\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_key": "test.legacy_ref",
+          "base_key": "test.legacy"
+        },
+        "id": "naming_convention_signal_ref_missing_base",
+        "level": "violation",
+        "message": "span 'test.deprecated_ref_span' includes reference attribute 'test.legacy_ref' and must also include 'test.legacy'.",
+        "signal_name": "test.deprecated_ref_span",
+        "signal_type": "span",
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
       "message": "Policy violation: id=naming_convention_signal_ref_missing_base, context={\"attribute_key\":\"test.payload_ref\",\"base_key\":\"test.payload\"}, message=event 'test.missing_base_event' includes reference attribute 'test.payload_ref' and must also include 'test.payload'., level=Violation, signal_type=Some(\"event\"), signal_name=Some(\"test.missing_base_event\"), provenance: current"
     },
     "error": {
@@ -142,6 +184,48 @@
         "message": "span 'test.missing_base_span_refinement' includes reference attribute 'test.payload_ref' and must also include 'test.payload'.",
         "signal_name": "test.missing_base_span_refinement",
         "signal_type": "span",
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=naming_convention_signal_ref_missing_base, context={\"attribute_key\":\"test.summary_ref\",\"base_key\":\"test.summary\"}, message=entity 'test.missing_base_entity' includes reference attribute 'test.summary_ref' and must also include 'test.summary'., level=Violation, signal_type=Some(\"entity\"), signal_name=Some(\"test.missing_base_entity\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_key": "test.summary_ref",
+          "base_key": "test.summary"
+        },
+        "id": "naming_convention_signal_ref_missing_base",
+        "level": "violation",
+        "message": "entity 'test.missing_base_entity' includes reference attribute 'test.summary_ref' and must also include 'test.summary'.",
+        "signal_name": "test.missing_base_entity",
+        "signal_type": "entity",
+        "type": "PolicyFinding"
+      }
+    }
+  },
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=naming_convention_signal_ref_missing_base, context={\"attribute_key\":\"test.summary_ref\",\"base_key\":\"test.summary\"}, message=entity 'test.missing_base_entity_refinement' includes reference attribute 'test.summary_ref' and must also include 'test.summary'., level=Violation, signal_type=Some(\"entity\"), signal_name=Some(\"test.missing_base_entity_refinement\"), provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_key": "test.summary_ref",
+          "base_key": "test.summary"
+        },
+        "id": "naming_convention_signal_ref_missing_base",
+        "level": "violation",
+        "message": "entity 'test.missing_base_entity_refinement' includes reference attribute 'test.summary_ref' and must also include 'test.summary'.",
+        "signal_name": "test.missing_base_entity_refinement",
+        "signal_type": "entity",
         "type": "PolicyFinding"
       }
     }

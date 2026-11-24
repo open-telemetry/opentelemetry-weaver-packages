@@ -58,14 +58,12 @@ deny contains finding if {
     }
 }
 
-# A non-deprecated span, event, or refinement that includes a `_ref` attribute must also include its base attribute.
+# A non-deprecated span, event, entity, or refinement that includes a `_ref` attribute must also include its base attribute.
 deny contains finding if {
     some signal in ref_checked_signals
     some attr in signal.attributes
-    not ref_is_deprecated(attr)
     endswith(attr.key, "_ref")
     base_key := trim_suffix(attr.key, "_ref")
-    ref_base_expected(attr.key, base_key)
     not ref_signal_has_attribute(signal, base_key)
 
     finding := {
@@ -84,14 +82,6 @@ deny contains finding if {
 registry_attribute_exists(key) if {
     some a in input.registry.attributes
     a.key == key
-}
-
-ref_base_expected(_, base_key) if {
-    registry_attribute_exists(base_key)
-}
-
-ref_base_expected(attr_key, _) if {
-    not registry_attribute_exists(attr_key)
 }
 
 ref_is_deprecated(obj) if {
@@ -119,6 +109,11 @@ ref_base_event_exists(id) if {
     e.name == id
 }
 
+ref_base_entity_exists(id) if {
+    some e in input.registry.entities
+    e.type == id
+}
+
 ref_checked_signals contains entry if {
     some span in input.registry.spans
     not ref_is_deprecated(span)
@@ -129,6 +124,12 @@ ref_checked_signals contains entry if {
     some event in input.registry.events
     not ref_is_deprecated(event)
     entry := {"signal_type": "event", "signal_name": event.name, "attributes": object.get(event, "attributes", [])}
+}
+
+ref_checked_signals contains entry if {
+    some entity in input.registry.entities
+    not ref_is_deprecated(entity)
+    entry := {"signal_type": "entity", "signal_name": entity.type, "attributes": object.get(entity, "description", [])}
 }
 
 ref_checked_signals contains entry if {
@@ -143,4 +144,11 @@ ref_checked_signals contains entry if {
     not ref_base_event_exists(event.id)
     not ref_is_deprecated(event)
     entry := {"signal_type": "event", "signal_name": event.id, "attributes": object.get(event, "attributes", [])}
+}
+
+ref_checked_signals contains entry if {
+    some entity in object.get(object.get(input, "refinements", {}), "entities", [])
+    not ref_base_entity_exists(entity.id)
+    not ref_is_deprecated(entity)
+    entry := {"signal_type": "entity", "signal_name": entity.id, "attributes": object.get(entity, "description", [])}
 }
