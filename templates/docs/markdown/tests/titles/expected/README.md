@@ -15,6 +15,6 @@ in a namespace are also available on the namespace page.
 
 Currently, the following namespaces exist:
 
-- [CI/CD](/cicd/README.md)
-- [HTTP](/http/README.md)
-- [Myapp](/myapp/README.md)
+- [CI/CD](cicd/README.md)
+- [HTTP](http/README.md)
+- [Myapp](myapp/README.md)

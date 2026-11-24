@@ -10,7 +10,7 @@
 
 | Type | Stability | Description |
 | --- | --- | --- |
-| [`myapp.request`](/myapp/spans.md#myapprequest) | ![Development](https://img.shields.io/badge/-development-blue) | Span describing an application request to a server. |
+| [`myapp.request`](spans.md#myapprequest) | ![Development](https://img.shields.io/badge/-development-blue) | Span describing an application request to a server. |
 
 ## Attributes
 

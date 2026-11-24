@@ -18,5 +18,5 @@ in a namespace are also available on the namespace page.
 Currently, the following namespaces exist:
 
 {% for bundle in ctx | sort(attribute="root_namespace") -%}
-- [{{ titles.namespace(bundle.root_namespace) }}]({{ links.registry_page_url(bundle.root_namespace, "README.md") | trim }})
+- [{{ titles.namespace(bundle.root_namespace) }}]({{ bundle.root_namespace | kebab_case }}/README.md)
 {% endfor -%}
