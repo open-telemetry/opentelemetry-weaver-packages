@@ -28,6 +28,8 @@ change. See [CONTRIBUTING.md](CONTRIBUTING.md#changelog) for details.
   base attribute.
 - `check/stability`: Enforces stability rules for attribute definition and
   usage.
+- `check/stability`: Flag enum members that are more stable than their
+  attribute.
 - `check/entity_associations`: Checks that entity associations in a registry are
   well formed. Skips the current materialized form, whose referential integrity
   weaver already validates during resolution, and stays a back-compatible check

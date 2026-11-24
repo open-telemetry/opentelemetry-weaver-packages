@@ -124,3 +124,22 @@ deny contains finding if {
         "signal_name": item.signal_name,
     }
 }
+
+# Rule: An enum member must not be more stable than its attribute.
+deny contains finding if {
+    some attr in input.registry.attributes
+    some member in attr.type.members
+    stability_rank[member.stability] > stability_rank[attr.stability]
+
+    finding := {
+        "id": "stability_enum_member_higher_than_attribute",
+        "message": sprintf("Member '%s' of the attribute '%s' has stability '%s' which is higher than the attribute stability '%s'", [member.id, attr.key, member.stability, attr.stability]),
+        "level": "violation",
+        "context": {
+            "attribute_key": attr.key,
+            "attribute_stability": attr.stability,
+            "member_id": member.id,
+            "member_stability": member.stability,
+        },
+    }
+}

@@ -1,0 +1,25 @@
+[
+  {
+    "diagnostic": {
+      "message": "Policy violation: id=stability_enum_member_higher_than_attribute, context={\"attribute_key\":\"test.enum\",\"attribute_stability\":\"beta\",\"member_id\":\"stable_val\",\"member_stability\":\"stable\"}, message=Member 'stable_val' of the attribute 'test.enum' has stability 'stable' which is higher than the attribute stability 'beta', level=Violation, signal_type=None, signal_name=None, provenance: current"
+    },
+    "error": {
+      "provenance": "current",
+      "type": "policy_violation",
+      "violation": {
+        "context": {
+          "attribute_key": "test.enum",
+          "attribute_stability": "beta",
+          "member_id": "stable_val",
+          "member_stability": "stable"
+        },
+        "id": "stability_enum_member_higher_than_attribute",
+        "level": "violation",
+        "message": "Member 'stable_val' of the attribute 'test.enum' has stability 'stable' which is higher than the attribute stability 'beta'",
+        "signal_name": null,
+        "signal_type": null,
+        "type": "PolicyFinding"
+      }
+    }
+  }
+]

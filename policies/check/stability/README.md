@@ -41,6 +41,8 @@ This package enforces stability restrictions for OpenTelemetry semantic-conventi
   attribute groups are covered by this rule too (`signal` is `attribute_group`),
   since other registries may reference them; internal groups are not part of the
   resolved registry and are not checked.
+- Ensuring an enum member never claims a higher stability than its attribute.
+  The finding id is `stability_enum_member_higher_than_attribute`.
 
 ### Exceptions
 
