@@ -23,14 +23,20 @@ We'd love your contributions! Please read our [contributing guide](CONTRIBUTING.
 
 ## Approvers and Maintainers
 
-For github groups see the [codeowners](CODEOWNERS) file.
+This repository is co-maintained by the Weaver and Semantic Conventions SIGs.
+For github groups see the [codeowners](.github/CODEOWNERS) file.
 
 ### Maintainers
 
-- [Jeremy Blythe](https://github.com/jerbly) Evertz
-- [Josh Suereth](https://github.com/jsuereth) Google LLC
-- [Laurent Quérel](https://github.com/lquerel) F5 Networks
-- [Liudmila Molkova](https://github.com/lmolkova), Grafana Labs
+- [Alexander Wert](https://github.com/AlexanderWert), Dash0
+- [Armin Ruech](https://github.com/arminru), Dynatrace
+- [Christophe Kamphaus](https://github.com/kamphaus), Independent
+- [Jeremy Blythe](https://github.com/jerbly), Evertz
+- [Joao Grassi](https://github.com/joaopgrassi), Dynatrace
+- [Josh Suereth](https://github.com/jsuereth), Google
+- [Laurent Quérel](https://github.com/lquerel), F5 Networks
+- [Liudmila Molkova](https://github.com/lmolkova), Google
+- [Trask Stalnaker](https://github.com/trask), Microsoft
 
 For more information about the maintainer role, see the [community repository](https://github.com/open-telemetry/community/blob/main/guides/contributor/membership.md#maintainer).
 
