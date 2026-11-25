@@ -6,8 +6,4 @@
 
 # Global owners, will be the owners for everything in the repo
 
-* @open-telemetry/weaver-package-approvers
-
-# Semantic conventions policies
-/policies/check/backwards-compatibility/ @open-telemetry/specs-semconv-approvers
-/policies/check/stability/ @open-telemetry/specs-semconv-approvers
+* @open-telemetry/weaver-package-approvers @open-telemetry/specs-semconv-approvers
