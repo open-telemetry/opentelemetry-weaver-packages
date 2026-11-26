@@ -18,12 +18,14 @@ Attributes defined in the `myapp` namespace. Application developers are encourag
 | <a id="myapp-task-owner">`myapp.task.owner`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | string | Owner of the task. | `solo` |
 | <a id="myapp-task-priority">`myapp.task.priority`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | int | Priority of the task. | `0` |
 | <a id="myapp-task-retries">`myapp.task.retries`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | int | Number of times the task was retried. | `42` |
-| <a id="myapp-task-state">`myapp.task.state`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | string | Current state of the task. | `queued`; `running`; `done` |
+| <a id="myapp-task-state">`myapp.task.state`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | string | Current state of the task. | `queued`; `running`; `done` [(see more)](#myapp-task-state-values) |
 | <a id="myapp-task-tags">`myapp.task.tags`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | string[] | Tags attached to the task. | `["a", "b"]`; `["c"]` |
 
 **[1] `myapp.task.id`:** The identifier is assigned by the scheduler and stays stable across retries.
 
 ---
+
+<a id="myapp-task-state-values"></a>
 
 `myapp.task.state` has the following list of well-known values. If one of them applies, then the respective value MUST be used; otherwise, a custom value MAY be used.
 

@@ -39,10 +39,12 @@ Attributes defined in the `myapp` namespace. Application developers are encourag
 
 | Key | Stability | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- |
-| <a id="myapp-request-method">`myapp.request.method`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | string | Application-level request method. | `GET`; `POST` |
+| <a id="myapp-request-method">`myapp.request.method`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | string | Application-level request method. | `GET`; `POST` [(see more)](#myapp-request-method-values) |
 | <a id="myapp-session-id">`myapp.session.id`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | Unique identifier of the application session. | `sess_5j66Up` |
 
 ---
+
+<a id="myapp-request-method-values"></a>
 
 `myapp.request.method` has the following list of well-known values. If one of them applies, then the respective value MUST be used; otherwise, a custom value MAY be used.
 

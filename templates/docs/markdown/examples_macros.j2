@@ -1,3 +1,4 @@
+{% import 'enum_macros.j2' as enums %}
 {%- macro escape_multiline_markdown_cell(value) -%}
     {%- if '\n' in value -%}
         {#- Multi-line values (e.g. pretty-printed JSON) can't use real newlines
@@ -13,7 +14,8 @@
 
 {#- `item.examples is defined and is not none` rather than a truthiness check:
     a single scalar example may legitimately be falsy (0, false, ""). -#}
-{% macro format(item) %}{% if (item.examples is defined and item.examples is not none) or item.type == "enum" or item.type is mapping %}{{formatText(item) | trim }} {% endif %}{% endmacro %}
+{#- Enums whose values table is rendered link to it with `(see more)`. -#}
+{% macro format(item) %}{% if (item.examples is defined and item.examples is not none) or item.type == "enum" or item.type is mapping %}{{formatText(item) | trim }}{% if item.type is mapping and enums.has_table(item) == "True" %} [(see more)](#{{ enums.anchor(item) }}){% endif %} {% endif %}{% endmacro %}
 
 {% macro formatText(item) %}{%- if item.examples is defined and item.examples is not none %}
 {%- if "[]" in item.type and "template" not in item.type %}
