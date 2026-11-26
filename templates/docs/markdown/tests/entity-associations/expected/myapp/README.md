@@ -32,6 +32,7 @@
 
 | Type | Stability | Description |
 | --- | --- | --- |
+| [`myapp.job`](/myapp/spans.md#myappjob) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | A background job run by the service. |
 | [`myapp.request`](/myapp/spans.md#myapprequest) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | A request handled by the service. |
 
 ## Attributes

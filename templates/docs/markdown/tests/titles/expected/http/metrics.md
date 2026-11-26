@@ -9,9 +9,9 @@
 
 ## HTTP Client Request Duration
 
-| Name | Instrument Type | Unit (UCUM) | Description | Stability | Entity Associations |
-| -------- | --------------- | ----------- | -------------- | --------- | ------ |
-| `http.client.request.duration` | Histogram | `s` | Duration of the HTTP client request. | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | |
+| Name | Instrument Type | Unit (UCUM) | Description | Stability |
+| -------- | --------------- | ----------- | -------------- | --------- |
+| `http.client.request.duration` | Histogram | `s` | Duration of the HTTP client request. | ![Stable](https://img.shields.io/badge/-stable-lightgreen) |
 
 **Requirement Level:** `Recommended`
 

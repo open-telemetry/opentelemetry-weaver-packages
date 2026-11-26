@@ -17,9 +17,10 @@ Emitted when the service starts.
 
 **Requirement Level:** `Recommended`
 
-**Entity Associations:** SHOULD be associated with one of the following entities:
+**Entity Associations:** SHOULD be associated with *one of* the following entities:
 
-- one of ([`myapp.service`](/myapp/entities.md#myappservice), `k8s.pod`)
+- [`myapp.service`](/myapp/entities.md#myappservice)
+- `k8s.pod`
 
 **Attributes:**
 

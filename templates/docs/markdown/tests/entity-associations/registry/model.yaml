@@ -44,6 +44,20 @@ spans:
       - ref: myapp.request.size
         requirement_level: recommended
 
+  # Nested `all_of` / `one_of` expression.
+  - type: myapp.job
+    kind: internal
+    stability: stable
+    brief: A background job run by the service.
+    name:
+      note: "{job}"
+    entity_associations:
+      - all_of:
+          - myapp.service
+          - one_of:
+              - myapp.host
+              - k8s.pod
+
 metrics:
   # Nested `all_of` / `one_of` expression.
   - name: myapp.request.count

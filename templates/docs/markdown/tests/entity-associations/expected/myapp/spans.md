@@ -5,7 +5,32 @@
 
 | Type | Stability | Description |
 | --- | --- | --- |
+| [`myapp.job`](#myappjob) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | A background job run by the service. |
 | [`myapp.request`](#myapprequest) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | A request handled by the service. |
+
+## `myapp.job`
+
+**Status:** ![Stable](https://img.shields.io/badge/-stable-lightgreen)
+
+A background job run by the service.
+
+**Span name:** MUST follow the overall [guidelines for span names](https://opentelemetry.io/docs/specs/otel/trace/api/#span).
+{job}
+
+**Requirement Level:** `Recommended`
+
+**Span kind:** SHOULD be `INTERNAL`.
+
+**Span status:** SHOULD follow the [Recording Errors](https://opentelemetry.io/docs/specs/semconv/general/recording-errors/) document.
+
+**Entity Associations:** SHOULD be associated with *all of* the following entities:
+
+- [`myapp.service`](/myapp/entities.md#myappservice)
+- one of:
+  - [`myapp.host`](/myapp/entities.md#myapphost)
+  - `k8s.pod`
+
+
 
 ## `myapp.request`
 
@@ -22,7 +47,7 @@ A request handled by the service.
 
 **Span status:** SHOULD follow the [Recording Errors](https://opentelemetry.io/docs/specs/semconv/general/recording-errors/) document.
 
-**Entity Associations:** SHOULD be associated with one of the following entities:
+**Entity Associations:** SHOULD be associated with *one of* the following entities:
 
 - [`myapp.service`](/myapp/entities.md#myappservice)
 - `k8s.pod`
