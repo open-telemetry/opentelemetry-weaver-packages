@@ -40,7 +40,7 @@ A request handled by the service.
 
 | Name | Instrument Type | Unit (UCUM) | Description | Stability | Entity Associations |
 | -------- | --------------- | ----------- | -------------- | --------- | ------ |
-| `myapp.request.count` | Counter | `{request}` | Number of requests handled. | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | all of (`myapp.service`, one of (`myapp.host`, `k8s.pod`)) |
+| `myapp.request.count` | Counter | `{request}` | Number of requests handled. | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | all of ([`myapp.service`](/myapp/entities.md#myappservice), one of ([`myapp.host`](/myapp/entities.md#myapphost), `k8s.pod`)) |
 
 **Requirement Level:** `Recommended`
 

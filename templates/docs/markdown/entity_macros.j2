@@ -16,16 +16,16 @@
 {#- One association expression, inline. Since weaver 0.26 a leaf is `{type, provenance}`
    (older versions passed a bare type string) and leaves can be nested under
    `one_of` / `all_of`. Upstream entities (`provenance.source` set) have no docs map,
-   so they render unlinked, same as when `link` is false. -#}
-{% macro association(e, link=true) -%}
+   so they render unlinked. -#}
+{% macro association(e) -%}
 {%- if e is string -%}
-{%- if link %}[`{{ e }}`]({{ registry_url(e) }}){% else %}`{{ e }}`{% endif -%}
+[`{{ e }}`]({{ registry_url(e) }})
 {%- elif e.type -%}
-{%- if link and not (e.provenance and e.provenance.source) %}[`{{ e.type }}`]({{ registry_url(e.type) }}){% else %}`{{ e.type }}`{% endif -%}
+{%- if not (e.provenance and e.provenance.source) %}[`{{ e.type }}`]({{ registry_url(e.type) }}){% else %}`{{ e.type }}`{% endif -%}
 {%- elif e.one_of -%}
-one of ({% for c in e.one_of %}{% if not loop.first %}, {% endif %}{{ association(c, link) }}{% endfor %})
+one of ({% for c in e.one_of %}{% if not loop.first %}, {% endif %}{{ association(c) }}{% endfor %})
 {%- elif e.all_of -%}
-all of ({% for c in e.all_of %}{% if not loop.first %}, {% endif %}{{ association(c, link) }}{% endfor %})
+all of ({% for c in e.all_of %}{% if not loop.first %}, {% endif %}{{ association(c) }}{% endfor %})
 {%- endif -%}
 {%- endmacro %}
 
