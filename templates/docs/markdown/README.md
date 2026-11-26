@@ -135,6 +135,32 @@ Attributes from a dependency you don't list render
 unlinked - the docs say the attribute is there without claiming to know where it
 is documented. 
 
+### Page layout
+
+`registry_layout` picks where pages are written, relative to `registry_base_url`.
+Links between pages follow it. `<ns>` is the kebab-cased root namespace.
+
+| `registry_layout` | Pages | Signal links |
+| --- | --- | --- |
+| `per_namespace` (default) | `<ns>/README.md`, `<ns>/entities.md`, `<ns>/spans.md`, `<ns>/metrics.md`, `<ns>/events.md` | Anchor on the namespace's signal page |
+| `semconv_v1` | `attributes/<ns>.md`, `entities/<ns>.md`, `spans/<ns>.md`, `metrics/<ns>.md`, `events/<ns>.md` | Anchor on the namespace's signal page |
+| `per_signal` | `<ns>/README.md`, `<ns>/<signal>/README.md`, `<ns>/<signal>/<id>.md` | The signal's own page |
+
+`semconv_v1` matches the layout semantic-conventions published with its v1
+templates. It also reads the optional `namespace_aliases` text map from your
+`.weaver.toml` to publish a namespace under another name:
+
+```toml
+[template.text_maps.namespace_aliases]
+hw = "hardware"
+```
+
+Two namespaces aliased to the same name write to the same page, so the last
+one generated wins.
+
+See [`tests/layout-semconv-v1`](tests/layout-semconv-v1) and
+[`tests/layout-per-signal`](tests/layout-per-signal).
+
 ### Section headings in registry
 
 Each span, metric, event and entity gets a section headed by its id -

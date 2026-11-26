@@ -1,0 +1,5 @@
+# One page per signal: <ns>/<signal>/<id>.md.
+params:
+  registry_base_url: ""
+  registry_layout: per_signal
+  exclude_deprecated: false

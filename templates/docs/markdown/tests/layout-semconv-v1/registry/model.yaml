@@ -1,0 +1,44 @@
+file_format: definition/2
+attributes:
+  - key: myapp.service.name
+    type: string
+    stability: stable
+    brief: Name of the service.
+    examples: ["checkout"]
+  - key: myapp.request.id
+    type: string
+    stability: development
+    brief: Identifier of the request.
+    examples: ["req_1"]
+entities:
+  - type: myapp.service
+    stability: stable
+    brief: A deployed application service.
+    identity:
+      - ref: myapp.service.name
+spans:
+  - type: myapp.request
+    kind: server
+    name:
+      note: "`{myapp.request.id}`"
+    stability: development
+    brief: Span describing an application request.
+    attributes:
+      - ref: myapp.request.id
+        requirement_level: required
+metrics:
+  - name: myapp.request.count
+    instrument: counter
+    unit: "{request}"
+    stability: development
+    brief: Number of requests handled.
+    attributes:
+      - ref: myapp.request.id
+        requirement_level: recommended
+events:
+  - name: myapp.request.received
+    stability: development
+    brief: Emitted when a request is received.
+    attributes:
+      - ref: myapp.request.id
+        requirement_level: required

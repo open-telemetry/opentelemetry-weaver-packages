@@ -8,21 +8,20 @@ definition must come out byte for byte identical - `snippet.md.j2` and the
 `*_namespace.md.j2` pages differing in, say, a blank line is a bug that two
 independent expected trees cannot catch on their own.
 
-Usage: check_snippet_consistency.py <expected-markdown-dir> <expected-dir>
+Usage: check_snippet_consistency.py <expected-markdown-dir> <expected-dir> [test-dir]
 """
 
 import pathlib
 import re
 import sys
+import tomllib
 
-# `.registry.<collection>` -> the page `generate` writes it to. Attribute groups
-# are snippet-only by design, so there is nothing to compare them against.
-PAGES = {
-    "spans": "spans.md",
-    "metrics": "metrics.md",
-    "events": "events.md",
-    "entities": "entities.md",
-}
+# `.registry.<collection>` -> the page `generate` writes it to, per the test's
+# `registry_layout` param and `namespace_aliases` text map. Attribute groups are
+# snippet-only by design, so there is nothing to compare them against.
+PAGES = {"spans", "metrics", "events", "entities"}
+# A flat `registry_layout: <value>` line; enough for params.yaml without a yaml dependency.
+REGISTRY_LAYOUT = re.compile(r'^\s*registry_layout:\s*"?(?P<layout>\w+)"?\s*$', re.MULTILINE)
 SNIPPET_ONLY = {"attribute_groups"}
 
 BLOCK = re.compile(
@@ -41,26 +40,50 @@ FILTER = re.compile(
 )
 
 
-def generated_section(pages_dir, collection, definition_id):
-    """The body of `## `<definition_id>`` on the page `generate` wrote it to."""
+def registry_layout(test_dir):
+    layout, aliases = "per_namespace", {}
+    if test_dir:
+        params = pathlib.Path(test_dir) / "params.yaml"
+        if params.is_file() and (m := REGISTRY_LAYOUT.search(params.read_text())):
+            layout = m["layout"]
+        config = pathlib.Path(test_dir) / ".weaver.toml"
+        if config.is_file():
+            with config.open("rb") as f:
+                text_maps = tomllib.load(f).get("template", {}).get("text_maps", {})
+            aliases = text_maps.get("namespace_aliases", {})
+    return layout, aliases
+
+
+def generated_section(pages_dir, layout_config, collection, definition_id):
+    """The body of the definition's section on the page `generate` wrote it to."""
+    layout, aliases = layout_config
     namespace = definition_id.split(".")[0]
-    page = pages_dir / namespace / PAGES[collection]
+    if layout == "per_signal":
+        page = pages_dir / namespace / collection / f"{definition_id}.md"
+        level = "# "
+    elif layout == "semconv_v1":
+        page = pages_dir / collection / f"{aliases.get(namespace, namespace)}.md"
+        level = "## "
+    else:
+        page = pages_dir / namespace / f"{collection}.md"
+        level = "## "
     if not page.is_file():
         return None, f"no generated page {page}"
-    heading = f"## `{definition_id}`"
+    heading = f"{level}`{definition_id}`"
     lines = page.read_text().splitlines()
     if heading not in lines:
         return None, f"no section {heading} in {page}"
     start = lines.index(heading) + 1
     end = next(
-        (i for i in range(start, len(lines)) if lines[i].startswith("## ")),
+        (i for i in range(start, len(lines)) if lines[i].startswith(level)),
         len(lines),
     )
     return "\n".join(lines[start:end]), None
 
 
-def main(snippets_dir, pages_dir):
+def main(snippets_dir, pages_dir, test_dir=None):
     snippets_dir, pages_dir = pathlib.Path(snippets_dir), pathlib.Path(pages_dir)
+    layout = registry_layout(test_dir)
     compared = skipped = 0
     failures = []
 
@@ -84,7 +107,7 @@ def main(snippets_dir, pages_dir):
                 failures.append(f"{doc}: {definition_id} rendered no snippet body")
                 continue
 
-            section, err = generated_section(pages_dir, collection, definition_id)
+            section, err = generated_section(pages_dir, layout, collection, definition_id)
             if err:
                 failures.append(f"{doc}: {definition_id}: {err}")
                 continue
@@ -123,6 +146,6 @@ def _diff(page, snippet):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
+    if len(sys.argv) not in (3, 4):
         sys.exit(__doc__)
-    sys.exit(main(sys.argv[1], sys.argv[2]))
+    sys.exit(main(*sys.argv[1:]))

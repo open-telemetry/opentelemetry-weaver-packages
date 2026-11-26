@@ -1,0 +1,45 @@
+{%- import 'span_macros.j2' as sp -%}
+{%- import 'metric_table.j2' as mt -%}
+{%- import 'event_macros.j2' as ev -%}
+{%- import 'entity_macros.j2' as entity -%}
+{%- import 'attribute_table.j2' as at -%}
+{%- import 'titles.j2' as titles -%}
+{#- One section per signal, shared by the per-namespace signal pages and the
+   per-signal pages. `heading` is the markdown heading prefix (`#`, `##`, ...). -#}
+{%- macro spans(span, heading) %}
+{{ heading }} {{ titles.signal_heading(span.type) }}
+
+{{ sp.header(span) | trim }}
+
+{{ at.generate(span.attributes | default([], true)) | trim }}
+{% endmacro -%}
+{%- macro metrics(metric, heading) %}
+{{ heading }} {{ titles.signal_heading(metric.name) }}
+
+{{ mt.generate(metric) | trim }}
+
+{{ at.generate(metric.attributes | default([], true)) | trim }}
+{% endmacro -%}
+{%- macro events(event, heading) %}
+{{ heading }} {{ titles.signal_heading(event.name) }}
+
+{{ ev.header(event) | trim }}
+
+{{ at.generate(event.attributes | default([], true)) | trim }}
+{% endmacro -%}
+{%- macro entities(e, heading) %}
+{{ heading }} {{ titles.signal_heading(e.type) }}
+
+{{ entity.header(e) | trim }}
+
+{{ entity.all_attribute_table(e) | trim }}
+{% endmacro -%}
+{#- The field holding the signal id. -#}
+{%- macro id_attr(signal) -%}{{ "name" if signal in ["metrics", "events"] else "type" }}{%- endmacro -%}
+{%- macro render(signal, item, heading) -%}
+{%- if signal == "spans" %}{{ spans(item, heading) }}
+{%- elif signal == "metrics" %}{{ metrics(item, heading) }}
+{%- elif signal == "events" %}{{ events(item, heading) }}
+{%- else %}{{ entities(item, heading) }}
+{%- endif -%}
+{%- endmacro -%}

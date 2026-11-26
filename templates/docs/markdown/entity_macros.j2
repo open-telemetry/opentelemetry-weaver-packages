@@ -8,9 +8,8 @@
 {% import 'examples_macros.j2' as examples %}
 {% import 'links.j2' as links %}
 
-{#- Entities live at `{registry_base_url}/{namespace}/entities.md`, anchored per entity id. -#}
 {% macro registry_url(id) -%}
-{{ params.registry_base_url }}/{{ id | split_id | list | first | kebab_case }}/entities.md#{{ links.signal_anchor(id) }}
+{{ links.signal_url(id, "entities") | trim }}
 {%- endmacro %}
 
 {#- The entities a span or event should be associated with. Renders nothing when
