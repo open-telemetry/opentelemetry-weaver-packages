@@ -10,12 +10,12 @@
 {#- One descriptor per section, in page order. A `generate_*_registry` param
    turned off empties `all`, so an empty list is the only "should this section
    render?" check the body needs. Every section but Attributes links to the
-   signal's own page (`page`) and identifies signals by `id_attr`. -#}
+   signal's pages (`page`) and identifies signals by `id_attr`. -#}
 {%- set sections = [
-  {"title": "Entities", "all": ctx.entities if params.generate_entity_registry else [], "id_attr": "type", "page": "entities.md"},
-  {"title": "Events", "all": ctx.events if params.generate_event_registry else [], "id_attr": "name", "page": "events.md"},
-  {"title": "Metrics", "all": ctx.metrics if params.generate_metric_registry else [], "id_attr": "name", "page": "metrics.md"},
-  {"title": "Spans", "all": ctx.spans if params.generate_span_registry else [], "id_attr": "type", "page": "spans.md"},
+  {"title": "Entities", "all": ctx.entities if params.generate_entity_registry else [], "id_attr": "type", "page": "entities"},
+  {"title": "Events", "all": ctx.events if params.generate_event_registry else [], "id_attr": "name", "page": "events"},
+  {"title": "Metrics", "all": ctx.metrics if params.generate_metric_registry else [], "id_attr": "name", "page": "metrics"},
+  {"title": "Spans", "all": ctx.spans if params.generate_span_registry else [], "id_attr": "type", "page": "spans"},
   {"title": "Attributes", "all": ctx.attributes if params.generate_attribute_registry else []}
 ] -%}
 {#- Deprecated signals are pulled out of their own section into a single
@@ -38,7 +38,7 @@
 {#- `intro` is the lead-in paragraph of the Attributes section; the deprecated
    half of that section repeats the heading, not the prose. -#}
 {%- macro body(section, signals, intro=false) -%}
-{%- if section.page %}{{ table.render(signals, section.id_attr, links.registry_page_url(ns, section.page) | trim) }}
+{%- if section.page %}{{ table.render(signals, section.id_attr, section.page) }}
 {%- else %}
 {% if intro %}Attributes defined in the `{{ ns }}` namespace. Application developers are encouraged to reuse existing attributes; see these [naming recommendations]({{ links.naming_recommendations_url() }}) regarding attribute selection and naming for custom use cases.
 

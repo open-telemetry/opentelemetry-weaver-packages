@@ -1,0 +1,4 @@
+# semconv v1 layout: attributes/<ns>.md, entities/<ns>.md, etc.
+params:
+  registry_base_url: ""
+  registry_layout: semconv_v1

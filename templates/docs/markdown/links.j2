@@ -20,14 +20,47 @@
 {% macro span_guidelines_url() -%}{{ params.otel_span_guidelines_url }}{%- endmacro %}
 
 {# --- Registry page URL ---
-   Root-anchored absolute link to any page this registry generates, in the
-   namespace-first layout `{registry_base_url}/{namespace}/{page}` (e.g.
-   `/docs/registry/myapp/spans.md`). `registry_base_url` is the registry root
-   with no trailing slash. Root-anchored (not file-relative) so the same link
-   resolves whether it is read from a generated registry page or from a snippet
-   embedded in an arbitrary hand-written doc. #}
-{% macro registry_page_url(namespace, page) -%}
-{{ params.registry_base_url }}/{{ namespace | kebab_case }}/{{ page }}
+   Root-anchored absolute links to the pages this registry generates. `signal`
+   is `attributes` (the namespace page), `entities`, `spans`, `metrics` or
+   `events`. `registry_layout` picks the paths, `ns` is the kebab-cased namespace:
+
+   * `per_namespace`: `{ns}/README.md`, `{ns}/{signal}.md`, signals anchored.
+   * `semconv_v1`: `{signal}/{ns}.md`, signals anchored. `ns` is renamed
+     through the optional `namespace_aliases` text map.
+   * `per_signal`: `{ns}/README.md`, `{ns}/{signal}/README.md` and
+     `{ns}/{signal}/{id}.md`, one page per signal.
+
+   Also used for `file_name`s in weaver.yaml. Root-anchored (not file-relative)
+   so the same link resolves whether it is read from a generated registry page
+   or from a snippet embedded in an arbitrary hand-written doc. #}
+{% macro page_ns(namespace) -%}
+{%- if params.registry_layout == "semconv_v1" -%}
+{{ namespace | kebab_case | map_text("namespace_aliases") }}
+{%- else -%}
+{{ namespace | kebab_case }}
+{%- endif -%}
+{%- endmacro %}
+{% macro page_path(namespace, signal) -%}
+{%- set ns = page_ns(namespace) | trim -%}
+{%- if params.registry_layout == "semconv_v1" -%}{{ signal }}/{{ ns }}.md
+{%- elif signal == "attributes" -%}{{ ns }}/README.md
+{%- elif params.registry_layout == "per_signal" -%}{{ ns }}/{{ signal }}/README.md
+{%- else -%}{{ ns }}/{{ signal }}.md
+{%- endif -%}
+{%- endmacro %}
+{% macro registry_page_url(namespace, signal) -%}
+{{ params.registry_base_url }}/{{ page_path(namespace, signal) | trim }}
+{%- endmacro %}
+{#- `per_signal` only: the page of one signal. -#}
+{% macro signal_path(id, signal) -%}
+{{ page_ns(id | split_id | first) | trim }}/{{ signal }}/{{ id }}.md
+{%- endmacro %}
+{% macro signal_url(id, signal) -%}
+{%- if params.registry_layout == "per_signal" -%}
+{{ params.registry_base_url }}/{{ signal_path(id, signal) | trim }}
+{%- else -%}
+{{ registry_page_url(id | split_id | first, signal) | trim }}#{{ signal_anchor(id) }}
+{%- endif -%}
 {%- endmacro %}
 
 {# --- Signal heading anchor ---
@@ -50,7 +83,7 @@
 {# --- Attribute documentation URL ---
    Local attributes -- defined in this registry -- carry `provenance.path` (the
    model file they live in) and link to the attribute's row in its namespace
-   README under `registry_base_url` (`{ns}/README.md#{attribute-key}`); the
+   page (`attributes`, anchored `#{attribute-key}`); the
    README's Attributes section anchors each key by its kebab-cased id.
    Imported attributes come from a dependency and have no `provenance.path`
    (provenance is either null or `{source: <schema_url>}`); they link to that
@@ -67,7 +100,7 @@
 {% macro attribute_doc_url(attribute) -%}
 {%- set ns = attribute.key | split_id | first | kebab_case -%}
 {%- if attribute.provenance and attribute.provenance.path -%}
-{{ params.registry_base_url }}/{{ ns }}/README.md#{{ attribute.key | kebab_case }}
+{{ registry_page_url(ns, "attributes") | trim }}#{{ attribute.key | kebab_case }}
 {%- else -%}
 {%- set schema_url = attribute.provenance.source if attribute.provenance else "" -%}
 {{ schema_url | map_text("upstream_docs", "") | replace('{namespace}', ns) }}

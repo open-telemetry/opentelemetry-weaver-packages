@@ -1,0 +1,3 @@
+# Discovered by weaver walking up from the registry.
+[template.text_maps.namespace_aliases]
+myapp = "application"
