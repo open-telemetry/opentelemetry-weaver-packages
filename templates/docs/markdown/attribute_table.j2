@@ -16,6 +16,6 @@
 
 | Key | Stability | [Requirement Level]({{ links.requirement_level_url() }}) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- |
-{% for attribute in attributes | attribute_sort %}| {{ attrs.name_with_link(attribute) }} | {{ stability.badge(attribute, include_note=false) | trim }} | {{ requirement.render({"level": attribute.requirement_level, "name": attribute.key}, notes) | trim }} | {{ attrs.type(attribute) }} | {{ attrs.description(attribute, notes) }} | {{ examples.format(attribute) }}|
+{% for attribute in attributes | attribute_sort %}| {{ attrs.name_with_link(attribute) }} | {{ stability.badge(attribute, include_note=false) | trim }} | {{ requirement.render({"level": attribute.requirement_level, "name": attrs.display_key(attribute)}, notes) | trim }} | {{ attrs.type(attribute) }} | {{ attrs.description(attribute, notes) }} | {{ examples.format(attribute) }}|
 {% endfor %}{{ notes.render() }}{{ sampling.snippet(attributes) }}{{ enums.tables(attributes | selectattr("type", "mapping") | list, notes) }}
 {%- endif %}{% endmacro %}

@@ -27,7 +27,12 @@ TBD
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- |
 | [`myapp.request.method`](/myapp/README.md#myapp-request-method) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Application-level request method. | `GET`; `POST` |
+| [`myapp.request.header.<key>`](/myapp/README.md#myapp-request-header) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` [1] | string[] | Application request headers, `<key>` being the normalized header name. [2] | `["application/json"]` |
 | [`myapp.session.id`](/myapp/README.md#myapp-session-id) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | Unique identifier of the application session. | `sess_5j66Up` |
+
+**[1] `myapp.request.header.<key>`:** If the application is configured to capture request headers.
+
+**[2] `myapp.request.header.<key>`:** Instrumentations SHOULD require an explicit configuration of which headers are to be captured.
 
 ---
 

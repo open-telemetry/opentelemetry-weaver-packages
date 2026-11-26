@@ -25,7 +25,7 @@
 | Key | Stability | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- |
 {%- for attribute in attributes | sort(attribute="key") %}
-| <a id="{{ attribute.key | kebab_case }}">`{{ attribute.key }}`</a> | {{ stability.badge(attribute, include_note=false) | trim }} | {{ attrs.type(attribute) }} | {{ attrs.description(attribute, notes) }} | {{ examples.format(attribute) }}|
+| <a id="{{ attribute.key | kebab_case }}">`{{ attrs.display_key(attribute) }}`</a> | {{ stability.badge(attribute, include_note=false) | trim }} | {{ attrs.type(attribute) }} | {{ attrs.description(attribute, notes) }} | {{ examples.format(attribute) }}|
 {%- endfor %}
 {%- set notes_out = notes.render() | trim %}{% if notes_out %}
 
