@@ -7,6 +7,8 @@
 | --- | --- | --- |
 | [`myapp.job.count`](#myappjobcount) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | Number of job runs. |
 | [`myapp.job.duration`](#myappjobduration) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | Duration of a job run. |
+| [`myapp.jobs-run`](#myappjobs-run) | ![Development](https://img.shields.io/badge/-development-blue) | Number of job runs, dashed name. |
+| [`myapp.jobs.run`](#myappjobsrun) | ![Development](https://img.shields.io/badge/-development-blue) | Number of job runs, dotted name. |
 
 ## `myapp.job.count`
 
@@ -59,3 +61,39 @@ Omit otherwise.
 **Note:** The identifier is assigned by the scheduler and stays the same across retries of the same job.
 
 <a id="metric-myapp-job-duration-note-3"></a>**[3] `myapp.job.attempt`:** Instrumentations that cannot see retries done by the scheduler report 1 for every attempt.
+
+---
+
+## `myapp.jobs-run`
+
+| Name | Instrument Type | Unit (UCUM) | Description | Stability | Entity Associations |
+| -------- | --------------- | ----------- | -------------- | --------- | ------ |
+| `myapp.jobs-run` | Counter | `{run}` | Number of job runs, dashed name. | ![Development](https://img.shields.io/badge/-development-blue) | |
+
+**Requirement Level:** `Recommended`
+
+**Attributes:**
+
+| Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
+| --- | --- | --- | --- | --- | --- |
+| [`myapp.job.id`](/myapp/README.md#myapp-job-id) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Identifier of the job. [[1]](#metric-myapp-jobs--run-note-1) | `job-42` |
+
+<a id="metric-myapp-jobs--run-note-1"></a>**[1] `myapp.job.id`:** The identifier is assigned by the scheduler and stays the same across retries of the same job.
+
+---
+
+## `myapp.jobs.run`
+
+| Name | Instrument Type | Unit (UCUM) | Description | Stability | Entity Associations |
+| -------- | --------------- | ----------- | -------------- | --------- | ------ |
+| `myapp.jobs.run` | Counter | `{run}` | Number of job runs, dotted name. | ![Development](https://img.shields.io/badge/-development-blue) | |
+
+**Requirement Level:** `Recommended`
+
+**Attributes:**
+
+| Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
+| --- | --- | --- | --- | --- | --- |
+| [`myapp.job.id`](/myapp/README.md#myapp-job-id) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Identifier of the job. [[1]](#metric-myapp-jobs-run-note-1) | `job-42` |
+
+<a id="metric-myapp-jobs-run-note-1"></a>**[1] `myapp.job.id`:** The identifier is assigned by the scheduler and stays the same across retries of the same job.

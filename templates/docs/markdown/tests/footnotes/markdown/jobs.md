@@ -20,3 +20,9 @@ not collide even though each snippet restarts at [1].
 
 <!-- weaver .registry.attribute_groups[] | select(.id == "myapp.job") -->
 <!-- endweaver -->
+
+<!-- weaver .registry.metrics[] | select(.name == "myapp.jobs-run") -->
+<!-- endweaver -->
+
+<!-- weaver .registry.metrics[] | select(.name == "myapp.jobs.run") -->
+<!-- endweaver -->
