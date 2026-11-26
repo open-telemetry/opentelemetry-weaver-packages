@@ -25,7 +25,7 @@
 
 | Name | Stability | Description |
 | --- | --- | --- |
-| [`myapp.request.duration`](/myapp/metrics.md#myapprequestduration) | ![Development](https://img.shields.io/badge/-development-blue) | Duration of the application request. |
+| [`myapp.request.duration`](/myapp/metrics.md#myapprequestduration) | ![Development](https://img.shields.io/badge/-development-blue) | Duration of the application request.<br>Covers the time between receiving the request and sending the response &#124; including retries. |
 
 ## Spans
 
@@ -39,7 +39,7 @@ Attributes defined in the `myapp` namespace. Application developers are encourag
 
 | Key | Stability | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- |
-| <a id="myapp-request-method">`myapp.request.method`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | string | Application-level request method. | `GET`; `POST` |
+| <a id="myapp-request-method">`myapp.request.method`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | string | Application-level request method.<br>Uppercase. | `GET`; `POST` |
 | <a id="myapp-session-id">`myapp.session.id`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | Unique identifier of the application session. | `sess_5j66Up` |
 
 ---
@@ -49,4 +49,4 @@ Attributes defined in the `myapp` namespace. Application developers are encourag
 | Value | Description | Stability |
 | --- | --- | --- |
 | `GET` | GET method. | ![Stable](https://img.shields.io/badge/-stable-lightgreen) |
-| `POST` | POST method. | ![Stable](https://img.shields.io/badge/-stable-lightgreen) |
+| `POST` | POST method.<br>Sent with a body. | ![Stable](https://img.shields.io/badge/-stable-lightgreen) |

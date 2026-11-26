@@ -26,7 +26,7 @@ TBD
 
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- |
-| [`myapp.request.method`](/myapp/README.md#myapp-request-method) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Application-level request method. | `GET`; `POST` |
+| [`myapp.request.method`](/myapp/README.md#myapp-request-method) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Application-level request method.<br>Uppercase. | `GET`; `POST` |
 | [`myapp.session.id`](/myapp/README.md#myapp-session-id) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | Unique identifier of the application session. | `sess_5j66Up` |
 
 ---
@@ -36,4 +36,4 @@ TBD
 | Value | Description | Stability |
 | --- | --- | --- |
 | `GET` | GET method. | ![Stable](https://img.shields.io/badge/-stable-lightgreen) |
-| `POST` | POST method. | ![Stable](https://img.shields.io/badge/-stable-lightgreen) |
+| `POST` | POST method.<br>Sent with a body. | ![Stable](https://img.shields.io/badge/-stable-lightgreen) |

@@ -1,3 +1,4 @@
+{% import 'table_cell.j2' as cell %}
 {# Status badges for any object with `stability` and `deprecated` (signal,
    attribute or enum member). `include_note=false` drops the deprecation text
    after the badges; callers that do so are expected to surface it elsewhere
@@ -36,5 +37,5 @@
 {% macro description(signal) -%}
 {%- set deprecated = signal.deprecated | default(none, true) -%}
 {%- set deprecated_text = deprecated_note(deprecated) | trim if deprecated else '' -%}
-{{ signal.brief | trim }}{% if deprecated_text %}<br>{{ deprecated_text }}{% endif %}
+{{ cell.render(signal.brief) }}{% if deprecated_text %}<br>{{ deprecated_text }}{% endif %}
 {%- endmacro %}
