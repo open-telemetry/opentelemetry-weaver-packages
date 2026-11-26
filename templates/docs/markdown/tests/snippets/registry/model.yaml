@@ -68,7 +68,8 @@ metrics:
     brief: >-
       Duration of the application request.
 
-      Covers the time between receiving the request and sending the response | including retries.
+      Covers the time between receiving the request and sending the response | including retries,
+      reported per `GET|POST` method and per `a\|b` route.
     attributes:
       - ref: myapp.request.method
         requirement_level: required

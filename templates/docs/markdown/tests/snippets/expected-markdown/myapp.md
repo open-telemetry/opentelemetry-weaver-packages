@@ -51,7 +51,7 @@ TBD
 
 | Name | Instrument Type | Unit (UCUM) | Description | Stability | Entity Associations |
 | -------- | --------------- | ----------- | -------------- | --------- | ------ |
-| `myapp.request.duration` | Histogram | `s` | Duration of the application request.<br>Covers the time between receiving the request and sending the response &#124; including retries. | ![Development](https://img.shields.io/badge/-development-blue) | |
+| `myapp.request.duration` | Histogram | `s` | Duration of the application request.<br>Covers the time between receiving the request and sending the response \| including retries, reported per `GET\|POST` method and per `a\|b` route. | ![Development](https://img.shields.io/badge/-development-blue) | |
 
 **Requirement Level:** `Recommended`
 

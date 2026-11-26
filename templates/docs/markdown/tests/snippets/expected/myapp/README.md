@@ -25,7 +25,7 @@
 
 | Name | Stability | Description |
 | --- | --- | --- |
-| [`myapp.request.duration`](/myapp/metrics.md#myapprequestduration) | ![Development](https://img.shields.io/badge/-development-blue) | Duration of the application request.<br>Covers the time between receiving the request and sending the response &#124; including retries. |
+| [`myapp.request.duration`](/myapp/metrics.md#myapprequestduration) | ![Development](https://img.shields.io/badge/-development-blue) | Duration of the application request.<br>Covers the time between receiving the request and sending the response \| including retries, reported per `GET\|POST` method and per `a\|b` route. |
 
 ## Spans
 
