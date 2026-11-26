@@ -23,11 +23,13 @@ Attributes defined in the `myapp` namespace. Application developers are encourag
 | --- | --- | --- | --- | --- |
 | <a id="myapp-service-id">`myapp.service.id`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | string | Stable identifier of the service. | `svc_42` |
 | <a id="myapp-service-name">`myapp.service.name`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | string | Human-readable service name. [1] | `checkout` |
-| <a id="myapp-service-tier">`myapp.service.tier`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | string | Service tier. | `free`; `pro` |
+| <a id="myapp-service-tier">`myapp.service.tier`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | string | Service tier. | `free`; `pro` [(see more)](#myapp-service-tier-values) |
 
 **[1] `myapp.service.name`:** Defaults to the executable name when the service does not set one explicitly.
 
 ---
+
+<a id="myapp-service-tier-values"></a>
 
 `myapp.service.tier` has the following list of well-known values. If one of them applies, then the respective value MUST be used; otherwise, a custom value MAY be used.
 
