@@ -1,0 +1,8 @@
+name: entity-associations-test
+schema_url: https://example.com/schemas/entity-associations-test/1.0.0
+stability: development
+dependencies:
+  # Upstream registry defining `k8s.pod`, so associations can point at an
+  # entity this registry does not define. Path is relative to the test dir.
+  - schema_url: https://example.com/schemas/associations-upstream/1.0.0
+    registry_path: ./_upstream

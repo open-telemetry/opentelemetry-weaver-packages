@@ -15,6 +15,9 @@ change. See [CONTRIBUTING.md](CONTRIBUTING.md#changelog) for details.
   links.
 - `docs/markdown`: Add the `markdown.omit_enum_table` annotation to skip the
   enum values table where a signal pins the attribute to one value.
+- `docs/markdown`: Fix rendering of `entity_associations` with weaver 0.26+,
+  including nested `one_of` / `all_of` expressions. Upstream entities render
+  unlinked.
 
 ### Policies
 

@@ -51,7 +51,7 @@ TBD
 
 | Name | Instrument Type | Unit (UCUM) | Description | Stability | Entity Associations |
 | -------- | --------------- | ----------- | -------------- | --------- | ------ |
-| `myapp.request.duration` | Histogram | `s` | Duration of the application request. | ![Development](https://img.shields.io/badge/-development-blue) | |
+| `myapp.request.duration` | Histogram | `s` | Duration of the application request. | ![Development](https://img.shields.io/badge/-development-blue) |  |
 
 **Requirement Level:** `Recommended`
 

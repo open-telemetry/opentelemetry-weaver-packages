@@ -1,0 +1,13 @@
+file_format: definition/2
+attributes:
+  - key: k8s.pod.uid
+    type: string
+    stability: stable
+    brief: The UID of the Pod.
+    examples: ["275ecb36-5aa8-4c2a-9c47-d8bb681b9aff"]
+entities:
+  - type: k8s.pod
+    stability: stable
+    brief: A Kubernetes Pod.
+    identity:
+      - ref: k8s.pod.uid

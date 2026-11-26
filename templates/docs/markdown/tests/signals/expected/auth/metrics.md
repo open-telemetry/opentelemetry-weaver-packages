@@ -11,7 +11,7 @@
 
 | Name | Instrument Type | Unit (UCUM) | Description | Stability | Entity Associations |
 | -------- | --------------- | ----------- | -------------- | --------- | ------ |
-| `auth.attempts` | Counter | `{attempt}` | Number of authentication attempts. | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | |
+| `auth.attempts` | Counter | `{attempt}` | Number of authentication attempts. | ![Stable](https://img.shields.io/badge/-stable-lightgreen) |  |
 
 **Requirement Level:** `Opt-In`
 
