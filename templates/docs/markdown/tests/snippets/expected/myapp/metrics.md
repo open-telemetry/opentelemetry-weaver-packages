@@ -5,13 +5,13 @@
 
 | Name | Stability | Description |
 | --- | --- | --- |
-| [`myapp.request.duration`](#myapprequestduration) | ![Development](https://img.shields.io/badge/-development-blue) | Duration of the application request. |
+| [`myapp.request.duration`](#myapprequestduration) | ![Development](https://img.shields.io/badge/-development-blue) | Duration of the application request.<br>Covers the time between receiving the request and sending the response \| including retries, reported per `GET\|POST` method and per `a\|b` route. |
 
 ## `myapp.request.duration`
 
 | Name | Instrument Type | Unit (UCUM) | Description | Stability | Entity Associations |
 | -------- | --------------- | ----------- | -------------- | --------- | ------ |
-| `myapp.request.duration` | Histogram | `s` | Duration of the application request. | ![Development](https://img.shields.io/badge/-development-blue) | |
+| `myapp.request.duration` | Histogram | `s` | Duration of the application request.<br>Covers the time between receiving the request and sending the response \| including retries, reported per `GET\|POST` method and per `a\|b` route. | ![Development](https://img.shields.io/badge/-development-blue) | |
 
 **Requirement Level:** `Recommended`
 
@@ -19,7 +19,7 @@
 
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- |
-| [`myapp.request.method`](/myapp/README.md#myapp-request-method) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Application-level request method. | `GET`; `POST` |
+| [`myapp.request.method`](/myapp/README.md#myapp-request-method) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Application-level request method.<br>Uppercase. | `GET`; `POST` |
 
 ---
 
@@ -28,4 +28,4 @@
 | Value | Description | Stability |
 | --- | --- | --- |
 | `GET` | GET method. | ![Stable](https://img.shields.io/badge/-stable-lightgreen) |
-| `POST` | POST method. | ![Stable](https://img.shields.io/badge/-stable-lightgreen) |
+| `POST` | POST method.<br>Sent with a body. | ![Stable](https://img.shields.io/badge/-stable-lightgreen) |

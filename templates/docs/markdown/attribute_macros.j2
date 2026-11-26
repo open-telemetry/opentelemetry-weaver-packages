@@ -1,6 +1,7 @@
 {% import 'examples_macros.j2' as examples %}
 {% import 'links.j2' as links %}
 {% import 'stability.j2' as stability %}
+{% import 'table_cell.j2' as cell %}
 
 {% macro type(attribute) %}{%- if attribute.type is mapping %}
 {%- if attribute.type.members[0].value is string %}string{%- endif %}
@@ -51,6 +52,6 @@ When the attribute is recorded on events, it MUST be recorded in structured form
    what replaced them is what the reader needs. #}
 {% macro description(attribute, notes) -%}
 {%- if attribute.deprecated %}{{ stability.description(attribute) }}
-{%- else %}{{ attribute.brief | trim }}{{ notes.add({"note": note(attribute), "name": attribute.key}) }}
+{%- else %}{{ cell.render(attribute.brief) }}{{ notes.add({"note": note(attribute), "name": attribute.key}) }}
 {%- endif -%}
 {%- endmacro %}

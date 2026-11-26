@@ -1,0 +1,9 @@
+{#- Makes free text safe inside one markdown table cell: escapes `|` as `\|`, and
+    joins the non-blank lines of multi-line text (e.g. a YAML block scalar `brief`)
+    with `<br>` so the row is not split. GFM drops the backslash of `\|` inside
+    code spans too, so `a|b` in backticks still renders as `a|b`. Pipes that are
+    already escaped are left alone. -#}
+{%- macro render(text) -%}
+{%- set lines = (text | default('', true) | string).split('\n') | map('trim') | reject('eq', '') | list -%}
+{{- lines | join('<br>') | replace('\\|', '\x00') | replace('|', '\\|') | replace('\x00', '\\|') -}}
+{%- endmacro -%}

@@ -15,9 +15,13 @@ attributes:
         - id: post
           value: POST
           stability: stable
-          brief: POST method.
+          brief: |
+            POST method.
+            Sent with a body.
     stability: stable
-    brief: Application-level request method.
+    brief: |
+      Application-level request method.
+      Uppercase.
   - key: auth.user.id
     type: string
     stability: stable
@@ -61,7 +65,11 @@ metrics:
     instrument: histogram
     unit: s
     stability: development
-    brief: Duration of the application request.
+    brief: >-
+      Duration of the application request.
+
+      Covers the time between receiving the request and sending the response | including retries,
+      reported per `GET|POST` method and per `a\|b` route.
     attributes:
       - ref: myapp.request.method
         requirement_level: required
