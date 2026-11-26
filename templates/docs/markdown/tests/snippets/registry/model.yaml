@@ -51,7 +51,8 @@ spans:
       - ref: myapp.request.method
         requirement_level: required
       - ref: myapp.request.header
-        requirement_level: opt_in
+        requirement_level:
+          conditionally_required: If the application is configured to capture request headers.
   - type: myapp.legacy.request
     kind: client
     name:
