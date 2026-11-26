@@ -21,6 +21,6 @@ A job run.
 
 | Role | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- | --- |
-| Identity | [`myapp.job.id`](/myapp/README.md#myapp-job-id) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Identifier of the job. [[1]](#entity-myapp-job-run-note-1) | `job-42` |
+| Identity | [`myapp.job.id`](/myapp/README.md#myapp-job-id) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Identifier of the job. [[1]](#entity.myapp.job.run-note-1) | `job-42` |
 
-<a id="entity-myapp-job-run-note-1"></a>**[1] `myapp.job.id`:** The identifier is assigned by the scheduler and stays the same across retries of the same job.
+<a id="entity.myapp.job.run-note-1"></a>**[1] `myapp.job.id`:** The identifier is assigned by the scheduler and stays the same across retries of the same job.

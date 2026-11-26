@@ -21,6 +21,6 @@ Emitted when a job run fails.
 
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- |
-| [`myapp.job.attempt`](/myapp/README.md#myapp-job-attempt) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | int | Attempt number, starting at 1. [[1]](#event-myapp-job-failed-note-1) | `1`; `3` |
+| [`myapp.job.attempt`](/myapp/README.md#myapp-job-attempt) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | int | Attempt number, starting at 1. [[1]](#event.myapp.job.failed-note-1) | `1`; `3` |
 
-<a id="event-myapp-job-failed-note-1"></a>**[1] `myapp.job.attempt`:** Instrumentations that cannot see retries done by the scheduler report 1 for every attempt.
+<a id="event.myapp.job.failed-note-1"></a>**[1] `myapp.job.attempt`:** Instrumentations that cannot see retries done by the scheduler report 1 for every attempt.

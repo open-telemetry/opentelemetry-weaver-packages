@@ -7,11 +7,12 @@
    restarts at 1 (so a definition renders the same on its page and as a
    snippet) and ids are prefixed with the definition so they stay unique. Pass
    `<kind>.<id>`: a span and an entity may share an id. -#}
-{%- set ns = namespace(notes=[],index=0,scope="",scope_id="") -%}
+{%- set ns = namespace(notes=[],index=0,scope="") -%}
 {#- `ns` must be read for the macro to capture it; assigning alone is not enough.
-   Numbering restarts when the definition id changes. The anchor prefix doubles `-`
-   before turning `.` into `-`, so `myapp.job-run` and `myapp.job.run` stay distinct. -#}
-{%- macro scope(id) %}{% if ns %}{% if (id or "") != ns.scope_id %}{% set ns.index = 0 %}{% endif %}{% set ns.scope_id = id or "" %}{% set ns.scope = (id | lower | replace("-", "--") | replace(".", "-")) if id else "" %}{% endif %}{% endmacro %}
+   Numbering restarts when the definition changes. The id is used as-is as the
+   anchor prefix: HTML ids allow `.` and `-`, and any rewriting of them can make
+   distinct ids collide. -#}
+{%- macro scope(id) %}{% if ns %}{% if (id or "") != ns.scope %}{% set ns.index = 0 %}{% endif %}{% set ns.scope = id or "" %}{% endif %}{% endmacro %}
 {%- macro scoped_id(suffix) %}{{ ns.scope ~ "-" if ns.scope }}{{ suffix }}{% endmacro %}
 {%- macro anchor(n) %}{{ scoped_id("note-" ~ n) }}{% endmacro %}
 {#- Notes for the same `name` share one entry; entries are namespaces so a part is

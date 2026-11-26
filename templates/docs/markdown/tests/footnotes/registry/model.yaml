@@ -65,8 +65,24 @@ metrics:
             If known.
             Omit otherwise.
 
-  # Ids that only differ in `-` vs `.` keep distinct footnote ids, and the second
+  # Ids that only differ in `-` vs `.` keep distinct footnote ids, and each
   # restarts at [1] on the page.
+  - name: myapp.jobs-.run
+    instrument: counter
+    unit: "{run}"
+    stability: development
+    brief: Number of job runs, dash then dot.
+    attributes:
+      - ref: myapp.job.id
+        requirement_level: required
+  - name: myapp.jobs.-run
+    instrument: counter
+    unit: "{run}"
+    stability: development
+    brief: Number of job runs, dot then dash.
+    attributes:
+      - ref: myapp.job.id
+        requirement_level: required
   - name: myapp.jobs-run
     instrument: counter
     unit: "{run}"

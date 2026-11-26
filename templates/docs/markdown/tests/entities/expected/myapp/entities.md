@@ -24,10 +24,10 @@ Identified by a stable id that survives restarts.
 | Role | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- | --- |
 | Identity | [`myapp.service.id`](/myapp/README.md#myapp-service-id) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Stable identifier of the service. | `svc_42` |
-| Description | [`myapp.service.name`](/myapp/README.md#myapp-service-name) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Recommended` | string | Human-readable service name. [[1]](#entity-myapp-service-note-1) | `checkout` |
+| Description | [`myapp.service.name`](/myapp/README.md#myapp-service-name) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Recommended` | string | Human-readable service name. [[1]](#entity.myapp.service-note-1) | `checkout` |
 | Description | [`myapp.service.tier`](/myapp/README.md#myapp-service-tier) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Recommended` | string | Service tier. | `free`; `pro` |
 
-<a id="entity-myapp-service-note-1"></a>**[1] `myapp.service.name`:** Defaults to the executable name when the service does not set one explicitly.
+<a id="entity.myapp.service-note-1"></a>**[1] `myapp.service.name`:** Defaults to the executable name when the service does not set one explicitly.
 
 `myapp.service.tier` has the following list of well-known values. If one of them applies, then the respective value MUST be used; otherwise, a custom value MAY be used.
 

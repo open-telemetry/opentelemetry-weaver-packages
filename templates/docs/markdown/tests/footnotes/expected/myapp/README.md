@@ -27,7 +27,9 @@
 | --- | --- | --- |
 | [`myapp.job.count`](/myapp/metrics.md#myappjobcount) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | Number of job runs. |
 | [`myapp.job.duration`](/myapp/metrics.md#myappjobduration) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | Duration of a job run. |
+| [`myapp.jobs-.run`](/myapp/metrics.md#myappjobs-run) | ![Development](https://img.shields.io/badge/-development-blue) | Number of job runs, dash then dot. |
 | [`myapp.jobs-run`](/myapp/metrics.md#myappjobs-run) | ![Development](https://img.shields.io/badge/-development-blue) | Number of job runs, dashed name. |
+| [`myapp.jobs.-run`](/myapp/metrics.md#myappjobs-run) | ![Development](https://img.shields.io/badge/-development-blue) | Number of job runs, dot then dash. |
 | [`myapp.jobs.run`](/myapp/metrics.md#myappjobsrun) | ![Development](https://img.shields.io/badge/-development-blue) | Number of job runs, dotted name. |
 
 ## Spans

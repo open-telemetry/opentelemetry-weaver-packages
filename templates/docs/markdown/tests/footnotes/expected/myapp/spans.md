@@ -26,13 +26,13 @@ A job run.
 
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- |
-| [`myapp.job.id`](/myapp/README.md#myapp-job-id) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` [[1]](#span-myapp-job-run-note-1) | string | Identifier of the job. [[1]](#span-myapp-job-run-note-1) | `job-42` |
-| [`myapp.job.attempt`](/myapp/README.md#myapp-job-attempt) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | int | Attempt number, starting at 1. [[2]](#span-myapp-job-run-note-2) | `1`; `3` |
+| [`myapp.job.id`](/myapp/README.md#myapp-job-id) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` [[1]](#span.myapp.job.run-note-1) | string | Identifier of the job. [[1]](#span.myapp.job.run-note-1) | `job-42` |
+| [`myapp.job.attempt`](/myapp/README.md#myapp-job-attempt) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | int | Attempt number, starting at 1. [[2]](#span.myapp.job.run-note-2) | `1`; `3` |
 
-<a id="span-myapp-job-run-note-1"></a>**[1] `myapp.job.id`:**
+<a id="span.myapp.job.run-note-1"></a>**[1] `myapp.job.id`:**
 
 **Requirement level:** When the scheduler assigns an identifier to the job.
 
 **Note:** The identifier is assigned by the scheduler and stays the same across retries of the same job.
 
-<a id="span-myapp-job-run-note-2"></a>**[2] `myapp.job.attempt`:** Instrumentations that cannot see retries done by the scheduler report 1 for every attempt.
+<a id="span.myapp.job.run-note-2"></a>**[2] `myapp.job.attempt`:** Instrumentations that cannot see retries done by the scheduler report 1 for every attempt.
