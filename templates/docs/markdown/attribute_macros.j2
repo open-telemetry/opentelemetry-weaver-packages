@@ -51,6 +51,6 @@ When the attribute is recorded on events, it MUST be recorded in structured form
    what replaced them is what the reader needs. #}
 {% macro description(attribute, notes) -%}
 {%- if attribute.deprecated %}{{ stability.description(attribute) }}
-{%- else %}{{ attribute.brief | trim }}{{ notes.add({"note": note(attribute), "name": attribute.key}) }}
+{%- else %}{{ attribute.brief | trim }}{{ notes.add_with_limit({"note": note(attribute), "name": attribute.key, "label": "Note"}) }}
 {%- endif -%}
 {%- endmacro %}

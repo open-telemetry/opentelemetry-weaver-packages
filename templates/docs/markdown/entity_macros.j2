@@ -58,7 +58,7 @@
 {% endfor %}
 {%- endmacro %}
 
-{% macro all_attribute_table(e) -%}
+{% macro all_attribute_table(e) -%}{{ notes.scope("entity." ~ e.type) }}
 {%- set id_attrs = e.identity | default([]) %}{% set desc_attrs = e.description | default([]) -%}
 **Attributes:**
 

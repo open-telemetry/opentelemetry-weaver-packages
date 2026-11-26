@@ -11,11 +11,15 @@
 {%- set current = signals | rejectattr("deprecated") | list -%}
 {%- set deprecated = signals | selectattr("deprecated") | list %}
 {{ signal_table.render(current, id_attr) | trim }}
-{% for signal in current | sort(attribute=id_attr) %}{{ section(signal, "##") }}{% endfor -%}
+{% for signal in current | sort(attribute=id_attr) %}{% if not loop.first %}
+---
+{% endif %}{{ section(signal, "##") }}{% endfor -%}
 {%- if deprecated %}
 ## Deprecated
 
 {{ signal_table.render(deprecated, id_attr) | trim }}
-{% for signal in deprecated | sort(attribute=id_attr) %}{{ section(signal, "###") }}{% endfor -%}
+{% for signal in deprecated | sort(attribute=id_attr) %}{% if not loop.first %}
+---
+{% endif %}{{ section(signal, "###") }}{% endfor -%}
 {%- endif -%}
 {%- endmacro %}

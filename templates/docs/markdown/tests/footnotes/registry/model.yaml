@@ -1,0 +1,142 @@
+file_format: definition/2
+attributes:
+  - key: myapp.job.id
+    type: string
+    stability: stable
+    brief: Identifier of the job.
+    note: >
+      The identifier is assigned by the scheduler and stays the same across
+      retries of the same job.
+    examples: ["job-42"]
+  - key: myapp.job.queue
+    type: string
+    stability: stable
+    brief: Name of the queue the job was taken from.
+    note: Case-sensitive.
+    examples: ["default"]
+  - key: myapp.job.attempt
+    type: int
+    stability: development
+    brief: Attempt number, starting at 1.
+    note: >
+      Instrumentations that cannot see retries done by the scheduler report 1
+      for every attempt.
+    examples: [1, 3]
+  # Short, but would break the table row: rendered as a footnote.
+  - key: myapp.job.priority
+    type: string
+    stability: development
+    brief: Priority of the job.
+    note: "Either high | low."
+    examples: ["high"]
+
+metrics:
+  # Metric note and attribute notes share one footnote counter.
+  - name: myapp.job.duration
+    instrument: histogram
+    unit: s
+    stability: stable
+    requirement_level: recommended
+    brief: Duration of a job run.
+    note: Measured from when the job is taken from the queue until it completes.
+    attributes:
+      # Long requirement condition and long note: one footnote, labeled parts.
+      - ref: myapp.job.id
+        requirement_level:
+          conditionally_required: When the scheduler assigns an identifier to the job.
+      # Short note: rendered inline.
+      - ref: myapp.job.queue
+        requirement_level: required
+      - ref: myapp.job.attempt
+        requirement_level: recommended
+  # Second metric on the page: separated by '---', numbering continues.
+  - name: myapp.job.count
+    instrument: counter
+    unit: "{job}"
+    stability: stable
+    requirement_level: recommended
+    brief: Number of job runs.
+    attributes:
+      - ref: myapp.job.attempt
+        requirement_level: recommended
+      - ref: myapp.job.priority
+        requirement_level:
+          recommended: |-
+            If known.
+            Omit otherwise.
+
+  # Ids that only differ in `-` vs `.` keep distinct footnote ids, and each
+  # restarts at [1] on the page.
+  - name: myapp.jobs-.run
+    instrument: counter
+    unit: "{run}"
+    stability: development
+    brief: Number of job runs, dash then dot.
+    attributes:
+      - ref: myapp.job.id
+        requirement_level: required
+  - name: myapp.jobs.-run
+    instrument: counter
+    unit: "{run}"
+    stability: development
+    brief: Number of job runs, dot then dash.
+    attributes:
+      - ref: myapp.job.id
+        requirement_level: required
+  - name: myapp.jobs-run
+    instrument: counter
+    unit: "{run}"
+    stability: development
+    brief: Number of job runs, dashed name.
+    attributes:
+      - ref: myapp.job.id
+        requirement_level: required
+  - name: myapp.jobs.run
+    instrument: counter
+    unit: "{run}"
+    stability: development
+    brief: Number of job runs, dotted name.
+    attributes:
+      - ref: myapp.job.id
+        requirement_level: required
+
+spans:
+  - type: myapp.job.run
+    kind: internal
+    stability: stable
+    requirement_level: recommended
+    brief: A job run.
+    name:
+      note: "{queue}"
+    attributes:
+      - ref: myapp.job.id
+        requirement_level:
+          conditionally_required: When the scheduler assigns an identifier to the job.
+      - ref: myapp.job.attempt
+        requirement_level: recommended
+
+events:
+  - name: myapp.job.failed
+    stability: stable
+    requirement_level: recommended
+    brief: Emitted when a job run fails.
+    attributes:
+      - ref: myapp.job.attempt
+        requirement_level: recommended
+
+# Same id as the span: footnote ids must not collide when both are embedded.
+entities:
+  - type: myapp.job.run
+    stability: stable
+    brief: A job run.
+    identity:
+      - ref: myapp.job.id
+
+attribute_groups:
+  - id: myapp.job
+    visibility: public
+    stability: stable
+    brief: Attributes describing a job.
+    attributes:
+      - ref: myapp.job.id
+      - ref: myapp.job.attempt
