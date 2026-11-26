@@ -26,6 +26,8 @@
 
 | Name | Stability | Description |
 | --- | --- | --- |
+| [`myapp.host.uptime`](/myapp/metrics.md#myapphostuptime) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | Time since the host started. |
+| [`myapp.request.active`](/myapp/metrics.md#myapprequestactive) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | Number of requests in flight. |
 | [`myapp.request.count`](/myapp/metrics.md#myapprequestcount) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | Number of requests handled. |
 
 ## Spans

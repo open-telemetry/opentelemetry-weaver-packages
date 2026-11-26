@@ -76,6 +76,25 @@ metrics:
       - ref: myapp.request.size
         requirement_level: recommended
 
+  # Single local entity.
+  - name: myapp.host.uptime
+    instrument: gauge
+    unit: s
+    stability: stable
+    brief: Time since the host started.
+    entity_associations:
+      - myapp.host
+
+  # Bare list mixing local and upstream entities.
+  - name: myapp.request.active
+    instrument: updowncounter
+    unit: "{request}"
+    stability: stable
+    brief: Number of requests in flight.
+    entity_associations:
+      - myapp.service
+      - k8s.pod
+
 events:
   - name: myapp.started
     stability: stable

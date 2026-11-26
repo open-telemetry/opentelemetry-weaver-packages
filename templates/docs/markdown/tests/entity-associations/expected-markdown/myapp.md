@@ -68,13 +68,13 @@ A background job run by the service.
 <!-- see templates/docs/markdown/snippet.md.j2 -->
 <!-- prettier-ignore-start -->
 
-| Name | Instrument Type | Unit (UCUM) | Description | Stability |
-| -------- | --------------- | ----------- | -------------- | --------- |
-| `myapp.request.count` | Counter | `{request}` | Number of requests handled. | ![Stable](https://img.shields.io/badge/-stable-lightgreen) |
+| Name | Instrument Type | Unit (UCUM) | Description | Stability | Entity Associations |
+| -------- | --------------- | ----------- | -------------- | --------- | ------ |
+| `myapp.request.count` | Counter | `{request}` | Number of requests handled. | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | [1] |
 
 **Requirement Level:** `Recommended`
 
-**Entity Associations:** SHOULD be associated with *all of* the following entities:
+**[1]:** SHOULD be associated with *all of* the following entities:
 
 - [`myapp.service`](/myapp/entities.md#myappservice)
 - one of:

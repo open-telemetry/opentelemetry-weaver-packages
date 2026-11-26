@@ -39,19 +39,44 @@
 {%- endfor %}
 {%- endmacro %}
 
-{#- The entities a signal should be associated with. A top-level list is an implicit
-   `one_of`; a list holding a single `one_of` / `all_of` is unwrapped into the lead-in.
-   Renders nothing when the signal declares none. -#}
+{#- `one` or `all`: how the top-level entries of an association list combine. A
+   top-level list is an implicit `one_of`; a list holding a single `one_of` /
+   `all_of` is unwrapped. -#}
+{% macro association_mode(entity_types) -%}
+{%- set only = entity_types[0] if entity_types | length == 1 else none -%}
+{%- if only is mapping and only.all_of %}all{% else %}one{% endif -%}
+{%- endmacro %}
+
+{% macro association_text(entity_types) -%}
+{%- set only = entity_types[0] if entity_types | length == 1 else none -%}
+{%- set items = only.all_of if (only is mapping and only.all_of) else (only.one_of if (only is mapping and only.one_of) else entity_types) -%}
+SHOULD be associated with *{{ association_mode(entity_types) }} of* the following entities:
+{{ association_list(items) }}
+{%- endmacro %}
+
+{#- The entities a signal should be associated with. Renders nothing when the
+   signal declares none. -#}
 {% macro associations(entity_types) -%}
 {%- if entity_types is sequence and entity_types | length > 0 %}
-{%- set only = entity_types[0] if entity_types | length == 1 else none %}
-{%- if only is mapping and only.all_of %}{% set mode, items = "all", only.all_of %}
-{%- elif only is mapping and only.one_of %}{% set mode, items = "one", only.one_of %}
-{%- else %}{% set mode, items = "one", entity_types %}{% endif %}
 
-**Entity Associations:** SHOULD be associated with *{{ mode }} of* the following entities:
-{{ association_list(items) }}
+**Entity Associations:** {{ association_text(entity_types) }}
 {%- endif %}
+{%- endmacro %}
+
+{#- Short form for a table cell: a flat list is written out (`k8s.pod`, or
+   `*one of* a, b`); a nested one becomes a footnote holding the full list. -#}
+{% macro associations_cell(entity_types, notes) -%}
+{%- if entity_types is sequence and entity_types | length > 0 -%}
+{%- set only = entity_types[0] if entity_types | length == 1 else none -%}
+{%- set items = only.all_of if (only is mapping and only.all_of) else (only.one_of if (only is mapping and only.one_of) else entity_types) -%}
+{%- if items | select("mapping") | selectattr("type", "undefined") | list | length > 0 -%}
+{{ notes.add({"note": association_text(entity_types)}) | trim }}
+{%- elif items | length == 1 -%}
+{{ entity_link(items[0]) }}
+{%- else -%}
+*{{ association_mode(entity_types) }} of* {% for e in items %}{% if not loop.first %}, {% endif %}{{ entity_link(e) }}{% endfor %}
+{%- endif -%}
+{%- endif -%}
 {%- endmacro %}
 
 {#- Create role tags #}

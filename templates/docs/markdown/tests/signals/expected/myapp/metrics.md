@@ -9,9 +9,9 @@
 
 ## `myapp.request.duration`
 
-| Name | Instrument Type | Unit (UCUM) | Description | Stability |
-| -------- | --------------- | ----------- | -------------- | --------- |
-| `myapp.request.duration` | Histogram | `s` | Duration of the application request. | ![Development](https://img.shields.io/badge/-development-blue) |
+| Name | Instrument Type | Unit (UCUM) | Description | Stability | Entity Associations |
+| -------- | --------------- | ----------- | -------------- | --------- | ------ |
+| `myapp.request.duration` | Histogram | `s` | Duration of the application request. | ![Development](https://img.shields.io/badge/-development-blue) |  |
 
 **Requirement Level:** `Recommended`
 

@@ -5,17 +5,39 @@
 
 | Name | Stability | Description |
 | --- | --- | --- |
+| [`myapp.host.uptime`](#myapphostuptime) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | Time since the host started. |
+| [`myapp.request.active`](#myapprequestactive) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | Number of requests in flight. |
 | [`myapp.request.count`](#myapprequestcount) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | Number of requests handled. |
 
-## `myapp.request.count`
+## `myapp.host.uptime`
 
-| Name | Instrument Type | Unit (UCUM) | Description | Stability |
-| -------- | --------------- | ----------- | -------------- | --------- |
-| `myapp.request.count` | Counter | `{request}` | Number of requests handled. | ![Stable](https://img.shields.io/badge/-stable-lightgreen) |
+| Name | Instrument Type | Unit (UCUM) | Description | Stability | Entity Associations |
+| -------- | --------------- | ----------- | -------------- | --------- | ------ |
+| `myapp.host.uptime` | Gauge | `s` | Time since the host started. | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | [`myapp.host`](/myapp/entities.md#myapphost) |
 
 **Requirement Level:** `Recommended`
 
-**Entity Associations:** SHOULD be associated with *all of* the following entities:
+
+
+## `myapp.request.active`
+
+| Name | Instrument Type | Unit (UCUM) | Description | Stability | Entity Associations |
+| -------- | --------------- | ----------- | -------------- | --------- | ------ |
+| `myapp.request.active` | UpDownCounter | `{request}` | Number of requests in flight. | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | *one of* [`myapp.service`](/myapp/entities.md#myappservice), `k8s.pod` |
+
+**Requirement Level:** `Recommended`
+
+
+
+## `myapp.request.count`
+
+| Name | Instrument Type | Unit (UCUM) | Description | Stability | Entity Associations |
+| -------- | --------------- | ----------- | -------------- | --------- | ------ |
+| `myapp.request.count` | Counter | `{request}` | Number of requests handled. | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | [1] |
+
+**Requirement Level:** `Recommended`
+
+**[1]:** SHOULD be associated with *all of* the following entities:
 
 - [`myapp.service`](/myapp/entities.md#myappservice)
 - one of:
