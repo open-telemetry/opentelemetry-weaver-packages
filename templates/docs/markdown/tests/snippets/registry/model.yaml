@@ -18,6 +18,15 @@ attributes:
           brief: POST method.
     stability: stable
     brief: Application-level request method.
+  - key: myapp.request.body
+    type: string
+    stability: development
+    brief: The full request body.
+    note: Captured value MAY be truncated.
+    examples: ["{\"id\": 1}"]
+    annotations:
+      value:
+        unbounded_size: true
   - key: auth.user.id
     type: string
     stability: stable
@@ -44,6 +53,8 @@ spans:
         requirement_level: recommended
       - ref: myapp.request.method
         requirement_level: required
+      - ref: myapp.request.body
+        requirement_level: opt_in
   - type: myapp.legacy.request
     kind: client
     name:

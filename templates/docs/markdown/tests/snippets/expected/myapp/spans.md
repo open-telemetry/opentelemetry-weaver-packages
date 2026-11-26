@@ -28,6 +28,14 @@ TBD
 | --- | --- | --- | --- | --- | --- |
 | [`myapp.request.method`](/myapp/README.md#myapp-request-method) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Application-level request method. | `GET`; `POST` |
 | [`myapp.session.id`](/myapp/README.md#myapp-session-id) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | Unique identifier of the application session. | `sess_5j66Up` |
+| [`myapp.request.body`](/myapp/README.md#myapp-request-body) | ![Development](https://img.shields.io/badge/-development-blue) | `Opt-In` | string | The full request body. [1] | `{"id": 1}` |
+
+**[1] `myapp.request.body`:**
+
+> [!WARNING]
+> This attribute may contain large values. Applications should configure the OpenTelemetry SDK [attribute value limits](https://opentelemetry.io/docs/specs/otel/common/#attribute-limits). Instrumentations SHOULD additionally enforce an implementation-specific size limit before constructing or recording the value to avoid unbounded memory consumption.
+
+Captured value MAY be truncated.
 
 ---
 

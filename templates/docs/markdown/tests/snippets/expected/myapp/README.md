@@ -39,8 +39,16 @@ Attributes defined in the `myapp` namespace. Application developers are encourag
 
 | Key | Stability | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- |
+| <a id="myapp-request-body">`myapp.request.body`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The full request body. [1] | `{"id": 1}` |
 | <a id="myapp-request-method">`myapp.request.method`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | string | Application-level request method. | `GET`; `POST` |
 | <a id="myapp-session-id">`myapp.session.id`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | Unique identifier of the application session. | `sess_5j66Up` |
+
+**[1] `myapp.request.body`:**
+
+> [!WARNING]
+> This attribute may contain large values. Applications should configure the OpenTelemetry SDK [attribute value limits](https://opentelemetry.io/docs/specs/otel/common/#attribute-limits). Instrumentations SHOULD additionally enforce an implementation-specific size limit before constructing or recording the value to avoid unbounded memory consumption.
+
+Captured value MAY be truncated.
 
 ---
 
