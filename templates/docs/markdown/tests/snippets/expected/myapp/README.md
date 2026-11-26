@@ -39,8 +39,11 @@ Attributes defined in the `myapp` namespace. Application developers are encourag
 
 | Key | Stability | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- |
+| <a id="myapp-request-header">`myapp.request.header.<key>`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string[] | Application request headers, `<key>` being the normalized header name. [1] | `["application/json"]` |
 | <a id="myapp-request-method">`myapp.request.method`</a> | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | string | Application-level request method. | `GET`; `POST` |
 | <a id="myapp-session-id">`myapp.session.id`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | Unique identifier of the application session. | `sess_5j66Up` |
+
+**[1] `myapp.request.header.<key>`:** Instrumentations SHOULD require an explicit configuration of which headers are to be captured.
 
 ---
 

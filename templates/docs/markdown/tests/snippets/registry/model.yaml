@@ -18,6 +18,12 @@ attributes:
           brief: POST method.
     stability: stable
     brief: Application-level request method.
+  - key: myapp.request.header
+    type: template[string[]]
+    stability: development
+    brief: Application request headers, `<key>` being the normalized header name.
+    note: Instrumentations SHOULD require an explicit configuration of which headers are to be captured.
+    examples: [["application/json"]]
   - key: auth.user.id
     type: string
     stability: stable
@@ -44,6 +50,8 @@ spans:
         requirement_level: recommended
       - ref: myapp.request.method
         requirement_level: required
+      - ref: myapp.request.header
+        requirement_level: opt_in
   - type: myapp.legacy.request
     kind: client
     name:

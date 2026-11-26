@@ -28,6 +28,9 @@ TBD
 | --- | --- | --- | --- | --- | --- |
 | [`myapp.request.method`](/myapp/README.md#myapp-request-method) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Required` | string | Application-level request method. | `GET`; `POST` |
 | [`myapp.session.id`](/myapp/README.md#myapp-session-id) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | Unique identifier of the application session. | `sess_5j66Up` |
+| [`myapp.request.header.<key>`](/myapp/README.md#myapp-request-header) | ![Development](https://img.shields.io/badge/-development-blue) | `Opt-In` | string[] | Application request headers, `<key>` being the normalized header name. [1] | `["application/json"]` |
+
+**[1] `myapp.request.header.<key>`:** Instrumentations SHOULD require an explicit configuration of which headers are to be captured.
 
 ---
 

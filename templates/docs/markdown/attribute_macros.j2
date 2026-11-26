@@ -22,9 +22,14 @@
    local-vs-upstream URL construction is owned by links.j2, driven entirely by
    config. An imported attribute whose dependency is not in the `upstream_docs`
    map has no known documentation, so it renders unlinked. #}
+{# Template attributes are recorded as `<attribute>.<key>`, e.g. `http.request.header.<key>`. #}
+{% macro display_key(attribute) -%}
+{{ attribute.key }}{% if attribute.type is string and attribute.type is startingwith("template[") %}.<key>{% endif %}
+{%- endmacro %}
+
 {% macro name_with_link(attribute) -%}
 {%- set url = links.attribute_doc_url(attribute) | trim -%}
-{%- if url %}[`{{ attribute.key }}`]({{ url }}){% else %}`{{ attribute.key }}`{% endif -%}
+{%- if url %}[`{{ display_key(attribute) }}`]({{ url }}){% else %}`{{ display_key(attribute) }}`{% endif -%}
 {%- endmacro %}
 
 {% macro schema_note(attribute) -%}
@@ -51,6 +56,6 @@ When the attribute is recorded on events, it MUST be recorded in structured form
    what replaced them is what the reader needs. #}
 {% macro description(attribute, notes) -%}
 {%- if attribute.deprecated %}{{ stability.description(attribute) }}
-{%- else %}{{ attribute.brief | trim }}{{ notes.add({"note": note(attribute), "name": attribute.key}) }}
+{%- else %}{{ attribute.brief | trim }}{{ notes.add({"note": note(attribute), "name": display_key(attribute)}) }}
 {%- endif -%}
 {%- endmacro %}
