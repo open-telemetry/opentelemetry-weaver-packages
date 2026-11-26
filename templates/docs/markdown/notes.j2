@@ -10,7 +10,10 @@
 {%- set ns = namespace(notes=[],index=0,scope="") -%}
 {#- `ns` must be read for the macro to capture it; assigning alone is not enough. -#}
 {%- macro scope(id) %}{% if ns %}{% set new = (id | lower | replace(".", "-")) if id else "" %}{% if new != ns.scope %}{% set ns.index = 0 %}{% endif %}{% set ns.scope = new %}{% endif %}{% endmacro %}
-{%- macro anchor(n) %}{{ ns.scope ~ "-" if ns.scope }}note-{{ n }}{% endmacro %}
+{#- Id unique to the current definition, for any anchor a definition renders more
+   than once per page (footnotes, enum value tables). -#}
+{%- macro scoped_id(suffix) %}{{ ns.scope ~ "-" if ns.scope }}{{ suffix }}{% endmacro %}
+{%- macro anchor(n) %}{{ scoped_id("note-" ~ n) }}{% endmacro %}
 {%- macro push(note) %}{% set part = {"label": note.label, "note": note.note} %}{% set st = namespace(pos=0, out=[]) %}{% for n in ns.notes %}{% if note.name and n.name == note.name and not st.pos %}{% set st.pos = loop.index %}{% set st.out = st.out + [{"name": n.name, "parts": n.parts + [part]}] %}{% else %}{% set st.out = st.out + [n] %}{% endif %}{% endfor %}{% if not st.pos %}{% set st.out = st.out + [{"name": note.name, "parts": [part]}] %}{% set st.pos = st.out | length %}{% endif %}{% set ns.notes = st.out %} [[{{ st.pos + ns.index }}]](#{{ anchor(st.pos + ns.index) }}){% endmacro %}
 {%- macro add(note) %}{% if note.note %}{{ push(note) }}{% endif %}{% endmacro %}
 {%- macro add_with_limit(note) %}{% set text = (note.note or "") | trim %}{% if text | length > 50 or "\n" in text or "|" in text or text.startswith('>') or text.startswith('```') %}{{ push(note) }}{% elif text %} {{ text }}{% endif %}{% endmacro %}
