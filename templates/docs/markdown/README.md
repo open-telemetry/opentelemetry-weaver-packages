@@ -115,7 +115,7 @@ Links between generated pages come from params:
 | Param | Purpose |
 | --- | --- |
 | `registry_base_url` | Where this registry is published (no trailing slash). Links between generated pages are absolute, `<registry_base_url>/<namespace>/<page>.md`, so they also work from a snippet embedded anywhere. |
-| `otel_requirement_level_url`, `otel_naming_recommendations_url`, `otel_recording_errors_url` | OpenTelemetry general guidance. The same for everyone; params only so they are easy to update. |
+| `otel_requirement_level_url`, `otel_naming_recommendations_url`, `otel_recording_errors_url`, `otel_span_guidelines_url`, `otel_attribute_limits_url` | OpenTelemetry general guidance. The same for everyone; params only so they are easy to update. |
 
 #### Upstream docs
 
@@ -171,6 +171,11 @@ package your project uses:
 acronyms = ["API", "HTTP", "SDK", "MyProduct"]
 text_maps = { namespace_mapping = { cicd = "CI/CD" } }
 ```
+
+### Unbounded attribute values
+
+Attributes with `annotations.value.unbounded_size: true` get a warning in their
+note, pointing to the SDK [attribute value limits](https://opentelemetry.io/docs/specs/otel/common/#attribute-limits).
 
 ### Hiding pinned enum tables
 

@@ -40,10 +40,18 @@ When the attribute is recorded on events, it MUST be recorded in structured form
 {%- endif -%}
 {%- endmacro %}
 
+{% macro unbounded_note(attribute) -%}
+{%- set annotations = attribute.annotations | default({}, true) -%}
+{%- if annotations is mapping and annotations.value is defined and annotations.value is mapping and annotations.value.unbounded_size -%}
+> [!WARNING]
+> This attribute may contain large values. Applications should configure the OpenTelemetry SDK [attribute value limits]({{ links.attribute_limits_url() }}). Instrumentations SHOULD additionally enforce an implementation-specific size limit before constructing or recording the value to avoid unbounded memory consumption.
+{%- endif -%}
+{%- endmacro %}
+
 {% macro note(attribute) -%}
 {%- set base_note = attribute.note | default('', true) | trim -%}
 {%- set generated_schema_note = schema_note(attribute) | trim -%}
-{{ [base_note, generated_schema_note] | reject("eq", "") | join("\n\n") }}
+{{ [unbounded_note(attribute) | trim, base_note, generated_schema_note] | reject("eq", "") | join("\n\n") }}
 {%- endmacro %}
 
 {# Description cell of an attribute table. Deprecated attributes carry their

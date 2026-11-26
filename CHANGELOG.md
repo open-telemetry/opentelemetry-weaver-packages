@@ -15,6 +15,8 @@ change. See [CONTRIBUTING.md](CONTRIBUTING.md#changelog) for details.
   links.
 - `docs/markdown`: Add the `markdown.omit_enum_table` annotation to skip the
   enum values table where a signal pins the attribute to one value.
+- `docs/markdown`: Warn about large values on attributes with
+  `annotations.value.unbounded_size: true`.
 
 ### Policies
 
